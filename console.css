@@ -93,3 +93,26 @@
   margin-inline-start:auto; font-family:var(--font-head); font-weight:700;
   font-size:13px; color:var(--gray-600);
 }
+
+/* ---- קיפול רצועות: כותרת לחיצה מקפלת/פותחת את הגוף ---- */
+.lane-head.is-toggleable{ cursor:pointer; user-select:none; }
+.lane-head.is-toggleable:hover{ background:var(--mint-pale); }
+.lane-head.is-toggleable:focus-visible{ outline:2px solid var(--anchor); outline-offset:-2px; }
+
+/* חץ-הקיפול. פתוח = מצביע למטה. החל אחרי מונה-הצעדים (או בקצה כשאין מונה). */
+.lane-toggle{
+  flex-shrink:0; font-size:20px; color:var(--anchor); line-height:1;
+  transition:transform var(--m-quick);
+}
+.lane-toggle.is-end{ margin-inline-start:auto; }
+
+/* מכווץ: החץ מסתובב ומצביע שמאלה (←, כיוון הקריאה ב-RTL) */
+.lane.is-collapsed .lane-toggle{ transform:rotate(90deg); }
+
+/* מכווץ: מסתירים את גוף-הרצועה ומבטלים את קו-ההפרדה התחתון של הכותרת */
+.lane.is-collapsed .lane-body{ display:none; }
+.lane.is-collapsed .lane-head{ border-block-end-color:transparent; }
+
+/* פתיחה רכה של גוף-הרצועה */
+@keyframes lane-reveal{ from{ opacity:0; transform:translateY(-4px); } to{ opacity:1; transform:none; } }
+.lane:not(.is-collapsed) .lane-body{ animation:lane-reveal var(--m-quick) ease-out; }
