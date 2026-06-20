@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Deep Research · מחקר שמחזיר דוח · Benefits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Varela+Round&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<style>
+  /* ============================================================
+     Chains deck · Benefits · DUPLICATED engine from agents deck (T1 lineage).
+     Engine + component CSS + sprite + animations kept intact.
+     tokens.css inlined (target lives outside design-library).
+     ============================================================ */
+
+  /* ---- tokens (inlined from 15-design-system/tokens.css) ---- */
+  :root {
+    --anchor:#047857; --ui-green:#10B981; --depth:#064E3B; --green-soft:#D1FAE5; --green-mint:#6EE7B7;
+    --canvas:#FFFBEB; --paper:#FFFFFF; --soft:#FEF3C7;
+    --ink:#0F172A; --border-soft:#FDE68A;
+    --sunshine:#FCD34D; --coral:#FB7185; --lavender:#A78BFA; --leaf:#84CC16;
+    --sky:#38BDF8; --pink:#EC4899; --teal:#2DD4BF;
+    --gray-900:#1E293B; --gray-600:#475569; --gray-500:#64748B;
+    --font-display:'Rubik', system-ui, sans-serif;
+    --font-body:'Varela Round', system-ui, sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, monospace;
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:72px;
+    --radius-sm:10px; --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-pill:999px;
+    --border:2.5px solid var(--ink); --border-bold:3px solid var(--ink);
+    --shadow-sm:3px 3px 0 0 var(--ink); --shadow-md:5px 5px 0 0 var(--ink); --shadow-lg:8px 8px 0 0 var(--ink);
+    --block-shadow:0 6px 0 0 var(--depth); --block-shadow-hover:0 8px 0 0 var(--depth); --block-shadow-active:0 2px 0 0 var(--depth);
+    --ease-bounce:cubic-bezier(0.34, 1.56, 0.64, 1); --focus-ring:3px solid var(--ui-green);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body), system-ui, sans-serif;
+    color: var(--gray-900);
+    background: var(--canvas);
+    background-image:
+      radial-gradient(circle at 10% 12%, rgba(56,189,248,0.07) 0, transparent 100px),
+      radial-gradient(circle at 90% 84%, rgba(236,72,153,0.06) 0, transparent 120px),
+      radial-gradient(circle at 50% 50%, rgba(252,211,77,0.05) 0, transparent 180px);
+    padding-bottom: 96px;
+  }
+  :is(button, a, select, summary, [tabindex]):focus-visible {
+    outline: var(--focus-ring); outline-offset: 3px; border-radius: 8px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+
+  /* ---------- Slim deck topbar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(255,251,235,0.88); backdrop-filter: blur(10px);
+    border-bottom: 3px solid var(--ink);
+    padding: 12px clamp(16px, 4vw, 40px);
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--ink); }
+  .brand__logo { height: 30px; width: auto; flex-shrink: 0; display: inline-flex; }
+  .brand__logo svg { height: 30px; width: auto; }
+  .brand__sub { font-family: var(--font-mono); font-size: 11px; color: var(--gray-600); font-weight: 600; direction: ltr; }
+  .topbar__spacer { margin-inline-start: auto; }
+  .counter { font-family: var(--font-mono); font-size: 13px; color: var(--gray-600); font-weight: 700; direction: ltr; min-width: 64px; text-align: center; }
+  .navbtn { width: 42px; height: 42px; border-radius: 50%; border: 2.5px solid var(--ink); background: var(--paper); cursor: pointer; font-size: 18px; display: grid; place-items: center; box-shadow: var(--shadow-sm); color: var(--ink); transition: all .15s var(--ease-bounce); }
+  .navbtn:hover { background: var(--sunshine); transform: translate(-1px,-1px); box-shadow: var(--shadow-md); }
+
+  /* ---------- Item wrapper ---------- */
+  .catalog { max-width: 1340px; margin: 0 auto; padding: 32px clamp(16px, 4vw, 40px) 0; }
+  .cat-item { scroll-margin-top: 84px; margin-bottom: 60px; }
+
+  /* ---------- The 16:9 stage (container-query host) ---------- */
+  .stage { container-type: inline-size; width: 100%; }
+  .slide {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+    border: 3px solid var(--ink); border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg); background: var(--canvas);
+    padding: 4.4cqw 5.2cqw;
+    display: flex; flex-direction: column; justify-content: center;
+    perspective: 1200px;
+    --t-body:   clamp(26px, 2.25cqw, 36px);
+    --t-lead:   clamp(28px, 2.7cqw, 44px);
+    --t-small:  clamp(25px, 2cqw, 31px);
+    --t-micro:  clamp(20px, 1.7cqw, 26px);
+    --t-h3:     clamp(28px, 2.5cqw, 42px);
+    --t-h2:     clamp(40px, 5cqw, 80px);
+    --t-h1:     clamp(54px, 9cqw, 150px);
+    --t-mega:   clamp(80px, 12cqw, 220px);
+    font-size: var(--t-body); line-height: 1.5; color: var(--gray-900);
+  }
+  .slide > *:not(.deco):not(.corner-mark):not(.title-logo):not(.title-glow) { position: relative; z-index: 2; }
+
+  /* ---------- Decoration helper ---------- */
+  .deco { position: absolute; pointer-events: none; z-index: 0; display: block; }
+  svg.deco { width: 100%; height: 100%; }
+  .ink-anchor { color: var(--anchor); } .ink-ink { color: var(--ink); } .ink-depth { color: var(--depth); }
+  .ink-white { color: #fff; } .ink-sun { color: var(--sunshine); }
+
+  /* ---------- Logo mark · RTL isolation (CORRECTION 1) ----------
+     The Benefits logo is a portrait mark (viewBox 824 453 2250 2991).
+     In an RTL document the bare <svg> inherits direction:rtl and MIRRORS the
+     glyph; force LTR + explicit aspect-preservation on every logo svg. */
+  .brand__logo svg, .cover-logo svg, .corner-mark svg, .closing-logo svg {
+    direction: ltr; unicode-bidi: isolate; overflow: visible;
+  }
+  /* ---------- Contained corner brand mark ---------- */
+  .corner-mark { position: absolute; top: 3.4cqw; left: 4.2cqw; right: auto; z-index: 3; height: 4.8cqw; min-height: 32px; max-height: 56px; width: auto; pointer-events: none; opacity: 0.92; overflow: visible; }
+  .corner-mark svg { height: 100%; width: auto; display: block; }
+  .slide--dark .corner-mark, .slide--ask .corner-mark, .slide--section .corner-mark { opacity: 1; }
+
+  /* ---------- Shared atoms ---------- */
+  .kicker { display: inline-flex; align-items: center; gap: 0.5em; background: var(--sunshine); color: var(--ink); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.45em 1em; font-family: var(--font-display); font-size: clamp(20px, 1.7cqw, 26px); font-weight: 700; box-shadow: 4px 4px 0 0 var(--ink); width: max-content; max-width: 96%; }
+  .tag { display: inline-flex; align-items: center; gap: 0.5em; background: var(--paper); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.4em 1em; font-family: var(--font-display); font-size: clamp(20px, 1.7cqw, 26px); font-weight: 700; color: var(--ink); box-shadow: 4px 4px 0 0 var(--ink); width: max-content; }
+  .head { display: flex; align-items: center; gap: 1.4cqw; margin-bottom: 2.4cqw; }
+  .num { display: grid; place-items: center; width: 6cqw; height: 6cqw; min-width: 56px; min-height: 56px; flex-shrink: 0; background: var(--anchor); color: #fff; border: 3px solid var(--ink); border-radius: 50%; font-family: var(--font-display); font-weight: 900; font-size: var(--t-h3); direction: ltr; box-shadow: 5px 5px 0 0 var(--ink); }
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink); margin: 0; }
+  .slide h2 { font-size: var(--t-h2); font-weight: 800; line-height: 1.04; letter-spacing: -0.04em; }
+  .slide h2 .hi { background: var(--sunshine); padding: 0 0.16em; border-radius: 8px; }
+  .slide h2 .pill { background: var(--anchor); color: #fff; padding: 0 0.28em; border: 4px solid var(--ink); border-radius: 14px; box-shadow: 6px 6px 0 0 var(--ink); display: inline-block; }
+  .lead { font-size: var(--t-lead); line-height: 1.45; color: var(--gray-900); margin: 0 0 2.2cqw; max-width: 40em; }
+  .lead strong { background: var(--green-soft); padding: 0 0.25em; border-radius: 6px; }
+  .muted { color: var(--gray-600); }
+  .ltr { direction: ltr; unicode-bidi: isolate; }
+
+  /* facts list */
+  .facts { display: grid; gap: 1.3cqw; list-style: none; padding: 0; margin: 0; }
+  .facts li { display: flex; gap: 1.2cqw; align-items: center; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 18px; padding: 1.3cqw 1.6cqw; box-shadow: 5px 5px 0 0 var(--ink); font-size: var(--t-body); line-height: 1.4; }
+  .facts li i { background: var(--anchor); color: #fff; width: 3.4cqw; height: 3.4cqw; min-width: 40px; min-height: 40px; border-radius: 50%; border: 2.5px solid var(--ink); display: grid; place-items: center; flex-shrink: 0; font-size: var(--t-small); }
+  .facts li.alt i { background: var(--coral); } .facts li.warn i { background: var(--sunshine); color: var(--ink); }
+  .facts li.sky i { background: var(--sky); color: var(--ink); } .facts li.lav i { background: var(--lavender); }
+  .facts li strong { font-family: var(--font-display); }
+
+  .card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-xl); padding: 2.6cqw; box-shadow: 8px 8px 0 0 var(--ink); position: relative; overflow: hidden; }
+  .body-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3.4cqw; align-items: center; }
+
+  /* columns + panels */
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4cqw; align-items: stretch; }
+  .cols-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.8cqw; align-items: stretch; }
+  .panel { border: 3px solid var(--ink); border-radius: var(--radius-lg); padding: 2.4cqw; box-shadow: 7px 7px 0 0 var(--ink); background: var(--paper); }
+  .panel h3 { font-size: var(--t-h3); font-weight: 700; margin: 0 0 0.9cqw; }
+  .panel p { font-size: var(--t-small); line-height: 1.45; margin: 0; }
+
+  /* summary cards */
+  .summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.8cqw; }
+  .summary-card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-xl); padding: 2.4cqw; box-shadow: 7px 7px 0 0 var(--ink); }
+  .summary-card__num { font-family: var(--font-display); font-weight: 900; font-size: clamp(48px,6cqw,90px); line-height: 1; color: var(--anchor); margin: 0 0 0.8cqw; direction: ltr; }
+  .summary-card:nth-child(2) .summary-card__num { color: var(--pink); }
+  .summary-card:nth-child(3) .summary-card__num { color: var(--sky); }
+  .summary-card h3 { font-size: var(--t-h3); font-weight: 700; margin: 0 0 0.6cqw; }
+  .summary-card p { font-size: var(--t-small); margin: 0; line-height: 1.45; }
+
+  /* big statement */
+  .statement { font-family: var(--font-display); font-weight: 900; font-size: clamp(42px,5.8cqw,104px); line-height: 1.1; letter-spacing: -0.03em; text-align: center; color: var(--ink); margin: 0; max-width: 92%; align-self: center; }
+  .statement .hi { background: var(--sunshine); padding: 0 0.15em; border-radius: 10px; }
+  .statement .mint { color: var(--anchor); }
+
+  /* definition */
+  .def { align-self: center; max-width: 88%; text-align: center; margin: 0 auto; }
+  .def__term { display: inline-flex; align-items: baseline; gap: 0.4em; font-family: var(--font-display); font-weight: 900; font-size: clamp(40px,5cqw,88px); background: var(--anchor); color: #fff; border: 4px solid var(--ink); border-radius: 18px; padding: 0.08em 0.4em; box-shadow: 9px 9px 0 0 var(--ink); margin-bottom: 2cqw; letter-spacing: -0.02em; direction: ltr; }
+  .def__term .gloss { font-family: var(--font-display); font-weight: 700; font-size: 0.5em; color: var(--sunshine); letter-spacing: 0; }
+  .def__meaning { font-size: var(--t-lead); line-height: 1.4; color: var(--gray-900); }
+  .def__meaning strong { background: var(--sunshine); padding: 0 0.2em; border-radius: 8px; }
+
+  /* cover / title */
+  .slide--cover { text-align: center; align-items: center; justify-content: center; }
+  .slide--cover h1 { font-size: clamp(40px,6.4cqw,104px); font-weight: 900; line-height: 1.02; letter-spacing: -0.04em; margin: 0 0 1.4cqw; }
+  .cover-logo { width: 18cqw; max-width: 220px; height: auto; margin: 0 auto 1.4cqw; display: block; }
+  .cover-logo svg { width: 100%; height: auto; display: block; }
+
+  /* ===== TITLE slide · calm dark-green hero =====
+     Dark-green canvas, static radial glow (NO pulsing/blinking), mint eyebrow,
+     big white Rubik headline with ONE yellow rotated stamp, small white logo
+     in the bottom-left corner. Minimal deco. */
+  .slide--title { background: var(--depth); color: #fff; text-align: center; align-items: center; justify-content: center; overflow: hidden; }
+  .title-glow { position: absolute; inset: -18%; z-index: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 22% 26%, rgba(16,185,129,0.30) 0, transparent 42%),
+      radial-gradient(circle at 80% 74%, rgba(110,231,183,0.16) 0, transparent 44%),
+      radial-gradient(circle at 64% 14%, rgba(252,211,77,0.12) 0, transparent 40%); }
+  .title-eyebrow { display: inline-flex; align-items: center; gap: 0.55em; background: rgba(255,255,255,0.08); color: var(--green-mint);
+    border: 2.5px solid var(--green-mint); border-radius: var(--radius-pill); padding: 0.5em 1.3em;
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(20px,1.8cqw,28px); margin-bottom: 2.4cqw; }
+  .title-eyebrow .dot { width: 0.72em; height: 0.72em; border-radius: 50%; background: var(--green-mint); flex: none; }
+  .title-eyebrow .ltr { color: var(--green-mint); }
+  .slide--title h1 { font-family: var(--font-display); font-weight: 900; color: #fff;
+    font-size: clamp(46px,7cqw,118px); line-height: 1.04; letter-spacing: -0.035em; margin: 0 0 2.6cqw; max-width: 94%; }
+  .slide--title h1 .ltr { color: #fff; }
+  .slide--title h1 .stamp { display: inline-block; background: var(--sunshine); color: var(--ink);
+    padding: 0 0.22em; border: 5px solid var(--ink); border-radius: 16px;
+    box-shadow: 8px 8px 0 0 rgba(0,0,0,0.42); transform: rotate(-2deg); }
+  .slide--title .tagline { font-family: var(--font-display); font-weight: 500; color: rgba(255,255,255,0.9);
+    font-size: clamp(22px,2.3cqw,34px); line-height: 1.45; margin: 0; max-width: 74%; }
+  .slide--title .tagline strong { color: var(--green-mint); font-weight: 600; }
+  .title-logo { position: absolute; bottom: 3.4cqw; left: 4cqw; right: auto; z-index: 3;
+    width: 7.5cqw; max-width: 84px; min-width: 50px; height: auto; opacity: 0.95; }
+  .title-logo svg { width: 100%; height: auto; display: block; filter: brightness(0) invert(1); }
+
+  /* ===== closing slide ===== */
+  .slide--closing { background: var(--depth); color: #fff; text-align: center; align-items: center; justify-content: center; }
+  .closing-logo { width: 20cqw; max-width: 240px; height: auto; margin: 0 auto 3cqw; display: block; }
+  .closing-logo svg { width: 100%; height: auto; display: block; filter: brightness(0) invert(1); }
+  .closing-name { font-family: var(--font-display); font-weight: 900; font-size: clamp(56px,9cqw,150px); line-height: 1; letter-spacing: -0.03em; color: #fff; margin: 0 0 2.2cqw; direction: ltr; unicode-bidi: isolate; }
+  .closing-line { display: inline-flex; align-items: center; gap: 0.6em; font-family: var(--font-display); font-weight: 600; font-size: clamp(26px,2.7cqw,42px); color: var(--green-mint); background: rgba(255,255,255,0.06); border: 2.5px solid var(--green-mint); border-radius: var(--radius-pill); padding: 0.5em 1.4em; }
+  .closing-line .ltr { color: #fff; }
+
+  /* section divider */
+  .slide--section { justify-content: center; }
+  .section-kicker { font-family: var(--font-display); font-size: var(--t-h3); font-weight: 700; color: var(--anchor); letter-spacing: 0.08em; margin-bottom: 1cqw; }
+  .section-num { font-family: var(--font-display); font-weight: 900; font-size: clamp(140px,16cqw,300px); line-height: 0.85; color: var(--ink); letter-spacing: -0.05em; opacity: 0.12; position: absolute; top: 2cqw; inset-inline-start: 5cqw; z-index: 1; direction: ltr; }
+  .section-title { font-family: var(--font-display); font-weight: 900; font-size: clamp(44px,6.4cqw,110px); line-height: 1.02; letter-spacing: -0.03em; color: var(--ink); margin: 0; max-width: 90%; }
+  .section-title .hi { background: var(--sunshine); padding: 0 0.12em; border-radius: 10px; }
+  .section-sub { font-family: var(--font-display); font-weight: 500; font-size: var(--t-lead); color: var(--gray-900); margin: 1.4cqw 0 0; max-width: 80%; }
+
+  /* ---------- COLOUR-FORWARD canvases ---------- */
+  .slide--dark { background: var(--depth); color: #fff; }
+  .slide--dark h2, .slide--dark h1, .slide--dark h3, .slide--dark h4 { color: #fff; }
+  .slide--dark .lead { color: var(--green-mint); }
+  .slide--sun { background: var(--sunshine); }
+  .slide--sky { background: var(--sky); }
+  .slide--coral { background: var(--coral); }
+  .slide--lav { background: var(--lavender); }
+  .slide--soft { background: var(--soft); }
+  .slide--greensoft { background: var(--green-soft); }
+
+  /* framework letter row (LTR) — reused for SPOKE → SPOKEN */
+  .micro-map { display: grid; grid-template-columns: repeat(5,1fr); gap: 1.4cqw; direction: ltr; }
+  .micro-card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg); padding: 1.8cqw 1.2cqw; box-shadow: 6px 6px 0 0 var(--ink); text-align: center; }
+  .micro-card__letter { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px,4cqw,60px); line-height: 1; margin: 0 auto 0.8cqw; color: #fff; width: 7cqw; height: 7cqw; min-width: 64px; min-height: 64px; border-radius: 50%; border: 3px solid var(--ink); display: grid; place-items: center; box-shadow: 4px 4px 0 0 var(--ink); }
+  .micro-card__en { font-family: var(--font-display); font-weight: 700; font-size: var(--t-small); direction: ltr; margin: 0 0 0.3cqw; color: var(--ink); }
+  .micro-card__he { font-size: var(--t-micro); margin: 0; color: var(--gray-900); line-height: 1.3; direction: rtl; }
+
+  /* footnote */
+  .footnote { font-family: var(--font-display); font-size: var(--t-micro); color: var(--gray-500); margin-top: 1.6cqw; }
+
+  /* ============================================================
+     NEW for chains deck — chain links, question/step cards,
+     SPOKE→SPOKEN row, copy blocks, demo pair.
+     Built in the Benefits DS language (ink borders, hard offset shadows).
+     ============================================================ */
+
+  /* chain-of-links visual (RTL: first link on the right, arrow points left) */
+  .chainwrap { display: flex; flex-direction: column; gap: 1.4cqw; }
+  .chainpair { display: flex; align-items: center; gap: 1.1cqw; flex-wrap: nowrap; }
+  .link { display: grid; place-items: center; text-align: center; background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg); box-shadow: 5px 5px 0 0 var(--ink); padding: 0.85cqw 1.3cqw; font-family: var(--font-display); font-weight: 800; font-size: var(--t-small); color: var(--ink); flex: 1 1 0; min-width: 0; line-height: 1.15; }
+  .link__role { font-family: var(--font-display); font-weight: 600; font-size: var(--t-micro); color: var(--gray-600); margin-top: 0.2em; }
+  .link--first { background: var(--green-soft); }
+  .link--next { background: var(--sunshine); }
+  .link--depth { background: var(--anchor); color: #fff; }
+  .chain-arrow { display: grid; place-items: center; gap: 0.25em; flex: none; color: var(--anchor); }
+  .chain-arrow i { font-size: clamp(30px,3.4cqw,52px); line-height: 1; }
+  .chain-prod { font-family: var(--font-display); font-weight: 700; font-size: var(--t-micro); color: var(--ink); background: var(--paper); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.15em 0.7em; box-shadow: 3px 3px 0 0 var(--ink); white-space: nowrap; }
+  .chain-anchor { display: flex; align-items: center; gap: 0.6em; margin-top: 1.4cqw; background: var(--depth); color: #fff; border: 3px solid var(--ink); border-radius: var(--radius-lg); box-shadow: 5px 5px 0 0 var(--ink); padding: 1cqw 1.4cqw; font-family: var(--font-display); font-weight: 600; font-size: var(--t-small); line-height: 1.35; }
+  .chain-anchor i { color: var(--green-mint); font-size: var(--t-h3); flex-shrink: 0; }
+
+  /* numbered question / step cards */
+  .ncard { position: relative; }
+  .ncard__n { position: absolute; top: -1.1cqw; inset-inline-start: 1.2cqw; width: 3cqw; height: 3cqw; min-width: 38px; min-height: 38px; background: var(--anchor); color: #fff; border: 2.5px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-weight: 900; font-size: var(--t-small); direction: ltr; box-shadow: 3px 3px 0 0 var(--ink); }
+  .ncard:nth-child(2) .ncard__n { background: var(--coral); }
+  .ncard:nth-child(3) .ncard__n { background: var(--sky); color: var(--ink); }
+  .ncard h3 { font-size: var(--t-h3); font-weight: 800; margin: 0.6cqw 0 0.5cqw; line-height: 1.12; }
+  .ncard p { font-size: var(--t-small); line-height: 1.4; margin: 0; color: var(--gray-900); }
+
+  /* SPOKE → SPOKEN row (6 letters; the 5 known in green, N is the yellow addition) */
+  .spoke-map { display: grid; grid-template-columns: repeat(6,1fr); gap: 1.2cqw; direction: ltr; align-items: stretch; }
+  .spoke-map .micro-card__letter { background: var(--anchor); }
+  .spoke-map .micro-card.is-n { border-style: dashed; }
+  .spoke-map .micro-card.is-n .micro-card__letter { background: var(--sunshine); color: var(--ink); transform: rotate(-3deg); box-shadow: 5px 5px 0 0 var(--ink); border-style: solid; }
+  .spoke-eq { display: flex; align-items: center; justify-content: center; gap: 0.8em; margin-top: 2cqw; font-family: var(--font-display); font-weight: 900; direction: ltr; }
+  .spoke-eq .word { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-md); box-shadow: 5px 5px 0 0 var(--ink); padding: 0.12em 0.5em; font-size: clamp(28px,3.2cqw,52px); letter-spacing: -0.01em; }
+  .spoke-eq .word.is-result { background: var(--anchor); color: #fff; }
+  .spoke-eq .op { font-size: clamp(26px,3cqw,46px); color: var(--ink); }
+
+  /* copy blocks — verbatim copy-paste content (Hebrew → Rubik, NOT mono) */
+  .copy-stack { display: grid; gap: 1.6cqw; }
+  .copy-block { position: relative; background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg); box-shadow: 6px 6px 0 0 var(--ink); padding: 1.9cqw 2cqw 1.5cqw; }
+  .copy-block__tag { position: absolute; top: -1.1cqw; inset-inline-start: 1.4cqw; background: var(--anchor); color: #fff; border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.22em 0.95em; font-family: var(--font-display); font-weight: 700; font-size: var(--t-micro); box-shadow: 3px 3px 0 0 var(--ink); }
+  .copy-block__btn { position: absolute; top: 0.8cqw; inset-inline-end: 0.8cqw; display: inline-grid; place-items: center; width: 2.8cqw; height: 2.8cqw; min-width: 34px; min-height: 34px; background: var(--sunshine); color: var(--ink); border: 2.5px solid var(--ink); border-radius: 50%; cursor: pointer; box-shadow: 3px 3px 0 0 var(--ink); font-size: var(--t-micro); transition: all .15s var(--ease-bounce); }
+  .copy-block__btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 0 var(--ink); }
+  .copy-block__btn.ok { background: var(--ui-green); color: #fff; }
+  .copy-block__text { font-family: var(--font-display); font-weight: 500; font-size: clamp(24px,1.95cqw,30px); line-height: 1.5; color: var(--ink); direction: rtl; text-align: right; white-space: pre-wrap; }
+  .copy-block__text .ph { color: var(--gray-500); font-weight: 600; }
+
+  /* demo pair (live demo card) */
+  .demo-pair { display: flex; align-items: center; justify-content: center; gap: 1.6cqw; margin: 1.2cqw auto 0; flex-wrap: nowrap; }
+  .demo-pair .link { flex: 0 1 auto; min-width: 0; font-size: var(--t-h3); padding: 1.2cqw 1.8cqw; }
+  .demo-pair .chain-arrow i { font-size: clamp(38px,4.2cqw,66px); color: var(--green-mint); }
+
+  /* ============================================================
+     ENTRANCE / EXIT — transition-driven (reverses on leave).
+     ============================================================ */
+  .anim { opacity: 0; transform: translateY(32px); transition: opacity .55s var(--ease-bounce), transform .55s var(--ease-bounce); transition-delay: calc(var(--i, 0) * 75ms); }
+  .anim.x      { transform: translateX(56px); }
+  .anim.xr     { transform: translateX(-56px); }
+  .anim.pop    { transform: scale(0.55); }
+  .anim.up-big { transform: translateY(64px); }
+  .anim.drop   { transform: translateY(-56px); }
+  .anim.rot    { transform: rotate(-7deg) translateY(36px) scale(0.94); }
+  .anim.rotr   { transform: rotate(7deg) translateY(36px) scale(0.94); }
+  .anim.zoom   { transform: scale(0.2); }
+  .is-visible .anim { opacity: 1; transform: none; }
+
+  /* ============================================================
+     CLICK-TO-REVEAL step system.
+     ============================================================ */
+  [data-step] { transition: opacity .5s var(--ease-bounce), transform .5s var(--ease-bounce); }
+  .slide [data-step]:not(.step-on),
+  .is-visible [data-step]:not(.step-on) { opacity: 0; transform: translateY(24px); }
+  .slide [data-step].step-on,
+  .is-visible [data-step].step-on { opacity: 1; transform: none; }
+
+  @media (max-width: 560px) {
+    .brand__sub { display:none; }
+  }
+
+  /* ===== PRESENT MODE ===== */
+  .present-btn { display:inline-flex; align-items:center; gap:0.5em; font-family:var(--font-body); font-weight:700; font-size:14px; background:var(--anchor); color:#fff; border:2.5px solid var(--ink); border-radius:var(--radius-pill); padding:9px 18px; box-shadow:var(--shadow-sm); cursor:pointer; transition:all .15s var(--ease-bounce); }
+  .present-btn:hover { background:var(--depth); transform:translate(-1px,-1px); box-shadow:var(--shadow-md); }
+  body.presenting { overflow:hidden; background:#0b0b0b; }
+  body.presenting .topbar { display:none; }
+  body.presenting .catalog { max-width:none; margin:0; padding:0; }
+  body.presenting .cat-item { display:none; margin:0; }
+  body.presenting .cat-item.present-active { display:block; }
+  body.presenting .cat-item.present-active .stage {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:min(100vw, 177.78vh); height:min(56.25vw, 100vh); z-index:500;
+  }
+  body.presenting .cat-item.present-active .slide {
+    width:100%; height:100%; aspect-ratio:auto; border:0; border-radius:0; box-shadow:none;
+  }
+  /* click zones */
+  .pres-edge { position:fixed; top:0; bottom:0; z-index:550; display:none; cursor:pointer; }
+  body.presenting .pres-edge { display:block; }
+  .pres-edge.prev { right:0; width:24%; } /* RTL: right side = previous */
+  .pres-edge.next { left:0; width:76%; }  /* RTL: left/most = next */
+  /* floating HUD */
+  .pres-hud { position:fixed; z-index:600; bottom:20px; left:50%; transform:translateX(-50%);
+    display:none; align-items:center; gap:12px; background:rgba(15,23,42,0.82); color:#fff;
+    border-radius:var(--radius-pill); padding:8px 14px; font-family:var(--font-mono); font-size:13px;
+    backdrop-filter:blur(8px); direction:rtl; opacity:0; transition:opacity .35s; }
+  body.presenting .pres-hud { display:flex; }
+  body.presenting .pres-hud:hover, body.presenting .pres-hud.show { opacity:1; }
+  .pres-hud button { background:transparent; border:0; color:#fff; cursor:pointer; font-size:20px; line-height:1; display:grid; place-items:center; padding:2px; }
+  .pres-hud .pc { min-width:58px; text-align:center; font-weight:700; direction:ltr; }
+
+  /* ============================================================
+     deep-research deck — three-way compare, before/after,
+     tool-set grid, ensemble merge. Benefits DS (ink + offset shadows).
+     ============================================================ */
+  /* three-way compare */
+  .tw { display:grid; grid-template-columns:repeat(3,1fr); gap:1.8cqw; align-items:stretch; }
+  .tw .panel { text-align:center; display:flex; flex-direction:column; align-items:center; gap:1cqw; padding:2.2cqw 1.4cqw; position:relative; }
+  .tw-ico { width:5.4cqw; height:5.4cqw; min-width:54px; min-height:54px; display:grid; place-items:center; border-radius:50%; border:3px solid var(--ink); background:var(--soft); box-shadow:4px 4px 0 0 var(--ink); font-size:var(--t-h3); color:var(--ink); }
+  .tw-tool { font-family:var(--font-display); font-weight:800; font-size:var(--t-h3); color:var(--ink); }
+  .tw-ret { font-family:var(--font-display); font-weight:700; font-size:var(--t-small); color:var(--gray-900); }
+  .tw .panel--hero { background:var(--anchor); }
+  .tw .panel--hero .tw-tool, .tw .panel--hero .tw-ret { color:#fff; }
+  .tw .panel--hero .tw-ico { background:var(--sunshine); }
+  .tw-badge { position:absolute; top:-1.2cqw; inset-inline-start:50%; transform:translateX(50%); background:var(--sunshine); color:var(--ink); border:2.5px solid var(--ink); border-radius:var(--radius-pill); padding:0.18em 0.95em; font-family:var(--font-display); font-weight:800; font-size:var(--t-micro); box-shadow:3px 3px 0 0 var(--ink); white-space:nowrap; }
+
+  /* before / after */
+  .ba { display:grid; grid-template-columns:1fr 1fr; gap:2cqw; align-items:stretch; }
+  .ba .panel { display:flex; flex-direction:column; gap:1cqw; }
+  .ba .panel--good { background:var(--green-soft); }
+  .ba-tag { font-family:var(--font-display); font-weight:800; font-size:var(--t-small); color:var(--ink); }
+  .ba .panel--good .ba-tag { color:var(--anchor); }
+  .ba-q { font-family:var(--font-display); font-weight:600; font-size:var(--t-micro); line-height:1.4; color:var(--ink); background:var(--paper); border:2.5px solid var(--ink); border-radius:var(--radius-md); padding:0.9cqw 1.1cqw; box-shadow:3px 3px 0 0 var(--ink); }
+  .ba-flow { display:flex; align-items:center; gap:0.6em; }
+  .ba-flow i { color:var(--anchor); font-size:var(--t-h3); }
+  .ba-out { font-family:var(--font-display); font-weight:800; font-size:var(--t-small); }
+  .ba .panel--good .ba-out { color:var(--anchor); }
+  .ba .panel--bad .ba-out { color:var(--gray-600); }
+  .fieldrow { display:grid; grid-template-columns:repeat(5,1fr); gap:1cqw; margin-top:1.8cqw; }
+  .fieldpill { text-align:center; background:var(--paper); border:2.5px solid var(--ink); border-radius:var(--radius-md); box-shadow:3px 3px 0 0 var(--ink); padding:1cqw 0.5cqw; font-family:var(--font-display); font-weight:700; font-size:var(--t-micro); line-height:1.25; color:var(--ink); }
+  .fieldpill b { display:block; font-size:1.5em; color:var(--anchor); font-weight:900; margin-bottom:0.1em; direction:ltr; }
+
+  /* tool-set grid (one parallel set) */
+  .toolgrid { display:grid; grid-template-columns:repeat(5,1fr); gap:1.2cqw; }
+  .tool { text-align:center; background:var(--paper); border:3px solid var(--ink); border-radius:var(--radius-lg); box-shadow:5px 5px 0 0 var(--ink); padding:1.3cqw 0.7cqw; }
+  .tool__name { font-family:var(--font-display); font-weight:800; font-size:var(--t-small); direction:ltr; unicode-bidi:isolate; color:var(--ink); }
+  .tool__word { font-size:var(--t-micro); color:var(--gray-600); margin-top:0.2em; line-height:1.2; }
+  .tool--chat { background:var(--soft); border-style:dashed; }
+  .toollegend { display:flex; gap:1.8cqw; justify-content:center; margin-top:1.6cqw; font-family:var(--font-display); font-weight:700; font-size:var(--t-micro); color:var(--gray-600); }
+  .toollegend span { display:inline-flex; align-items:center; gap:0.45em; }
+  .toollegend .d { width:0.85em; height:0.85em; border-radius:50%; border:2.5px solid var(--ink); }
+  .toollegend .d--dr { background:var(--anchor); }
+  .toollegend .d--chat { background:var(--soft); border-style:dashed; }
+
+  /* ensemble merge (parallel runs → one project) */
+  .ens { display:flex; align-items:center; gap:1.2cqw; justify-content:center; }
+  .ens-runs { display:grid; gap:0.9cqw; }
+  .ens-runs .link { padding:0.75cqw 1.2cqw; }
+  .ens-merge i { font-size:clamp(40px,4.6cqw,72px); color:var(--anchor); }
+  .ens-proj { font-size:var(--t-h3); padding:1.4cqw 1.6cqw; }
+  .ens-tag { display:inline-flex; align-items:center; gap:0.45em; background:var(--lavender); color:var(--ink); border:2.5px solid var(--ink); border-radius:var(--radius-pill); padding:0.32em 1em; font-family:var(--font-display); font-weight:800; font-size:var(--t-small); box-shadow:4px 4px 0 0 var(--ink); width:max-content; }
+
+  /* SP-CSS-START */
+  /* ===== PRESENTER VIEW (speaker-notes window · ?presenter=1) ===== */
+  .sp-notes{display:none}
+  body.sp-presenter-mode{background:#0f1115;overflow:auto;height:auto;margin:0}
+  body.sp-presenter-mode .topbar,
+  body.sp-presenter-mode #catalog,
+  body.sp-presenter-mode .pres-edge,
+  body.sp-presenter-mode .pres-hud{display:none!important}
+  #presenterRoot{display:none}
+  body.sp-presenter-mode #presenterRoot{
+    display:grid;direction:rtl;box-sizing:border-box;min-height:100vh;
+    padding:clamp(16px,2.2vw,30px);gap:clamp(14px,1.8vw,24px);
+    grid-template-columns:1.25fr 0.75fr;grid-template-rows:1fr auto;
+    grid-template-areas:"now next" "bar bar";
+    color:#e8eaf0;font-family:'Rubik','Varela Round',system-ui,sans-serif;
+  }
+  #presenterRoot section,#presenterRoot footer{background:#171a21;border:1px solid #272d39;border-radius:18px;padding:clamp(16px,1.9vw,28px);min-height:0}
+  #spNowLabel,#spNextLabel{font-size:14px;letter-spacing:.05em;color:#8b93a3;margin-bottom:12px}
+  #spNow{grid-area:now;display:flex;flex-direction:column}
+  #spNote{font-size:clamp(22px,2.3vw,34px);line-height:1.5;font-weight:500;overflow:auto;flex:1}
+  #spNote:empty::before{content:'— אין הערה לשקף הזה —';color:#565d6b;font-size:.62em}
+  #spNote .sp-points{margin:.1em 0 0;padding-inline-start:1.2em;list-style:disc}
+  #spNote .sp-points li{margin:.5em 0;line-height:1.5}
+  #spNote .sp-points strong{color:#fff;font-weight:700}
+  #spNote .sp-paste{position:relative;margin:.7em 0 .1em;padding:.7em .9em;border:1px solid #2f6b53;border-radius:10px;background:rgba(16,185,129,.09);line-height:1.55;font-size:.9em}
+  #spNote .sp-paste__tag{display:inline-block;margin-bottom:.45em;padding:.12em .8em;border-radius:999px;background:#10B981;color:#06281d;font-size:.62em;font-weight:700;letter-spacing:.02em}
+  #spNote .sp-paste__copy{position:absolute;top:.5em;inset-inline-end:.6em;display:inline-flex;align-items:center;gap:.3em;padding:.22em .75em;border-radius:999px;border:1px solid #2f6b53;background:#10B981;color:#06281d;font-family:inherit;font-size:.6em;font-weight:700;cursor:pointer}
+  #spNote .sp-paste__copy:hover{background:#34d399}
+  #spNote .sp-paste__copy.ok{background:#6EE7B7}
+  #spNote .sp-paste__text{white-space:pre-wrap;line-height:1.55}
+  #spNote .sp-cue{display:block;margin-top:.6em;padding:.45em .72em;border-radius:10px;background:rgba(252,183,0,.12);border:1px solid rgba(252,183,0,.32);color:#fcd873;font-size:.6em;font-weight:600;line-height:1.45}
+  #spRevealLine{margin-top:14px;padding-top:12px;border-top:1px dashed #2c313d;color:#9aa3b4;font-size:clamp(15px,1.5vw,20px)}
+  #spRevealLine:empty{display:none;border:0;margin:0;padding:0}
+  #spNext{grid-area:next;display:flex;flex-direction:column;gap:12px}
+  #spNextHead{font-size:clamp(18px,1.8vw,26px);font-weight:700;line-height:1.3;color:#fff}
+  #spNextPrev{position:relative;overflow:hidden;border-radius:12px;background:#0b0d11;width:100%}
+  #spNextPrev .sp-clonewrap{position:absolute;top:0;right:0;transform-origin:top right}
+  #spNextPrev .sp-end{display:grid;place-items:center;height:100%;color:#565d6b;font-size:20px}
+  #spNextPrev .cat-item{margin:0}
+  #spBar{grid-area:bar;display:flex;align-items:center;gap:clamp(16px,2.2vw,32px);padding:12px clamp(18px,2vw,26px)}
+  #spTimer{font-variant-numeric:tabular-nums;font-weight:800;font-size:clamp(30px,3.2vw,48px);color:#fcb700;letter-spacing:.02em}
+  #spPos,#spStep{color:#aeb6c6;font-size:clamp(18px,1.9vw,26px);font-variant-numeric:tabular-nums}
+  #spStep.is-hidden{display:none}
+  #presenterRoot .sp-navbtn{margin-inline-start:auto;display:flex;gap:10px}
+  #presenterRoot .sp-navbtn button{font:inherit;font-size:clamp(16px,1.6vw,20px);background:#262d39;color:#e8eaf0;border:0;border-radius:10px;padding:10px 18px;cursor:pointer}
+  #presenterRoot .sp-navbtn button:hover{background:#333c4b}
+  /* SP-CSS-END */
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand__logo" aria-label="Benefits"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+    Deep Research · מחקר שמחזיר דוח
+    <span class="brand__sub">· Lesson 2</span>
+  </div>
+  <div class="topbar__spacer"></div>
+  <span class="counter" id="counter">01 / 06</span>
+  <button class="navbtn" id="prev" type="button" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
+  <button class="navbtn" id="next" type="button" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
+  <button class="present-btn" id="presentBtn" type="button"><i class="ti ti-presentation"></i> מסך מלא</button>
+</header>
+
+<main class="catalog" id="catalog">
+  <!-- 01 · TITLE · calm dark-green hero -->
+  <section class="cat-item" id="s1" data-type="title">
+    <aside class="sp-notes" hidden><ul class="sp-points">
+      <li>היחידה הזו על <strong>Deep Research</strong> — סוכן מחקר שמחזיר דוח עם מקורות, לא עוד צ'אט.</li>
+      <li>הדרך הכי קלה להבין אותו היא בניגוד, אז נתחיל מ"הדבר השלישי".</li>
+      <li>חשוב: לא מריצים Deep Research חי על המסך — הוא רץ בין 5 ל-30 דקות. מסבירים את הדפוס, וההרצה החיה מגיעה בשיעור הבא, ברקע.</li>
+    </ul><span class="sp-cue">▸ פתיחה קצרה — מסבירים בניגוד, לא מריצים חי. הבא: שקף הדבר השלישי.</span></aside>
+    <div class="stage"><div class="slide slide--title">
+      <span class="title-glow" aria-hidden="true"></span>
+      <svg class="deco" style="top:8%;right:7%;width:6cqw;height:6cqw;" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="var(--sunshine)" stroke="var(--ink)" stroke-width="6"/></svg>
+      <svg class="deco" style="bottom:9%;right:9%;width:5cqw;height:5cqw;transform:rotate(14deg);" aria-hidden="true"><rect x="8" y="8" width="84" height="84" rx="10" fill="var(--sky)" stroke="var(--ink)" stroke-width="6"/></svg>
+      <span class="title-eyebrow anim drop"><span class="dot"></span> <span class="ltr">Deep Research</span> · מפגש <span class="ltr">2</span></span>
+      <h1 class="anim pop" style="--i:1"><span class="ltr">Deep Research</span> — סוכן מחקר שמחזיר <span class="stamp">דוח</span> עם מקורות.</h1>
+      <p class="tagline anim" style="--i:2">סוכן שרץ ברקע: מתחילים, עוזבים, וחוזרים כשהדוח מוכן — ומריצים אותו במקביל על כמה כלים.</p>
+      <span class="title-logo anim drop" style="--i:3" aria-label="Benefits"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+    </div></div>
+  </section>
+
+  <!-- 02 · THREE-WAY COMPARE · the third thing -->
+  <section class="cat-item" id="s2" data-type="two-column-compare">
+    <aside class="sp-notes" hidden><ul class="sp-points">
+      <li>כדי להבין מה זה Deep Research, הכי קל להסתכל על זה כדבר השלישי: Google מחזיר קישורים, צ'אט רגיל מחזיר תשובה, אבל כאן אנחנו מקבלים דוח שלם עם מקורות.</li>
+      <li>«דיפ ריסרץ' זה אשכרה מחקר באינטרנט.» הוא כותב לעצמו תוכנית עבודה, מחפש, קורא, מסנתז וחוזר אלינו עם תוצאות מוכנות.</li>
+      <li>הרצה חיה כזו לוקחת בין 5 ל-30 דקות, אז במקום לשבת ולחכות לה עכשיו בכיתה, אנחנו פשוט נבין ביחד את דפוס העבודה שלו.</li>
+    </ul><span class="sp-cue">▸ הניגוד התלת-כיווני הוא הלב; הדוח הוא ההבדל. הבא: שקף למה תוכנית מחקר.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-number-3"></i> דבר שלישי</span>
+      <h2 class="anim x" style="--i:1;margin:0.9cqw 0 1.6cqw;font-size:clamp(30px,3.6cqw,50px);"><span class="ltr">Deep Research</span> הוא לא צ'אט מהיר יותר או <span class="ltr">Google</span> חכם יותר — הוא מחזיר <span class="hi">דוח</span>.</h2>
+      <div class="tw anim up-big" style="--i:2">
+        <div class="panel"><span class="tw-ico"><i class="ti ti-link"></i></span><div class="tw-tool"><span class="ltr">Google</span></div><div class="tw-ret">מחזיר קישורים</div></div>
+        <div class="panel"><span class="tw-ico"><i class="ti ti-message-2"></i></span><div class="tw-tool">צ'אט</div><div class="tw-ret">מחזיר תשובה</div></div>
+        <div class="panel panel--hero"><span class="tw-badge">שונה</span><span class="tw-ico"><i class="ti ti-report"></i></span><div class="tw-tool"><span class="ltr">Deep Research</span></div><div class="tw-ret">מחזיר דוח עם מקורות</div></div>
+      </div>
+      <div class="chain-anchor anim x" style="--i:3;margin-top:1.8cqw;"><i class="ti ti-robot"></i><div>זהו סוכן מחקר: הוא כותב לעצמו תוכנית מחקר, מחפש, קורא, מסנתז, וחוזר עם מקורות ומראי מקום.</div></div>
+    </div></div>
+  </section>
+
+  <!-- 03 · BEFORE / AFTER · why a research plan -->
+  <section class="cat-item" id="s3" data-type="before-after">
+    <aside class="sp-notes" hidden><ul class="sp-points">
+      <li>הגענו ללב הקוגניטיבי של השיעור: כל מחקר רציני צריך תוכנית עבודה מסודרת.</li>
+      <li>«המודל יכתוב אחת לעצמו ממילא — השאלה היא של מי.» אם נזרוק לו שאלה גנרית נקבל דוח גנרי ונצטרך עוד סבבים, אבל תוכנית מדויקת תביא דוח שאפשר להגיש ישר ללקוח.</li>
+      <li>תוכנית טובה מחזיקה חמישה שדות פשוטים: מטרה, שאלה ראשית, שלוש עד חמש תתי-שאלות, מה בפנים ומה מחוץ להיקף, ופורמט הפלט.</li>
+      <li>אנחנו לא צריכים לכתוב עכשיו תוכנית ענקית על המסך, מספיק שנבין את חמשת השדות האלה ונראה את ההבדל בדוגמה.</li>
+    </ul><span class="sp-cue">▸ חושפים קודם את הגנרי, אחר כך את המדויק. חמשת השדות נבנים בתרגיל, לא כאן. הבא: שקף מפת השירותים.</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-target"></i> של מי התוכנית</span>
+      <h2 class="anim x" style="--i:1;margin:0.8cqw 0 1.3cqw;font-size:clamp(28px,3.3cqw,46px);">כל מחקר צריך תוכנית — המודל יכתוב אחת ממילא, והשאלה היא <span class="hi">של מי</span>.</h2>
+      <div class="ba">
+        <div class="panel panel--bad anim x" style="--i:2">
+          <span class="ba-tag"><i class="ti ti-mood-empty"></i> שאלה גנרית</span>
+          <div class="ba-q">"סקור את שוק ה-<span class="ltr">AI</span> לחינוך"</div>
+          <div class="ba-flow"><i class="ti ti-arrow-narrow-left"></i><span class="ba-out">דוח גנרי שצריך עוד סבבים</span></div>
+        </div>
+        <div class="panel panel--good anim x" style="--i:3" data-step="1">
+          <span class="ba-tag"><i class="ti ti-target-arrow"></i> תוכנית מדויקת</span>
+          <div class="ba-q">"השווה חמש פלטפורמות <span class="ltr">AI</span> לחינוך פיננסי, גילאי <span class="ltr">25–40</span> בארה״ב, לפי ארבעה מימדים: תמחור, פרסונליזציה, מוסדות, רגולציה"</div>
+          <div class="ba-flow"><i class="ti ti-arrow-narrow-left"></i><span class="ba-out">דוח שאפשר להגיש ללקוח</span></div>
+        </div>
+      </div>
+      <div class="fieldrow" data-step="2">
+        <div class="fieldpill"><b>1</b>מטרה</div>
+        <div class="fieldpill"><b>2</b>שאלה ראשית</div>
+        <div class="fieldpill"><b>3</b>שלוש עד חמש תתי-שאלות</div>
+        <div class="fieldpill"><b>4</b>היקף ומה מחוץ להיקף</div>
+        <div class="fieldpill"><b>5</b>פורמט פלט</div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 04 · TOOL-SET GRID · the services map -->
+  <section class="cat-item" id="s4" data-type="services-map">
+    <aside class="sp-notes" hidden><ul class="sp-points">
+      <li>יש המון כלים בשוק שעושים דברים דומים, ואני לא הולך לעבור איתכם אחד-אחד על כל הטבלה הזו כי כולם די דומים בסופו של דבר.</li>
+      <li>נשים לב לכמה בולטים: Perplexity הוא הכי מהיר ומביא ציטוטים בגוף הטקסט, ChatGPT נותן את הדוח הכי מפורט, ו-Claude הכי חזק על הקבצים שלכם.</li>
+      <li>יש לנו גם את Gemini שמביא הכי הרבה מקורות, Mistral שמעולה לפרטיות, ועוד כלים כמו Search Arena או Grok שהם חלק מאותו עולם.</li>
+      <li>הרעיון הוא לא לראות בזה חומה של Deep Research מול צ'אט, אלא להבין שזה סט כלים אחד שאנחנו יכולים להריץ עליו במקביל.</li>
+    </ul><span class="sp-cue">▸ לא עוברים כלי-כלי — סט אחד, הרצה מקבילית. הבא: שקף מריצים ושוכחים.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-layout-grid"></i> סט אחד מקבילי</span>
+      <h2 class="anim x" style="--i:1;margin:0.8cqw 0 1.4cqw;font-size:clamp(28px,3.3cqw,46px);">כלים רבים עושים את אותו הדבר — סט אחד שמריצים עליו <span class="hi">במקביל</span>, ואז מאחדים.</h2>
+      <div class="toolgrid anim up-big" style="--i:2">
+        <div class="tool"><div class="tool__name">Perplexity</div><div class="tool__word">הכי מהיר</div></div>
+        <div class="tool"><div class="tool__name">ChatGPT</div><div class="tool__word">הדוח המפורט</div></div>
+        <div class="tool"><div class="tool__name">Claude</div><div class="tool__word">על הקבצים שלכם</div></div>
+        <div class="tool"><div class="tool__name">Gemini</div><div class="tool__word">הכי הרבה מקורות</div></div>
+        <div class="tool"><div class="tool__name">Mistral</div><div class="tool__word">פרטיות</div></div>
+        <div class="tool"><div class="tool__name">Qwen</div><div class="tool__word">מולטימודלי</div></div>
+        <div class="tool"><div class="tool__name">MiniMax</div><div class="tool__word">בניית סוכנים</div></div>
+        <div class="tool tool--chat"><div class="tool__name">Search Arena</div><div class="tool__word">צ'אט</div></div>
+        <div class="tool tool--chat"><div class="tool__name">Grok</div><div class="tool__word">צ'אט</div></div>
+        <div class="tool tool--chat"><div class="tool__name">DeepSeek</div><div class="tool__word">צ'אט</div></div>
+      </div>
+      <div class="toollegend anim" style="--i:3"><span><span class="d d--dr"></span> שבעה עם <span class="ltr">Deep Research</span></span><span><span class="d d--chat"></span> שלושה צ'אט-בלבד, אותה הרצה</span></div>
+    </div></div>
+  </section>
+
+  <!-- 05 · ENSEMBLE · run it and forget it, in parallel -->
+  <section class="cat-item" id="s5" data-type="concept-with-motif">
+    <aside class="sp-notes" hidden><ul class="sp-points">
+      <li>הנה הסוד שהופך את העבודה עם Deep Research לחוויה של עובד שעובד בשבילכם במקום סתם כלי איטי: «מריצים את זה ושוכחים מזה.»</li>
+      <li>פשוט מתחילים את ההרצה, משאירים אותה ברקע, וממשיכים לעשות דברים אחרים עד שחוזרים אחרי 5 או 20 דקות.</li>
+      <li>כשיש לי שאלה ממש רצינית, אני «מריץ את אותו פרומפט במקביל בכמה כלי DR, ואז מאחד את הפלטים בפרויקט אחד.»</li>
+      <li>לדפוס העבודה המקבילי הזה קוראים Ensemble, וזה מה שמאפשר לאסוף תמונה אחת מלאה מכמה כלים.</li>
+    </ul><span class="sp-cue">▸ Ensemble = אותו פרומפט בכמה כלים ← פרויקט אחד. ההרצה החיה מגיעה בשיעור הבא. הבא: שקף הסיום.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="body-grid" style="grid-template-columns:1.1fr 1fr;gap:2.8cqw;">
+        <div>
+          <span class="kicker anim drop"><i class="ti ti-arrows-shuffle"></i> הרצה מקבילית</span>
+          <h2 class="anim x" style="--i:1;margin:0.9cqw 0 1.2cqw;font-size:clamp(28px,3.3cqw,46px);">מריצים ושוכחים — מתחילים, עוזבים, וחוזרים <span class="hi">כשהדוח מוכן</span>.</h2>
+          <ul class="facts" style="max-width:none;gap:0.8cqw;">
+            <li class="anim x" style="--i:2;padding:0.9cqw 1.4cqw;"><i class="ti ti-clock-pause"></i><div>מתחילים הרצה, משאירים ברקע, וחוזרים כעבור 5 עד 20 דקות. זה לא צ'אט — לא מחכים על המסך.</div></li>
+            <li class="alt anim x" style="--i:3;padding:0.9cqw 1.4cqw;"><i class="ti ti-arrows-join"></i><div>לשאלה רצינית: מריצים את אותו פרומפט בכמה כלים במקביל, ומאחדים את כל הפלטים לפרויקט אחד.</div></li>
+          </ul>
+          <span class="ens-tag anim drop" style="--i:4;margin-top:1.4cqw;"><i class="ti ti-stack-2"></i> <span class="ltr">Ensemble</span></span>
+        </div>
+        <div class="anim zoom" style="--i:2">
+          <div class="card" style="padding:2.2cqw;">
+            <div class="ens">
+              <div class="ens-runs">
+                <div class="link link--first"><span class="ltr">Perplexity</span></div>
+                <div class="link link--first"><span class="ltr">ChatGPT</span></div>
+                <div class="link link--first"><span class="ltr">Gemini</span></div>
+              </div>
+              <div class="chain-arrow ens-merge"><i class="ti ti-arrow-narrow-left"></i></div>
+              <div class="link link--depth ens-proj">פרויקט אחד</div>
+            </div>
+            <div class="chain-anchor" style="margin-top:1.6cqw;"><i class="ti ti-clock-hour-4"></i><div>מריצים ושוכחים — ההרצה יוצאת לרקע, וחוזרים אליה כשהדוח מוכן.</div></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 06 · CLOSING SLIDE -->
+  <section class="cat-item" id="s6" data-type="closing">
+    <aside class="sp-notes" hidden><ul class="sp-points">
+      <li>סיכמנו מה זה Deep Research: סוכן שמחזיר דוח, שצריך תוכנית טובה, ושמריצים אותו במקביל ושוכחים ממנו.</li>
+      <li>בשיעור הבא נריץ אותו באמת — ברקע — ונבנה ממנו ידע.</li>
+    </ul><span class="sp-cue">▸ סוף היחידה.</span></aside>
+    <div class="stage"><div class="slide slide--closing">
+      <svg class="deco" style="top:8%;left:7%;width:13cqw;height:13cqw;opacity:.5;"><use href="#dots-grid"/></svg>
+      <svg class="deco ink-sun" style="bottom:10%;right:8%;width:18cqw;height:5cqw;opacity:.8;"><use href="#squiggle-gold"/></svg>
+      <svg class="deco" style="top:12%;right:10%;width:9cqw;height:9cqw;"><use href="#star-burst"/></svg>
+      <span class="closing-logo anim drop"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <p class="closing-name anim pop" style="--i:1">Benefits</p>
+      <p class="closing-line anim" style="--i:2"><span class="ltr">AI that finally fits</span> · בן עקיבא</p>
+    </div></div>
+  </section>
+
+
+</main>
+
+<!-- Sprite inlined · subset of T1 symbols used + Benefits logo symbol -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="benefits-logo" viewBox="824 453 2250 2991"><path d="M826.492 3236.77C825.424 3122.47 824.356 2449.49 824.356 1741.27L824 453 1531.56 453C2204.58 453 2241.97 453.356 2291.11 459.765 2399.72 474.008 2482.33 498.221 2570.64 542.018 2723.41 617.505 2837 715.78 2927.09 850.376 2960.56 900.582 3002.58 982.834 3022.88 1038.74 3040.69 1086.45 3058.13 1157.67 3065.97 1213.57 3074.16 1269.47 3075.23 1407.63 3068.1 1460.68 3041.75 1653.32 2948.1 1834.56 2806.02 1968.44L2765.78 2006.54 2787.5 2024.7C2937.77 2149.32 3036.77 2323.8 3066.32 2514.65 3075.23 2572.69 3075.23 2703.73 3066.32 2759.99 3030.71 2986.09 2906.44 3178.73 2714.15 3307.27 2618.36 3371.01 2506.54 3414.45 2383.69 3435.45 2348.79 3441.51 2298.94 3442.22 1587.47 3442.93L828.63 3444 826.492 3236.77ZM2375.15 3229.65C2591.65 3181.22 2762.58 3034.87 2835.57 2835.83 2900.03 2659.93 2876.88 2476.91 2769.34 2315.61 2684.24 2188.14 2552.48 2099.47 2390.81 2061.73L2356.98 2053.9 1783.67 2051.76 1210.36 2049.98 1209.29 1442.17 1208.58 833.996 1706.04 833.996C2245.88 833.996 2233.06 833.64 2308.56 853.581 2498 904.143 2632.6 1041.59 2676.4 1229.24 2685.66 1269.12 2689.22 1378.07 2682.81 1431.84 2671.77 1527.62 2637.23 1617.71 2585.95 1684.3 2573.13 1700.67 2569.93 1702.81 2558.53 1702.81 2551.41 1702.81 2540.02 1701.03 2533.25 1699.25 2510.46 1692.48 2439.6 1681.45 2382.98 1675.39L2326.72 1669.34 2326.72 1657.95C2326.72 1649.04 2329.21 1644.42 2338.47 1638.36 2413.25 1585.66 2464.88 1501.63 2479.84 1406.2 2485.18 1372.73 2482.69 1310.78 2474.85 1281.22 2442.45 1161.94 2357.7 1079.69 2232.71 1046.57 2203.86 1038.74 2203.15 1038.74 1808.6 1038.74L1413.34 1038.74 1412.27 1414.39C1411.56 1620.91 1412.27 1803.22 1413.34 1819.25L1415.83 1848.44 1895.13 1849.87C2318.88 1850.94 2379.06 1851.65 2410.4 1856.63 2458.12 1864.47 2505.48 1875.15 2538.24 1885.83L2565.66 1894.38 2594.86 1872.66C2635.81 1842.39 2703.82 1775.09 2734.8 1734.15 2781.8 1671.48 2810.29 1618.07 2836.29 1542.58 2882.94 1407.27 2882.58 1273.39 2835.22 1136.66 2775.4 964.319 2649.34 818.329 2490.52 736.433 2426.78 703.674 2393.66 690.5 2342.74 677.325 2251.22 653.824 2286.48 654.892 1628.06 653.468L1030.53 652.044 1030.53 1946.72 1030.53 3241.04 1681.47 3239.97 2332.06 3238.9 2375.15 3229.65Z" fill="#047857" fill-rule="evenodd"/><path d="M1213 2646.36 1213 2226.07 1314.43 2226.07 1415.86 2226.07 1415.86 2544.85 1415.86 2863.62 1845.79 2863.62C2328.76 2863.62 2301.35 2865.05 2358.65 2836.55 2447.27 2792.74 2498.88 2697.29 2481.79 2608.96 2463.29 2511.37 2384.63 2440.84 2282.84 2430.51L2259.35 2428.02 2259.35 2326.51 2259.35 2225 2301.35 2227.14C2375.02 2230.7 2457.24 2257.41 2515.6 2297.3 2528.06 2305.85 2550.84 2324.73 2566.14 2339.33 2629.14 2399.53 2663.66 2462.21 2681.45 2548.41 2689.29 2587.23 2690.35 2688.39 2683.23 2724.71 2666.51 2810.91 2628.07 2882.5 2566.5 2942.34 2505.64 3001.46 2440.51 3036.73 2353.67 3057.03 2321.99 3064.51 2317.01 3064.51 1767.5 3065.58L1213 3067 1213 2646.36Z" fill="#047857" fill-rule="evenodd"/></symbol>
+<symbol id="squiggle-gold" viewBox="0 0 200 40"><path d="M5 20 Q 20 5, 35 20 T 65 20 T 95 20 T 125 20 T 155 20 T 185 20" stroke="#FBBF24" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M5 28 Q 20 13, 35 28 T 65 28 T 95 28 T 125 28 T 155 28 T 185 28" stroke="#0F172A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/></symbol>
+<symbol id="dots-grid" viewBox="0 0 160 160"><defs><pattern id="dots02" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.2" fill="currentColor"/></pattern></defs><rect width="160" height="160" fill="url(#dots02)"/></symbol>
+<symbol id="star-burst" viewBox="0 0 120 120"><path d="M60 8 L 70 42 L 105 45 L 78 68 L 88 102 L 60 82 L 32 102 L 42 68 L 15 45 L 50 42 Z" fill="#FBBF24" stroke="#0F172A" stroke-width="3" stroke-linejoin="round"/><circle cx="60" cy="60" r="10" fill="#047857" stroke="#0F172A" stroke-width="2.5"/></symbol>
+</svg>
+
+<div class="pres-edge prev" id="presPrev" aria-label="הקודם"></div>
+<div class="pres-edge next" id="presNext" aria-label="הבא"></div>
+<div class="pres-hud" id="presHud">
+  <button id="hudPrev" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
+  <span class="pc" id="presCounter">01 / 06</span>
+  <button id="hudNext" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
+  <button id="hudExit" aria-label="יציאה" style="margin-inline-start:6px;"><i class="ti ti-x"></i></button>
+</div>
+
+<script>
+  const items = Array.from(document.querySelectorAll('.cat-item'));
+  const counter = document.getElementById('counter');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  let current = 0;
+
+  /* ===== scroll-view visibility (entrance animations) ===== */
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      en.target.classList.toggle('is-visible', en.isIntersecting && en.intersectionRatio > 0.28);
+    });
+  }, { threshold: [0, 0.28, 0.6] });
+  document.querySelectorAll('.slide').forEach(s => slideObserver.observe(s));
+
+  const trackObserver = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting && en.intersectionRatio > 0.5) {
+        current = items.indexOf(en.target);
+        counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + items.length;
+      }
+    });
+  }, { threshold: [0.5] });
+  items.forEach(it => trackObserver.observe(it));
+
+  function go(n) {
+    const i = Math.max(0, Math.min(items.length - 1, n));
+    items[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  prev.addEventListener('click', () => go(current - 1));
+  next.addEventListener('click', () => go(current + 1));
+
+  /* ============================================================
+     CLICK-TO-REVEAL step engine.
+     ============================================================ */
+  function getSteps(item) {
+    const slide = item.querySelector('.slide');
+    if (!slide) return [];
+    const steps = [];
+    const generic = Array.from(slide.querySelectorAll('[data-step]'))
+      .sort((a, b) => (+a.dataset.step) - (+b.dataset.step));
+    generic.forEach(el => {
+      steps.push({
+        on: () => el.classList.add('step-on'),
+        off: () => el.classList.remove('step-on'),
+        isOn: () => el.classList.contains('step-on')
+      });
+    });
+    return steps;
+  }
+  function resetSteps(item) { getSteps(item).forEach(s => s.off()); }
+  function revealNext(item) {
+    const steps = getSteps(item);
+    for (const s of steps) { if (!s.isOn()) { s.on(); return true; } }
+    return false;
+  }
+  function hideLast(item) {
+    const steps = getSteps(item);
+    for (let i = steps.length - 1; i >= 0; i--) { if (steps[i].isOn()) { steps[i].off(); return true; } }
+    return false;
+  }
+
+  /* ===== PRESENT MODE ===== */
+  const body = document.body;
+  const presBtn = document.getElementById('presentBtn');
+  const presCounter = document.getElementById('presCounter');
+  const presHud = document.getElementById('presHud');
+  let pi = 0, hudTimer = null;
+
+  function showPresent(i, opts) {
+    opts = opts || {};
+    pi = Math.max(0, Math.min(items.length - 1, i));
+    items.forEach((it, idx) => it.classList.toggle('present-active', idx === pi));
+    const active = items[pi];
+    if (!opts.keepSteps) resetSteps(active);
+    if (opts.revealAll) getSteps(active).forEach(s => s.on());
+    const slide = active.querySelector('.slide');
+    if (slide) { slide.classList.remove('is-visible'); void slide.offsetWidth; slide.classList.add('is-visible'); }
+    presCounter.textContent = String(pi + 1).padStart(2, '0') + ' / ' + items.length;
+    current = pi;
+    flashHud();
+    broadcastState();
+  }
+  function presentForward() {
+    const active = items[pi];
+    if (revealNext(active)) { flashHud(); broadcastState(); return; }
+    if (pi < items.length - 1) showPresent(pi + 1);
+  }
+  function presentBackward() {
+    const active = items[pi];
+    if (hideLast(active)) { flashHud(); broadcastState(); return; }
+    if (pi > 0) showPresent(pi - 1, { revealAll: true });
+  }
+  function flashHud() {
+    presHud.classList.add('show');
+    clearTimeout(hudTimer);
+    hudTimer = setTimeout(() => presHud.classList.remove('show'), 1800);
+  }
+  function enterPresent(i) {
+    body.classList.add('presenting');
+    showPresent(i || 0);
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+  }
+  function exitPresent() {
+    body.classList.remove('presenting');
+    items.forEach(it => it.classList.remove('present-active'));
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    items[pi].scrollIntoView({ block: 'start' });
+  }
+
+  presBtn.addEventListener('click', () => {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    if (!body.classList.contains('presenting')) enterPresent(current);
+  });
+  document.getElementById('presNext').addEventListener('click', presentForward);
+  document.getElementById('presPrev').addEventListener('click', presentBackward);
+  document.getElementById('hudNext').addEventListener('click', (e) => { e.stopPropagation(); presentForward(); });
+  document.getElementById('hudPrev').addEventListener('click', (e) => { e.stopPropagation(); presentBackward(); });
+  document.getElementById('hudExit').addEventListener('click', (e) => { e.stopPropagation(); exitPresent(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'p' || e.key === 'P') {
+      const t = (e.target.tagName || '').toLowerCase();
+      if (t === 'input' || t === 'select' || t === 'textarea') return;
+      if (!IS_PRESENTER) { e.preventDefault(); openPresenter(); }
+      return;
+    }
+    if (!body.classList.contains('presenting')) {
+      const tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'select' || tag === 'input') return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+      else if (e.key === 'Home') go(0);
+      else if (e.key === 'End') go(items.length - 1);
+      return;
+    }
+    if (e.key === 'Escape') { exitPresent(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); presentForward(); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); presentBackward(); }
+    else if (e.key === 'Home') showPresent(0);
+    else if (e.key === 'End') showPresent(items.length - 1);
+  });
+  document.addEventListener('mousemove', () => { if (body.classList.contains('presenting')) flashHud(); });
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && body.classList.contains('presenting')) {
+      body.classList.remove('presenting');
+      items.forEach(it => it.classList.remove('present-active'));
+    }
+  });
+
+/* SP-JS-START */
+  /* ===== PRESENTER VIEW (speaker-notes second window) ===== */
+  const IS_PRESENTER = /[?&]presenter=1/.test(location.search);
+  let presenterWin = null, startedAt = null;
+
+  function broadcastState() {
+    if (!presenterWin || presenterWin.closed) return;
+    const steps = getSteps(items[pi]);
+    const totalSteps = steps.length;
+    const stepIndex = steps.filter(s => s.isOn()).length;
+    const pend = Array.from(items[pi].querySelectorAll('[data-step]:not(.step-on)'))
+      .sort((a, b) => (+a.dataset.step) - (+b.dataset.step));
+    const nextReveal = pend.length ? pend[0].textContent.replace(/\s+/g, ' ').trim().slice(0, 170) : '';
+    presenterWin.postMessage({ t: 'sp-sync', slideIndex: pi, stepIndex, totalSteps, totalSlides: items.length, startedAt, nextReveal }, '*');
+  }
+  function openPresenter() {
+    startedAt = startedAt || Date.now();
+    if (!presenterWin || presenterWin.closed) {
+      const url = location.href.split('#')[0].split('?')[0] + '?presenter=1';
+      presenterWin = window.open(url, 'sp_presenter', 'width=1040,height=740');
+    } else { presenterWin.focus(); }
+    setTimeout(broadcastState, 160);
+  }
+  function fmtClock(ms) { const s = Math.max(0, Math.floor(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+
+  function buildPresenterPanel() {
+    body.classList.add('sp-presenter-mode');
+    const root = document.createElement('div');
+    root.id = 'presenterRoot';
+    root.innerHTML =
+      '<section id="spNow"><div id="spNowLabel">עכשיו אומרים</div><div id="spNote"></div><div id="spRevealLine"></div></section>' +
+      '<section id="spNext"><div id="spNextLabel">השקף הבא</div><div id="spNextHead"></div><div id="spNextPrev"></div></section>' +
+      '<footer id="spBar"><span id="spTimer">00:00</span><span id="spPos">—</span><span id="spStep" class="is-hidden">—</span>' +
+      '<span class="sp-navbtn"><button id="spBack" type="button">‹ הקודם</button><button id="spFwd" type="button">הבא ›</button></span></footer>';
+    body.appendChild(root);
+
+    let st = { slideIndex: 0, stepIndex: 0, totalSteps: 0, totalSlides: items.length, startedAt: null, nextReveal: '' };
+
+    function renderNextPreview(idx) {
+      const box = document.getElementById('spNextPrev');
+      const head = document.getElementById('spNextHead');
+      box.innerHTML = '';
+      const nx = items[idx + 1];
+      if (!nx) { head.textContent = ''; box.innerHTML = '<div class="sp-end">— סוף המצגת —</div>'; return; }
+      const h = nx.querySelector('h1, h2, .statement, .def__term');
+      head.textContent = h ? h.textContent.replace(/\s+/g, ' ').trim() : '';
+      const REF = 1280;
+      const wrap = document.createElement('div'); wrap.className = 'sp-clonewrap'; wrap.style.width = REF + 'px';
+      const clone = nx.cloneNode(true);
+      clone.removeAttribute('id'); clone.style.margin = '0';
+      clone.querySelectorAll('.sp-notes').forEach(n => n.remove());
+      clone.querySelectorAll('.slide').forEach(s => s.classList.add('is-visible'));
+      clone.querySelectorAll('[data-step]').forEach(s => s.classList.add('step-on'));
+      wrap.appendChild(clone); box.appendChild(wrap);
+      const scale = box.clientWidth / REF;
+      wrap.style.transform = 'scale(' + scale + ')';
+      box.style.height = (REF * 9 / 16 * scale) + 'px';
+    }
+    function paint() {
+      const note = items[st.slideIndex] && items[st.slideIndex].querySelector('.sp-notes');
+      document.getElementById('spNote').innerHTML = note ? note.innerHTML : '';
+      document.getElementById('spPos').textContent = 'שקף ' + (st.slideIndex + 1) + ' / ' + st.totalSlides;
+      const stepEl = document.getElementById('spStep');
+      if (st.totalSteps > 0) { stepEl.classList.remove('is-hidden'); stepEl.textContent = 'צעד ' + st.stepIndex + ' / ' + st.totalSteps; }
+      else stepEl.classList.add('is-hidden');
+      document.getElementById('spRevealLine').textContent = st.nextReveal ? ('הבא לחשיפה: ' + st.nextReveal) : '';
+      renderNextPreview(st.slideIndex);
+    }
+    window.addEventListener('message', (ev) => { const d = ev.data || {}; if (d.t === 'sp-sync') { st = Object.assign(st, d); paint(); } });
+    document.getElementById('spBack').addEventListener('click', () => { if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'backward' }, '*'); });
+    document.getElementById('spFwd').addEventListener('click', () => { if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'forward' }, '*'); });
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowLeft', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'forward' }, '*'); }
+      else if (['ArrowRight', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'backward' }, '*'); }
+    });
+    setInterval(() => { if (st.startedAt) document.getElementById('spTimer').textContent = fmtClock(Date.now() - st.startedAt); }, 500);
+    window.addEventListener('resize', () => renderNextPreview(st.slideIndex));
+    if (window.opener) window.opener.postMessage({ t: 'sp-ready' }, '*');
+    paint();
+  }
+
+  if (IS_PRESENTER) {
+    buildPresenterPanel();
+  } else {
+    window.addEventListener('message', (ev) => {
+      const d = ev.data || {};
+      if (d.t === 'sp-ready') broadcastState();
+      else if (d.t === 'sp-cmd') { if (d.cmd === 'forward') presentForward(); else if (d.cmd === 'backward') presentBackward(); else if (d.cmd === 'exit') exitPresent(); }
+    });
+    const _pv = new URLSearchParams(location.search).get('present');
+    const _start = _pv ? Math.max(0, (parseInt(_pv, 10) || 1) - 1) : 0;
+    body.classList.add('presenting');
+    showPresent(_start);
+    /* inert print/screenshot helper: ?reveal=1 shows every step on the start slide */
+    if (new URLSearchParams(location.search).get('reveal')) getSteps(items[_start]).forEach(s => s.on());
+  }
+  /* SP-JS-END */
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>יסודות · AI כפונקציה · MICRO ו-STUDIO · Benefits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Varela+Round&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<style>
+  /* ============================================================
+     Foundations deck · Benefits · DUPLICATED from T1 slides-catalog.
+     Engine + component CSS + sprite + animations kept intact.
+     tokens.css inlined (target lives outside design-library).
+     ============================================================ */
+
+  /* ---- tokens (inlined from 15-design-system/tokens.css) ---- */
+  :root {
+    --anchor:#047857; --ui-green:#10B981; --depth:#064E3B; --green-soft:#D1FAE5; --green-mint:#6EE7B7;
+    --canvas:#FFFBEB; --paper:#FFFFFF; --soft:#FEF3C7;
+    --ink:#0F172A; --border-soft:#FDE68A;
+    --sunshine:#FCD34D; --coral:#FB7185; --lavender:#A78BFA; --leaf:#84CC16;
+    --sky:#38BDF8; --pink:#EC4899; --teal:#2DD4BF;
+    --gray-900:#1E293B; --gray-600:#475569; --gray-500:#64748B;
+    --font-display:'Rubik', system-ui, sans-serif;
+    --font-body:'Varela Round', system-ui, sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, monospace;
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:72px;
+    --radius-sm:10px; --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-pill:999px;
+    --border:2.5px solid var(--ink); --border-bold:3px solid var(--ink);
+    --shadow-sm:3px 3px 0 0 var(--ink); --shadow-md:5px 5px 0 0 var(--ink); --shadow-lg:8px 8px 0 0 var(--ink);
+    --block-shadow:0 6px 0 0 var(--depth); --block-shadow-hover:0 8px 0 0 var(--depth); --block-shadow-active:0 2px 0 0 var(--depth);
+    --ease-bounce:cubic-bezier(0.34, 1.56, 0.64, 1); --focus-ring:3px solid var(--ui-green);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body), system-ui, sans-serif;
+    color: var(--gray-900);
+    background: var(--canvas);
+    background-image:
+      radial-gradient(circle at 10% 12%, rgba(56,189,248,0.07) 0, transparent 100px),
+      radial-gradient(circle at 90% 84%, rgba(236,72,153,0.06) 0, transparent 120px),
+      radial-gradient(circle at 50% 50%, rgba(252,211,77,0.05) 0, transparent 180px);
+    padding-bottom: 96px;
+  }
+  :is(button, a, select, summary, [tabindex]):focus-visible {
+    outline: var(--focus-ring); outline-offset: 3px; border-radius: 8px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+
+  /* ---------- Slim deck topbar (catalog chrome stripped) ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(255,251,235,0.88); backdrop-filter: blur(10px);
+    border-bottom: 3px solid var(--ink);
+    padding: 12px clamp(16px, 4vw, 40px);
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--ink); }
+  .brand__logo { height: 30px; width: auto; flex-shrink: 0; display: inline-flex; }
+  .brand__logo svg { height: 30px; width: auto; }
+  .brand__sub { font-family: var(--font-mono); font-size: 11px; color: var(--gray-600); font-weight: 600; direction: ltr; }
+  .topbar__spacer { margin-inline-start: auto; }
+  .counter { font-family: var(--font-mono); font-size: 13px; color: var(--gray-600); font-weight: 700; direction: ltr; min-width: 64px; text-align: center; }
+  .navbtn { width: 42px; height: 42px; border-radius: 50%; border: 2.5px solid var(--ink); background: var(--paper); cursor: pointer; font-size: 18px; display: grid; place-items: center; box-shadow: var(--shadow-sm); color: var(--ink); transition: all .15s var(--ease-bounce); }
+  .navbtn:hover { background: var(--sunshine); transform: translate(-1px,-1px); box-shadow: var(--shadow-md); }
+
+  /* ---------- Item wrapper ---------- */
+  .catalog { max-width: 1340px; margin: 0 auto; padding: 32px clamp(16px, 4vw, 40px) 0; }
+  .cat-item { scroll-margin-top: 84px; margin-bottom: 60px; }
+
+  /* ---------- The 16:9 stage (container-query host) ---------- */
+  .stage { container-type: inline-size; width: 100%; }
+  .slide {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+    border: 3px solid var(--ink); border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg); background: var(--canvas);
+    padding: 4.4cqw 5.2cqw;
+    display: flex; flex-direction: column; justify-content: center;
+    perspective: 1200px;
+    --t-body:   clamp(26px, 2.25cqw, 36px);
+    --t-lead:   clamp(28px, 2.7cqw, 44px);
+    --t-small:  clamp(25px, 2cqw, 31px);
+    --t-micro:  clamp(20px, 1.7cqw, 26px);
+    --t-h3:     clamp(28px, 2.5cqw, 42px);
+    --t-h2:     clamp(40px, 5cqw, 80px);
+    --t-h1:     clamp(54px, 9cqw, 150px);
+    --t-mega:   clamp(80px, 12cqw, 220px);
+    font-size: var(--t-body); line-height: 1.5; color: var(--gray-900);
+  }
+  .slide > *:not(.deco):not(.corner-mark):not(.title-logo):not(.title-glow) { position: relative; z-index: 2; }
+
+  /* ---------- Decoration helper ---------- */
+  .deco { position: absolute; pointer-events: none; z-index: 0; display: block; }
+  svg.deco { width: 100%; height: 100%; }
+  .ink-anchor { color: var(--anchor); } .ink-ink { color: var(--ink); } .ink-depth { color: var(--depth); }
+  .ink-white { color: #fff; } .ink-sun { color: var(--sunshine); }
+
+  /* ---------- Logo mark · CORRECTION 1 ----------
+     The Benefits logo is a portrait mark (viewBox 824 453 2250 2991).
+     In an RTL document the bare <svg> inherits direction:rtl and MIRRORS the
+     glyph; force LTR + explicit aspect-preservation on every logo svg so the
+     COMPLETE, correctly-oriented mark renders and is never clipped. */
+  .brand__logo svg, .cover-logo svg, .corner-mark svg, .closing-logo svg, .title-logo svg {
+    direction: ltr; unicode-bidi: isolate; overflow: visible;
+  }
+  /* ---------- Contained corner brand mark ---------- */
+  /* logo on every non-title slide: deep in the BOTTOM-LEFT corner, small, hides nothing (Ben 2026-06-08) */
+  .corner-mark { position: absolute; bottom: 2.4cqw; left: 2.8cqw; z-index: 3; height: 4.2cqw; min-height: 28px; max-height: 46px; width: auto; pointer-events: none; opacity: 0.9; overflow: visible; }
+  .corner-mark svg { height: 100%; width: auto; display: block; }
+  .slide--dark .corner-mark, .slide--ask .corner-mark, .slide--section .corner-mark { opacity: 1; }
+
+  /* ---------- Shared atoms ---------- */
+  .kicker { display: inline-flex; align-items: center; gap: 0.5em; background: var(--sunshine); color: var(--ink); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.45em 1em; font-family: var(--font-display); font-size: clamp(20px, 1.7cqw, 26px); font-weight: 700; box-shadow: 4px 4px 0 0 var(--ink); width: max-content; max-width: 96%; }
+  .tag { display: inline-flex; align-items: center; gap: 0.5em; background: var(--paper); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.4em 1em; font-family: var(--font-display); font-size: clamp(20px, 1.7cqw, 26px); font-weight: 700; color: var(--ink); box-shadow: 4px 4px 0 0 var(--ink); width: max-content; }
+  .head { display: flex; align-items: center; gap: 1.4cqw; margin-bottom: 2.4cqw; }
+  .num { display: grid; place-items: center; width: 6cqw; height: 6cqw; min-width: 56px; min-height: 56px; flex-shrink: 0; background: var(--anchor); color: #fff; border: 3px solid var(--ink); border-radius: 50%; font-family: var(--font-display); font-weight: 900; font-size: var(--t-h3); direction: ltr; box-shadow: 5px 5px 0 0 var(--ink); }
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink); margin: 0; }
+  .slide h2 { font-size: var(--t-h2); font-weight: 800; line-height: 1.04; letter-spacing: -0.04em; }
+  .slide h2 .hi { background: var(--sunshine); padding: 0 0.16em; border-radius: 8px; }
+  .slide h2 .pill { background: var(--anchor); color: #fff; padding: 0 0.28em; border: 4px solid var(--ink); border-radius: 14px; box-shadow: 6px 6px 0 0 var(--ink); display: inline-block; }
+  .lead { font-size: var(--t-lead); line-height: 1.45; color: var(--gray-900); margin: 0 0 2.2cqw; max-width: 40em; }
+  .lead strong { background: var(--green-soft); padding: 0 0.25em; border-radius: 6px; }
+  .muted { color: var(--gray-600); }
+  .ltr { direction: ltr; unicode-bidi: isolate; }
+
+  /* facts list */
+  .facts { display: grid; gap: 1.3cqw; list-style: none; padding: 0; margin: 0; }
+  .facts li { display: flex; gap: 1.2cqw; align-items: center; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 18px; padding: 1.3cqw 1.6cqw; box-shadow: 5px 5px 0 0 var(--ink); font-size: var(--t-body); line-height: 1.4; }
+  .facts li i { background: var(--anchor); color: #fff; width: 3.4cqw; height: 3.4cqw; min-width: 40px; min-height: 40px; border-radius: 50%; border: 2.5px solid var(--ink); display: grid; place-items: center; flex-shrink: 0; font-size: var(--t-small); }
+  .facts li.alt i { background: var(--coral); } .facts li.warn i { background: var(--sunshine); color: var(--ink); }
+  .facts li.sky i { background: var(--sky); color: var(--ink); } .facts li.lav i { background: var(--lavender); }
+  .facts li strong { font-family: var(--font-display); }
+
+  .card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-xl); padding: 2.6cqw; box-shadow: 8px 8px 0 0 var(--ink); position: relative; overflow: hidden; }
+  .body-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3.4cqw; align-items: center; }
+
+  /* columns + panels */
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4cqw; align-items: stretch; }
+  .cols-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.8cqw; align-items: stretch; }
+  .panel { border: 3px solid var(--ink); border-radius: var(--radius-lg); padding: 2.4cqw; box-shadow: 7px 7px 0 0 var(--ink); background: var(--paper); }
+  .panel h3 { font-size: var(--t-h3); font-weight: 700; margin: 0 0 0.9cqw; }
+  .panel p { font-size: var(--t-small); line-height: 1.45; margin: 0; }
+
+  /* summary cards */
+  .summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.8cqw; }
+  .summary-card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-xl); padding: 2.4cqw; box-shadow: 7px 7px 0 0 var(--ink); }
+  .summary-card__num { font-family: var(--font-display); font-weight: 900; font-size: clamp(48px,6cqw,90px); line-height: 1; color: var(--anchor); margin: 0 0 0.8cqw; direction: ltr; }
+  .summary-card:nth-child(2) .summary-card__num { color: var(--pink); }
+  .summary-card:nth-child(3) .summary-card__num { color: var(--sky); }
+  .summary-card h3 { font-size: var(--t-h3); font-weight: 700; margin: 0 0 0.6cqw; }
+  .summary-card p { font-size: var(--t-small); margin: 0; line-height: 1.45; }
+
+  /* big statement */
+  .statement { font-family: var(--font-display); font-weight: 900; font-size: clamp(42px,5.8cqw,104px); line-height: 1.1; letter-spacing: -0.03em; text-align: center; color: var(--ink); margin: 0; max-width: 92%; align-self: center; }
+  .statement .hi { background: var(--sunshine); padding: 0 0.15em; border-radius: 10px; }
+  .statement .mint { color: var(--anchor); }
+
+  /* definition */
+  .def { align-self: center; max-width: 88%; text-align: center; margin: 0 auto; }
+  .def__term { display: inline-flex; align-items: baseline; gap: 0.4em; font-family: var(--font-display); font-weight: 900; font-size: clamp(40px,5cqw,88px); background: var(--anchor); color: #fff; border: 4px solid var(--ink); border-radius: 18px; padding: 0.08em 0.4em; box-shadow: 9px 9px 0 0 var(--ink); margin-bottom: 2cqw; letter-spacing: -0.02em; direction: ltr; }
+  .def__term .gloss { font-family: var(--font-display); font-weight: 700; font-size: 0.5em; color: var(--sunshine); letter-spacing: 0; }
+  .def__meaning { font-size: var(--t-lead); line-height: 1.4; color: var(--gray-900); }
+  .def__meaning strong { background: var(--sunshine); padding: 0 0.2em; border-radius: 8px; }
+
+  /* cover / title */
+  .slide--cover { text-align: center; align-items: center; justify-content: center; }
+  .slide--cover h1 { font-size: clamp(40px,6.4cqw,104px); font-weight: 900; line-height: 1.02; letter-spacing: -0.04em; margin: 0 0 1.4cqw; }
+  .slide--cover h1 .swipe { background: linear-gradient(180deg, transparent 58%, var(--sunshine) 58%); padding: 0 0.08em; direction: ltr; unicode-bidi: isolate; }
+  .slide--cover h1 .accent { background: var(--anchor); color: #fff; padding: 0 0.16em; border: 5px solid var(--ink); border-radius: 16px; box-shadow: 8px 8px 0 0 var(--ink); display: inline-block; }
+  .slide--cover .tagline { font-family: var(--font-display); font-weight: 500; font-size: clamp(24px,2.3cqw,34px); color: var(--gray-900); margin: 0 0 1.6cqw; max-width: 82%; line-height: 1.4; }
+  .slide--cover .meta-row { display: flex; gap: 1cqw; flex-wrap: wrap; justify-content: center; }
+  .slide--cover .meta-row span { background: var(--paper); padding: 0.45em 1em; border: 2.5px solid var(--ink); border-radius: var(--radius-pill); box-shadow: 4px 4px 0 0 var(--ink); font-family: var(--font-display); font-weight: 600; font-size: var(--t-small); display: inline-flex; align-items: center; gap: 0.4em; }
+  .cover-logo { width: 18cqw; max-width: 220px; height: auto; margin: 0 auto 1.4cqw; display: block; }
+  .cover-logo svg { width: 100%; height: auto; display: block; }
+
+  /* ===== TITLE slide (slide 1) · calm dark-green hero (CHANGE 1) =====
+     Dark-green canvas, static radial glow (NO pulsing/blinking), mint eyebrow,
+     big white Rubik headline with ONE yellow rotated MICRO stamp, small
+     white logo in the bottom-left corner well out of the way. Minimal deco. */
+  .slide--title { background: var(--depth); color: #fff; text-align: center; align-items: center; justify-content: center; overflow: hidden; }
+  /* soft, STATIC radial glow — pure gradient, no animation */
+  .title-glow { position: absolute; inset: -18%; z-index: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 22% 26%, rgba(16,185,129,0.30) 0, transparent 42%),
+      radial-gradient(circle at 80% 74%, rgba(110,231,183,0.16) 0, transparent 44%),
+      radial-gradient(circle at 64% 14%, rgba(252,211,77,0.12) 0, transparent 40%); }
+  .title-eyebrow { display: inline-flex; align-items: center; gap: 0.55em; background: rgba(255,255,255,0.08); color: var(--green-mint);
+    border: 2.5px solid var(--green-mint); border-radius: var(--radius-pill); padding: 0.5em 1.3em;
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(20px,1.8cqw,28px); margin-bottom: 2.4cqw; }
+  .title-eyebrow .dot { width: 0.72em; height: 0.72em; border-radius: 50%; background: var(--green-mint); flex: none; }
+  .title-eyebrow .ltr { color: var(--green-mint); }
+  .slide--title h1 { font-family: var(--font-display); font-weight: 900; color: #fff;
+    font-size: clamp(46px,7cqw,118px); line-height: 1.04; letter-spacing: -0.035em; margin: 0 0 2.6cqw; max-width: 94%; }
+  .slide--title h1 .ltr { color: #fff; }
+  /* the ONE yellow rotated stamp — sunshine bg, ink border, hard shadow, ~-2deg */
+  .slide--title h1 .stamp { display: inline-block; background: var(--sunshine); color: var(--ink);
+    padding: 0 0.22em; border: 5px solid var(--ink); border-radius: 16px;
+    box-shadow: 8px 8px 0 0 rgba(0,0,0,0.42); transform: rotate(-2deg); direction: ltr; unicode-bidi: isolate; }
+  .slide--title .tagline { font-family: var(--font-display); font-weight: 500; color: rgba(255,255,255,0.9);
+    font-size: clamp(22px,2.3cqw,34px); line-height: 1.45; margin: 0; max-width: 70%; }
+  .slide--title .tagline strong { color: var(--green-mint); font-weight: 600; }
+  /* TITLE logo (slide 1 ONLY): large, white, centered at the TOP of the hero —
+     not small, not at the bottom; LTR-isolated above so it is never clipped (Ben 2026-06-08) */
+  .title-logo { display: block; width: 12cqw; max-width: 132px; min-width: 84px; height: auto; margin: 0 auto 2.4cqw; opacity: 1; }
+  .title-logo svg { width: 100%; height: auto; display: block; filter: brightness(0) invert(1); }
+
+  /* ===== closing slide (CORRECTION 9) ===== */
+  .slide--closing { background: var(--depth); color: #fff; text-align: center; align-items: center; justify-content: center; }
+  .closing-logo { width: 20cqw; max-width: 240px; height: auto; margin: 0 auto 3cqw; display: block; }
+  .closing-logo svg { width: 100%; height: auto; display: block; filter: brightness(0) invert(1); }
+  .closing-name { font-family: var(--font-display); font-weight: 900; font-size: clamp(56px,9cqw,150px); line-height: 1; letter-spacing: -0.03em; color: #fff; margin: 0 0 2.2cqw; direction: ltr; unicode-bidi: isolate; }
+  .closing-line { display: inline-flex; align-items: center; gap: 0.6em; font-family: var(--font-display); font-weight: 600; font-size: clamp(26px,2.7cqw,42px); color: var(--green-mint); background: rgba(255,255,255,0.06); border: 2.5px solid var(--green-mint); border-radius: var(--radius-pill); padding: 0.5em 1.4em; }
+  .closing-line .ltr { color: #fff; }
+
+  /* section divider */
+  .slide--section { justify-content: center; }
+  .section-kicker { font-family: var(--font-display); font-size: var(--t-h3); font-weight: 700; color: var(--anchor); letter-spacing: 0.08em; margin-bottom: 1cqw; }
+  .section-num { font-family: var(--font-display); font-weight: 900; font-size: clamp(140px,16cqw,300px); line-height: 0.85; color: var(--ink); letter-spacing: -0.05em; opacity: 0.12; position: absolute; top: 2cqw; inset-inline-start: 5cqw; z-index: 1; direction: ltr; }
+  .section-title { font-family: var(--font-display); font-weight: 900; font-size: clamp(44px,6.4cqw,110px); line-height: 1.02; letter-spacing: -0.03em; color: var(--ink); margin: 0; max-width: 90%; }
+  .section-title .hi { background: var(--sunshine); padding: 0 0.12em; border-radius: 10px; }
+  .section-sub { font-family: var(--font-display); font-weight: 500; font-size: var(--t-lead); color: var(--gray-900); margin: 1.4cqw 0 0; max-width: 80%; }
+
+  /* ask / CTA dark */
+  .slide--ask { background: var(--depth); color: #fff; text-align: center; align-items: center; justify-content: center; }
+  .slide--ask .tag { background: var(--anchor); color: #fff; border-color: var(--sunshine); box-shadow: 4px 4px 0 0 var(--sunshine); }
+  .ask-breakdown { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.4cqw; margin: 0 auto; max-width: 94%; }
+  .ask-item { background: var(--anchor); border: 3px solid var(--sunshine); border-radius: 16px; padding: 1.8cqw 1.5cqw; box-shadow: 5px 5px 0 0 var(--sunshine); text-align: start; }
+  .ask-item__pct { font-family: var(--font-display); font-size: var(--t-h2); font-weight: 800; color: var(--sunshine); margin: 0 0 0.5cqw; line-height: 1; direction: ltr; }
+  .ask-item__label { font-size: var(--t-small); color: #fff; margin: 0; line-height: 1.35; }
+
+  /* ---------- COLOUR-FORWARD canvases ---------- */
+  .slide--dark { background: var(--depth); color: #fff; }
+  .slide--dark h2, .slide--dark h1, .slide--dark h3, .slide--dark h4 { color: #fff; }
+  .slide--dark .lead { color: var(--green-mint); }
+  .slide--sun { background: var(--sunshine); }
+  .slide--sky { background: var(--sky); }
+  .slide--coral { background: var(--coral); }
+  .slide--lav { background: var(--lavender); }
+  .slide--soft { background: var(--soft); }
+  .slide--greensoft { background: var(--green-soft); }
+
+  /* ===== concept-with-motif : image motif (slides 5,8,16) =====
+     CORRECTION 5: food/motif images are landscape; object-fit:contain on a
+     paper canvas shows the FULL dish uncropped (object-fit:cover was cutting
+     the sides of the wide context-trio / dinner images). */
+  .motif-wrap { display: grid; place-items: center; }
+  .motif-img { width: 100%; max-width: 36cqw; aspect-ratio: 4/3; object-fit: contain; padding: 1.2cqw; border: 3px solid var(--ink); border-radius: var(--radius-xl); box-shadow: 9px 9px 0 0 var(--ink); background: var(--paper); }
+
+  /* ===== definition station image (slides 18-23) ===== */
+  .def-station { display: grid; grid-template-columns: 1fr 1.05fr; gap: 3cqw; align-items: center; max-width: 100%; }
+  .def-station .def { text-align: start; margin: 0; max-width: 100%; }
+  .def-station .def__term { text-align: start; }
+  .def-station .def__meaning { font-size: var(--t-body); }
+  .station-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border: 3px solid var(--ink); border-radius: var(--radius-lg); box-shadow: 8px 8px 0 0 var(--ink); background: var(--paper); }
+  .station-meta { display: grid; gap: 1.1cqw; list-style: none; padding: 0; margin: 1.4cqw 0 0; }
+  .station-meta li { display: flex; gap: 1cqw; align-items: flex-start; font-size: var(--t-small); line-height: 1.4; }
+  .station-meta li i { color: var(--anchor); font-size: var(--t-h3); flex-shrink: 0; line-height: 1; }
+  .station-out { display: inline-flex; align-items: center; gap: 0.5em; margin-top: 1.4cqw; background: var(--green-soft); border: 2.5px solid var(--anchor); border-radius: var(--radius-pill); padding: 0.5em 1em; font-size: var(--t-small); font-weight: 700; color: var(--depth); }
+
+  /* ===== slide 9 : crop thumbnail -> MODAL (CORRECTION 6) ===== */
+  /* ===== slide 9 : THREE crop thumbnails -> MODAL (CHANGE 2) =====
+     One slide, three clickable squares. Each shows a zoomed CENTER crop of
+     its image (the misleading close-up) via object-fit:cover + object-position
+     center + scale, hiding the giveaway context at the edges. */
+  .crop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.6cqw; align-items: stretch;
+    width: 100%; max-width: 64cqw; margin: 0 auto; }
+  .crop-thumb { position: relative; width: 100%; min-width: 0; aspect-ratio: 1 / 1; border: 4px solid var(--ink); border-radius: var(--radius-xl);
+    box-shadow: 9px 9px 0 0 var(--ink); overflow: hidden; background: var(--depth); cursor: zoom-in;
+    transition: transform .2s var(--ease-bounce), box-shadow .2s var(--ease-bounce); }
+  .crop-thumb:hover, .crop-thumb:focus-visible { transform: translate(-2px,-2px); box-shadow: 12px 12px 0 0 var(--ink); outline: none; }
+  /* Tight crop on the misleading subject, hiding the giveaway context at the
+     edges. Per-image framing (the subject sits in a different spot in each). */
+  /* group-A drawn thumbnails — zoomed OUT so more of each illustration shows per square (Ben 2026-06-08) */
+  .crop-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scale(1.04); transform-origin: center; }
+  .crop-thumb--tower img { object-position: 50% 45%; transform: scale(1.08); }
+  .crop-thumb--shark img { object-position: 50% 50%; transform: scale(1.08); }
+  .crop-thumb--car   img { object-position: 50% 45%; transform: scale(1.08); }
+  .crop-thumb__label { position: absolute; bottom: 0.9cqw; inset-inline-start: 0.9cqw; z-index: 4;
+    font-family: var(--font-display); font-weight: 800; font-size: var(--t-micro); color: var(--ink);
+    background: var(--sunshine); border: 2.5px solid var(--ink); border-radius: var(--radius-pill);
+    padding: 0.28em 0.9em; box-shadow: 3px 3px 0 0 var(--ink); }
+  .crop-thumb__open { position: absolute; top: 0.9cqw; inset-inline-end: 0.9cqw; z-index: 4;
+    display: inline-flex; align-items: center; gap: 0.4em; font-family: var(--font-display); font-weight: 700;
+    font-size: var(--t-micro); color: #fff; background: var(--anchor); border: 2.5px solid var(--ink);
+    border-radius: var(--radius-pill); padding: 0.26em 0.7em; box-shadow: 3px 3px 0 0 var(--ink); }
+  .crop-thumb__open i { font-size: 1.05em; }
+  .crop-caption { font-size: var(--t-small); line-height: 1.4; margin: 1.8cqw auto 0; max-width: 84%; text-align: center; color: var(--gray-900); }
+  .slide--dark .crop-caption { color: var(--green-mint); }
+
+  /* ===== reusable fullscreen image modal · A / B states (CHANGE 3) =====
+     State A = the tight CENTER crop (object-fit:cover, scaled, the misleading
+     view). State B = the FULL image shown COMPLETELY (object-fit:contain),
+     getting all the space, never re-cropped. Toggle via image click or A/B
+     badge; × / backdrop / Esc close. z-index 900 sits above .pres-edge(550)
+     and .pres-hud(600). */
+  .crop-modal { position: fixed; inset: 0; z-index: 900; display: none; align-items: center; justify-content: center;
+    background: rgba(6,30,24,0.9); backdrop-filter: blur(6px); padding: clamp(16px,4vw,48px); }
+  .crop-modal.open { display: flex; }
+  .crop-modal__dialog { position: relative; width: min(94vw, 1360px); height: min(86vh, 860px); display: flex; flex-direction: column; align-items: center; }
+  .crop-modal__stage { position: relative; width: 100%; flex: 1 1 auto; min-height: 0; border: 4px solid var(--ink);
+    border-radius: var(--radius-xl); box-shadow: 12px 12px 0 0 #000; overflow: hidden; background: var(--depth); cursor: pointer; }
+  /* both layers fill the stage; A = the real cropped photo (group B), B = the full photo (group C) — both CONTAIN, no double-crop */
+  .crop-modal__img { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .5s var(--ease-bounce); }
+  .crop-modal__img.is-crop { object-fit: contain; background: var(--depth); }
+  .crop-modal__img.is-full { object-fit: contain; opacity: 0; background: var(--depth); }
+  .crop-modal.show-full .crop-modal__img.is-crop { opacity: 0; }
+  .crop-modal.show-full .crop-modal__img.is-full { opacity: 1; }
+  /* A | B toggle badge (corner) */
+  .crop-modal__ab { position: absolute; top: 16px; inset-inline-end: 16px; z-index: 6; display: inline-flex; align-items: stretch;
+    border: 3px solid var(--ink); border-radius: var(--radius-pill); overflow: hidden; box-shadow: 4px 4px 0 0 var(--ink);
+    font-family: var(--font-mono); font-weight: 700; font-size: 18px; direction: ltr; cursor: pointer; background: var(--paper); }
+  .crop-modal__ab span { display: grid; place-items: center; padding: 0.3em 0.95em; color: var(--gray-600); transition: background .25s, color .25s; }
+  .crop-modal__ab .ab-a { background: var(--sunshine); color: var(--ink); }
+  .crop-modal__ab .ab-b { color: var(--gray-500); }
+  .crop-modal.show-full .crop-modal__ab .ab-a { background: var(--paper); color: var(--gray-500); }
+  .crop-modal.show-full .crop-modal__ab .ab-b { background: var(--anchor); color: #fff; }
+  .crop-modal__close { position: absolute; top: -18px; inset-inline-end: -18px; z-index: 8; width: 56px; height: 56px; border-radius: 50%; background: var(--coral); color: #fff; border: 3px solid var(--ink); box-shadow: 4px 4px 0 0 var(--ink); cursor: pointer; display: grid; place-items: center; font-size: 28px; line-height: 1; transition: transform .15s var(--ease-bounce); }
+  .crop-modal__close:hover { transform: rotate(90deg) scale(1.05); }
+  @media (max-width: 560px) {
+    .crop-modal__close { top: -10px; inset-inline-end: -10px; width: 44px; height: 44px; font-size: 22px; }
+    .crop-modal__ab { font-size: 15px; }
+  }
+
+  /* ===== slide 14 : interactive missing-component prompt (CORRECTION 7) =====
+     Per-component DARK highlight colours, white text inside; no labels above;
+     a bottom legend (מקרא) revealed in step 2 names each colour and marks the
+     component that is MISSING on this slide. */
+  :root {
+    --mc-mission: #6D28D9; --mc-input: #B45309; --mc-context: #BE123C;
+    --mc-review: #1D4ED8; --mc-output: #047857;
+  }
+  .mc-prompt { align-self: center; max-width: 94%; margin: 0 auto; }
+  .mc-q { display: inline-flex; align-items: center; gap: 0.5em; background: var(--anchor); color: #fff; border: 3px solid var(--ink); border-radius: var(--radius-pill); padding: 0.5em 1.2em; font-family: var(--font-display); font-weight: 700; font-size: var(--t-h3); box-shadow: 5px 5px 0 0 var(--ink); margin-bottom: 2.6cqw; }
+  .mc-text { font-family: var(--font-display); font-weight: 600; font-size: clamp(30px,3.4cqw,56px); line-height: 1.9; color: var(--ink); text-align: start; }
+  /* segment: neutral until colour step turns on, then DARK + white text */
+  .seg { position: relative; border-radius: 8px; padding: 0.06em 0.28em; transition: background .35s var(--ease-bounce), color .35s var(--ease-bounce); color: var(--ink); background: transparent; }
+  .mc-prompt.show-color .seg { color: #fff; }
+  .mc-prompt.show-color .seg-m { background: var(--mc-mission); }
+  .mc-prompt.show-color .seg-i { background: var(--mc-input); }
+  .mc-prompt.show-color .seg-c { background: var(--mc-context); }
+  .mc-prompt.show-color .seg-r { background: var(--mc-review); }
+  .mc-prompt.show-color .seg-o { background: var(--mc-output); }
+  /* bottom legend (מקרא) — revealed in step 2 */
+  .mc-legend { display: flex; gap: 1.1cqw; flex-wrap: wrap; justify-content: center; margin: 3.4cqw auto 0; max-width: 96%; direction: ltr;
+    opacity: 0; transform: translateY(12px); transition: opacity .4s var(--ease-bounce), transform .4s var(--ease-bounce); }
+  .mc-prompt.show-legend .mc-legend { opacity: 1; transform: none; }
+  .mc-legend__chip { display: inline-flex; align-items: center; gap: 0.5em; font-family: var(--font-display); font-weight: 700; font-size: var(--t-small); color: var(--ink); background: var(--paper); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.34em 0.9em; box-shadow: 3px 3px 0 0 var(--ink); }
+  .mc-legend__sw { width: 1.05em; height: 1.05em; border-radius: 5px; border: 2px solid var(--ink); flex-shrink: 0; }
+  .mc-legend__chip.m .mc-legend__sw { background: var(--mc-mission); }
+  .mc-legend__chip.i .mc-legend__sw { background: var(--mc-input); }
+  .mc-legend__chip.c .mc-legend__sw { background: var(--mc-context); }
+  .mc-legend__chip.r .mc-legend__sw { background: var(--mc-review); }
+  .mc-legend__chip.o .mc-legend__sw { background: var(--mc-output); }
+  /* the MISSING component: grayed swatch + "חסר" tag */
+  .mc-legend__chip.is-missing { background: #F1F5F9; color: var(--gray-500); border-style: dashed; box-shadow: none; }
+  .mc-legend__chip.is-missing .mc-legend__sw { background: #CBD5E1; border-color: var(--gray-500); }
+  .mc-legend__miss { font-family: var(--font-display); font-weight: 800; font-size: 0.82em; color: #fff; background: var(--coral); border: 2px solid var(--ink); border-radius: var(--radius-pill); padding: 0.05em 0.5em; }
+  /* MICRO colour legend (slide 14d) */
+  .micro-legend { display: flex; gap: 1cqw; flex-wrap: wrap; justify-content: center; margin-top: 2cqw; direction: ltr; }
+  .micro-legend .chip { display: inline-flex; align-items: center; gap: 0.45em; font-family: var(--font-display); font-weight: 700; font-size: var(--t-micro); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.35em 0.9em; direction: ltr; color: var(--ink); }
+  .micro-legend .chip.m { background: #EDE9FE; } .micro-legend .chip.i { background: #FEF3C7; }
+  .micro-legend .chip.c { background: #FFE1E6; } .micro-legend .chip.r { background: #E0F2FE; }
+  .micro-legend .chip.o { background: #D1FAE5; }
+  .miss-pill { display: inline-flex; align-items: center; gap: 0.4em; background: var(--coral); color: #fff; border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.2em 0.7em; font-family: var(--font-display); font-weight: 700; font-size: var(--t-small); white-space: nowrap; }
+
+  /* recap MICRO cards (slide 13) — LTR row (CORRECTION 3) */
+  .micro-map { display: grid; grid-template-columns: repeat(5,1fr); gap: 1.4cqw; direction: ltr; }
+  .micro-card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg); padding: 1.8cqw 1.2cqw; box-shadow: 6px 6px 0 0 var(--ink); text-align: center; }
+  .micro-card__letter { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px,4cqw,60px); line-height: 1; margin: 0 auto 0.8cqw; color: #fff; width: 7cqw; height: 7cqw; min-width: 64px; min-height: 64px; border-radius: 50%; border: 3px solid var(--ink); display: grid; place-items: center; box-shadow: 4px 4px 0 0 var(--ink); }
+  .micro-card:nth-child(1) .micro-card__letter { background: var(--lavender); }
+  .micro-card:nth-child(2) .micro-card__letter { background: var(--sunshine); color: var(--ink); }
+  .micro-card:nth-child(3) .micro-card__letter { background: var(--coral); }
+  .micro-card:nth-child(4) .micro-card__letter { background: var(--sky); color: var(--ink); }
+  .micro-card:nth-child(5) .micro-card__letter { background: var(--anchor); }
+  .micro-card__en { font-family: var(--font-display); font-weight: 700; font-size: var(--t-small); direction: ltr; margin: 0 0 0.3cqw; color: var(--ink); }
+  .micro-card__he { font-size: var(--t-micro); margin: 0; color: var(--gray-900); line-height: 1.3; direction: rtl; }
+
+  /* footnote */
+  .footnote { font-family: var(--font-display); font-size: var(--t-micro); color: var(--gray-500); margin-top: 1.6cqw; }
+
+  /* ============================================================
+     ENTRANCE / EXIT — transition-driven (reverses on leave).
+     ============================================================ */
+  .anim { opacity: 0; transform: translateY(32px); transition: opacity .55s var(--ease-bounce), transform .55s var(--ease-bounce); transition-delay: calc(var(--i, 0) * 75ms); }
+  .anim.x      { transform: translateX(56px); }
+  .anim.xr     { transform: translateX(-56px); }
+  .anim.pop    { transform: scale(0.55); }
+  .anim.up-big { transform: translateY(64px); }
+  .anim.drop   { transform: translateY(-56px); }
+  .anim.rot    { transform: rotate(-7deg) translateY(36px) scale(0.94); }
+  .anim.rotr   { transform: rotate(7deg) translateY(36px) scale(0.94); }
+  .anim.flip   { transform: perspective(1000px) rotateY(-82deg); transform-origin: right center; }
+  .anim.flipx  { transform: perspective(1000px) rotateX(80deg); transform-origin: top center; }
+  .anim.zoom   { transform: scale(0.2); }
+  .anim.skew   { transform: translateX(48px) skewX(-8deg); }
+  .is-visible .anim { opacity: 1; transform: none; }
+
+  /* ============================================================
+     CLICK-TO-REVEAL step system.
+     [data-step] elements start hidden; .step-on reveals.
+     These rules must BEAT `.is-visible .anim {opacity:1}`, so they are
+     written with matching/higher specificity and placed AFTER it.
+     ============================================================ */
+  [data-step] { transition: opacity .5s var(--ease-bounce), transform .5s var(--ease-bounce); }
+  .slide [data-step]:not(.step-on),
+  .is-visible [data-step]:not(.step-on) { opacity: 0; transform: translateY(24px); }
+  .slide [data-step].step-on,
+  .is-visible [data-step].step-on { opacity: 1; transform: none; }
+  /* image layer keeps absolute fill when revealed (no translate) */
+  .imgbleed__full[data-step]:not(.step-on) { transform: none; }
+  .imgbleed__full[data-step].step-on { transform: none; }
+
+  @media (max-width: 560px) {
+    .brand__sub { display:none; }
+  }
+
+  /* ===== PRESENT MODE ===== */
+  .present-btn { display:inline-flex; align-items:center; gap:0.5em; font-family:var(--font-body); font-weight:700; font-size:14px; background:var(--anchor); color:#fff; border:2.5px solid var(--ink); border-radius:var(--radius-pill); padding:9px 18px; box-shadow:var(--shadow-sm); cursor:pointer; transition:all .15s var(--ease-bounce); }
+  .present-btn:hover { background:var(--depth); transform:translate(-1px,-1px); box-shadow:var(--shadow-md); }
+  body.presenting { overflow:hidden; background:#0b0b0b; }
+  body.presenting .topbar { display:none; }
+  body.presenting .catalog { max-width:none; margin:0; padding:0; }
+  body.presenting .cat-item { display:none; margin:0; }
+  body.presenting .cat-item.present-active { display:block; }
+  body.presenting .cat-item.present-active .stage {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:min(100vw, 177.78vh); height:min(56.25vw, 100vh); z-index:500;
+  }
+  body.presenting .cat-item.present-active .slide {
+    width:100%; height:100%; aspect-ratio:auto; border:0; border-radius:0; box-shadow:none;
+  }
+  /* In present mode the active stage is its own stacking context (z-index 500)
+     that sits UNDER the .pres-edge click zones (550) — so no slide descendant
+     can be clicked, it always hits the edge. On the crop slide we lift the
+     stage ABOVE the edges (560) and let clicks pass THROUGH the slide to the
+     edges below by default (pointer-events:none on slide content); only the
+     crop thumbnails keep pointer-events so they open the modal. Edge nav stays
+     fully working everywhere else (clicks on empty slide area fall through). */
+  body.presenting .cat-item.present-active[data-type="image-thumbs"] .stage { z-index:560; }
+  body.presenting .cat-item.present-active[data-type="image-thumbs"] .slide { pointer-events:none; }
+  body.presenting .cat-item.present-active[data-type="image-thumbs"] .crop-trigger { pointer-events:auto; }
+  /* click zones */
+  .pres-edge { position:fixed; top:0; bottom:0; z-index:550; display:none; cursor:pointer; }
+  body.presenting .pres-edge { display:block; }
+  .pres-edge.prev { right:0; width:24%; } /* RTL: right side = previous */
+  .pres-edge.next { left:0; width:76%; }  /* RTL: left/most = next */
+  /* floating HUD */
+  .pres-hud { position:fixed; z-index:600; bottom:20px; left:50%; transform:translateX(-50%);
+    display:none; align-items:center; gap:12px; background:rgba(15,23,42,0.82); color:#fff;
+    border-radius:var(--radius-pill); padding:8px 14px; font-family:var(--font-mono); font-size:13px;
+    backdrop-filter:blur(8px); direction:rtl; opacity:0; transition:opacity .35s; }
+  body.presenting .pres-hud { display:flex; }
+  body.presenting .pres-hud:hover, body.presenting .pres-hud.show { opacity:1; }
+  .pres-hud button { background:transparent; border:0; color:#fff; cursor:pointer; font-size:20px; line-height:1; display:grid; place-items:center; padding:2px; }
+  .pres-hud .pc { min-width:58px; text-align:center; font-weight:700; direction:ltr; }
+  /* SP-CSS-START */
+  /* ===== PRESENTER VIEW (speaker-notes window · ?presenter=1) ===== */
+  .sp-notes{display:none}
+  body.sp-presenter-mode{background:#0f1115;overflow:auto;height:auto;margin:0}
+  body.sp-presenter-mode .topbar,
+  body.sp-presenter-mode #catalog,
+  body.sp-presenter-mode .pres-edge,
+  body.sp-presenter-mode .pres-hud,
+  body.sp-presenter-mode .crop-modal{display:none!important}
+  #presenterRoot{display:none}
+  body.sp-presenter-mode #presenterRoot{
+    display:grid;direction:rtl;box-sizing:border-box;min-height:100vh;
+    padding:clamp(16px,2.2vw,30px);gap:clamp(14px,1.8vw,24px);
+    grid-template-columns:1.25fr 0.75fr;grid-template-rows:1fr auto;
+    grid-template-areas:"now next" "bar bar";
+    color:#e8eaf0;font-family:'Rubik','Varela Round',system-ui,sans-serif;
+  }
+  #presenterRoot section,#presenterRoot footer{background:#171a21;border:1px solid #272d39;border-radius:18px;padding:clamp(16px,1.9vw,28px);min-height:0}
+  #spNowLabel,#spNextLabel{font-size:14px;letter-spacing:.05em;color:#8b93a3;margin-bottom:12px}
+  #spNow{grid-area:now;display:flex;flex-direction:column}
+  #spNote{font-size:clamp(22px,2.3vw,34px);line-height:1.5;font-weight:500;overflow:auto;flex:1}
+  #spNote:empty::before{content:'— אין הערה לשקף הזה —';color:#565d6b;font-size:.62em}
+  /* presenter action cue (▸ … ◂ in the note): what to DO / show next — never said aloud */
+  #spNote .sp-cue{display:block;margin-top:.6em;padding:.45em .72em;border-radius:10px;background:rgba(252,183,0,.12);border:1px solid rgba(252,183,0,.32);color:#fcd873;font-size:.6em;font-weight:600;line-height:1.45}
+  #spRevealLine{margin-top:14px;padding-top:12px;border-top:1px dashed #2c313d;color:#9aa3b4;font-size:clamp(15px,1.5vw,20px)}
+  #spRevealLine:empty{display:none;border:0;margin:0;padding:0}
+  #spNext{grid-area:next;display:flex;flex-direction:column;gap:12px}
+  #spNextHead{font-size:clamp(18px,1.8vw,26px);font-weight:700;line-height:1.3;color:#fff}
+  #spNextPrev{position:relative;overflow:hidden;border-radius:12px;background:#0b0d11;width:100%}
+  #spNextPrev .sp-clonewrap{position:absolute;top:0;right:0;transform-origin:top right}
+  #spNextPrev .sp-end{display:grid;place-items:center;height:100%;color:#565d6b;font-size:20px}
+  #spNextPrev .cat-item{margin:0}
+  #spBar{grid-area:bar;display:flex;align-items:center;gap:clamp(16px,2.2vw,32px);padding:12px clamp(18px,2vw,26px)}
+  #spTimer{font-variant-numeric:tabular-nums;font-weight:800;font-size:clamp(30px,3.2vw,48px);color:#fcb700;letter-spacing:.02em}
+  #spPos,#spStep{color:#aeb6c6;font-size:clamp(18px,1.9vw,26px);font-variant-numeric:tabular-nums}
+  #spStep.is-hidden{display:none}
+  #presenterRoot .sp-navbtn{margin-inline-start:auto;display:flex;gap:10px}
+  #presenterRoot .sp-navbtn button{font:inherit;font-size:clamp(16px,1.6vw,20px);background:#262d39;color:#e8eaf0;border:0;border-radius:10px;padding:10px 18px;cursor:pointer}
+  #presenterRoot .sp-navbtn button:hover{background:#333c4b}
+  /* SP-CSS-END */
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand__logo" aria-label="Benefits"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+    יסודות · AI כפונקציה
+    <span class="brand__sub">· MICRO · STUDIO</span>
+  </div>
+  <div class="topbar__spacer"></div>
+  <span class="counter" id="counter">01 / 29</span>
+  <button class="navbtn" id="prev" type="button" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
+  <button class="navbtn" id="next" type="button" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
+  <button class="present-btn" id="presentBtn" type="button"><i class="ti ti-presentation"></i> מסך מלא</button>
+</header>
+
+<main class="catalog" id="catalog">
+
+  <!-- 01 · TITLE · calm dark-green hero (CHANGE 1) -->
+  <section class="cat-item" id="s1" data-type="title">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>ברוכים הבאים לשיעור הראשון של קורס בניפיטס.</li><li>לקורס יש חמישה מפגשים, עם הכנה ושיעורי בית, אבל למפגש הזה כמעט לא צריך שום דבר מראש.</li><li>אתם הולכים לקבל ממני קבצים שתתחילו לעבוד איתם בהמשך.</li><li>היחידה הזאת היא היסודות, והמטרה שלה אחת: לעשות סדר.</li><li>שתדעו לקרוא לדברים בשם, ושתהיה לכם מפה אחת לכל העבודה עם AI מכאן והלאה, בשיעורים, בשיעורי הבית ובעבודה עצמה.</li><li>בואו נצלול: היום אנחנו מסתכלים על AI כפונקציה.</li></ul><span class="sp-cue">▸ עדיין רק מדברים, אין הדגמה. הבא: מחיצת "חלק ראשון — MICRO".</span></aside>
+    <div class="stage"><div class="slide slide--title">
+      <span class="title-glow" aria-hidden="true"></span>
+      <!-- minimal STATIC Memphis: one sunshine circle + one sky square, tucked in corners away from the text -->
+      <svg class="deco" style="top:8%;right:7%;width:6cqw;height:6cqw;" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="var(--sunshine)" stroke="var(--ink)" stroke-width="6"/></svg>
+      <svg class="deco" style="bottom:9%;right:9%;width:5cqw;height:5cqw;transform:rotate(14deg);" aria-hidden="true"><rect x="8" y="8" width="84" height="84" rx="10" fill="var(--sky)" stroke="var(--ink)" stroke-width="6"/></svg>
+      <span class="title-logo anim drop" aria-label="Benefits"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="title-eyebrow anim drop" style="--i:1"><span class="dot"></span> <span class="ltr">Foundations</span> · מפגש <span class="ltr">1</span></span>
+      <h1 class="anim pop" style="--i:2"><span class="ltr">AI</span> כפונקציה:<br>מסגרת <span class="stamp">MICRO</span> למשימה בודדת.</h1>
+      <p class="tagline anim" style="--i:3">עבודה עם <span class="ltr">AI</span> מתחילה בהגדרת התוצר הרצוי, ואז תכנון לאחור לקראת מה שדרוש כדי להגיע אליו.</p>
+    </div></div>
+  </section>
+
+  <!-- 02 · SECTION DIVIDER (MICRO) -->
+  <section class="cat-item" id="s2" data-type="section-divider">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>זה החלק הראשון: מיקרו, המסגרת של משימה בודדת.</li><li>נתחיל ממשהו שכולכם כבר נתקלתם בו.</li></ul><span class="sp-cue">▸ מחיצה, עוברים מהר. הבא: שקף שלושת הפרומפטים.</span></aside>
+    <div class="stage"><div class="slide slide--section">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="section-num">01</span>
+      <svg class="deco" style="bottom:0;left:0;width:32cqw;height:12cqw;"><use href="#half-circle-lavender"/></svg>
+      <svg class="deco" style="top:10%;right:7%;width:14cqw;height:14cqw;"><use href="#star-stamp-lavender"/></svg>
+      <p class="section-kicker anim drop"><span class="ltr">PART ONE · MICRO</span></p>
+      <h2 class="section-title anim x" style="--i:1">המסגרת <span class="hi">למשימה</span> בודדת.</h2>
+      <p class="section-sub anim x" style="--i:2">חמישה חלקים שיחד מגדירים בדיוק מה לייצר, ועל סמך מה.</p>
+    </div></div>
+  </section>
+
+  <!-- 03 · LIST WITH ICONS · activity (static) -->
+  <section class="cat-item" id="s3" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>לפניכם שלושה פרומפטים פשוטים: "סכם לי את הדוח", "הכן לי מצגת", "ארגן לי את הנתונים".</li><li>אין בהם שום דבר מסובך.</li><li>השאלה אליכם: מה הבעיה בפרומפטים האלה? ⏸</li><li>כולנו כבר עובדים עם AI, אז אין פה הפתעה גדולה, אבל בואו נעצור ונשים אצבע על מה בדיוק חסר.</li><li>אם תשובה נשארת כללית מדי, "שזה לא ברור", תחזירו אותה: לא ברור מה? מה הייתם צריכים לדעת כדי לבצע?</li><li>את התשובה לא פותרים עכשיו, היא תיבנה בהמשך.</li></ul><span class="sp-cue">▸ דיון בעל פה, הפרומפטים על המסך, לא פותרים. הבא: שקף "הבקשה מעולם לא הגדירה מה לייצר", חשיפה מדורגת.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="tag anim drop"><i class="ti ti-flag"></i> <span class="ltr">OPENING</span></span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 1.8cqw;">מה הבעיה ב<span class="hi">פרומפטים</span> האלה?</h2>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim x" style="--i:2"><i class="ti ti-quote"></i><div>«סכם לי את הדוח»</div></li>
+        <li class="warn anim x" style="--i:3"><i class="ti ti-quote"></i><div>«הכן לי מצגת»</div></li>
+        <li class="alt anim x" style="--i:4"><i class="ti ti-quote"></i><div>«ארגן לי את הנתונים»</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 04 · LIST WITH ICONS · 3 lines reveal in sequence -->
+  <section class="cat-item" id="s4" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>בואו ניתן לזה שם. הבקשה הזאת מעולם לא הגדירה מה צריך לייצר.</li><li>(עכשיו חושפים: התוצר המצופה לא צוין) לא אמרנו מה אמור לצאת בסוף.</li><li>(עכשיו חושפים: החומר לעבודה לא סופק) אין חומר גלם, ותחשבו על זה — "תכין מצגת", ממה בכלל?</li><li>(עכשיו חושפים: הרקע שקובע את התשובה היה חסר) והרקע, שזה בדיוק הקונטקסט, גם הוא לא היה שם.</li><li>כל אחד מכם השלים את החוסרים האלה בראש בצורה אחרת.</li></ul><span class="sp-cue">▸ חושפים שורה אחר שורה. הבא: שקף המיקרוגל.</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="top:8%;left:7%;width:13cqw;height:9cqw;color:var(--coral);"><use href="#arrow-curve"/></svg>
+      <span class="tag anim drop"><i class="ti ti-help-circle"></i> מה היה חסר</span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 1.8cqw;">הבקשה מעולם לא הגדירה <span class="hi">מה לייצר</span>.</h2>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim" data-step="1"><i class="ti ti-package-off"></i><div>התוצר המצופה לא צוין.</div></li>
+        <li class="warn anim" data-step="2"><i class="ti ti-file-off"></i><div>החומר לעבודה לא סופק.</div></li>
+        <li class="alt anim" data-step="3"><i class="ti ti-background"></i><div>הרקע שקובע את התשובה היה חסר.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 05 · CONCEPT WITH MOTIF · microwave IMG -->
+  <section class="cat-item" id="s5" data-type="concept-with-motif">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>עכשיו אני רוצה שנסתכל על AI אחרת לגמרי, לא בתור כלי אלא בתור פונקציה.</li><li>ולא צריך להיות מתכנתים בשביל זה.</li><li>ניקח דבר מוכר מהמטבח, מיקרוגל. יש לו תפקיד אחד: הוא מקבל אוכל בפנים, ומחזיר אותו חם. זהו.</li><li>בדיוק ככה אני רוצה שתסתכלו על AI, ושנתחיל תמיד מהשאלה מה אני רוצה שייצא בסוף, ומשם נעבוד אחורה.</li></ul><span class="sp-cue">▸ הבא: שקף Mission.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="body-grid">
+        <div>
+          <span class="kicker anim drop"><i class="ti ti-microwave"></i> המיקרוגל</span>
+          <h2 class="anim x" style="--i:1;margin:1.4cqw 0 1.4cqw;">מיקרוגל הוא <span class="hi">פונקציה</span> פשוטה.</h2>
+          <ul class="facts" style="max-width:none;gap:1.1cqw;">
+            <li class="anim x" style="--i:2"><i class="ti ti-arrow-bar-to-right"></i><div>למיקרוגל יש תפקיד אחד: הוא מקבל אוכל כקלט <span class="ltr">(Input)</span> ומחזיר אותו מחומם.</div></li>
+            <li class="anim x" style="--i:3"><i class="ti ti-arrow-back-up"></i><div>להסתכל על AI כך פירושו להתחיל מהתוצר <span class="ltr">(Output)</span> הרצוי ולעבוד לאחור אל מה שדרוש.</div></li>
+            <li class="sky anim x" style="--i:4"><i class="ti ti-bulb"></i><div>לא נדרש ידע בתכנות כדי לראות תהליך כפונקציה.</div></li>
+          </ul>
+        </div>
+        <div class="motif-wrap anim zoom" style="--i:2">
+          <img class="motif-img" src="assets/foundations-microwave.jpg" alt="איור מיקרוגל">
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 06 · LIST WITH ICONS · M · Mission -->
+  <section class="cat-item" id="s6" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>כל שימוש במיקרוגל מתחיל ממשימה כללית.</li><li>עוד לפני שלחצתי כפתור, יש לי בראש "אני רוצה אוכל חם". זה הדבר הראשון שאני קובע, לפני הכל.</li><li>(עכשיו חושפים: משימה) זה ה-Mission, המטרה הכוללת.</li><li>שימו לב, אנחנו עוד לא כותבים פרומפט, אנחנו רק חושבים.</li><li>וברגע שברור מה המשימה הכוללת, אפשר להתקדם לכל השאר.</li></ul><span class="sp-cue">▸ חושפים את המילה "משימה" רק אחרי שהקונספט הוסבר. הבא: שקף Input.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="head anim drop"><span class="num">M</span><h2><span class="ltr">Mission</span> <span class="hi">(משימה)</span></h2></div>
+      <p class="lead anim x" style="--i:1">המשימה הכוללת, מוגדרת ראשונה.</p>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim x" style="--i:2"><i class="ti ti-flame"></i><div>כל שימוש במיקרוגל מתחיל במשימה <span class="ltr">(Mission)</span>, כמו הפקת אוכל חם.</div></li>
+        <li class="warn anim x" style="--i:3"><i class="ti ti-target"></i><div>המשימה <span class="ltr">(Mission)</span> היא המטלה הכוללת, והיא נקבעת לפני כל דבר אחר.</div></li>
+        <li class="alt anim x" style="--i:4"><i class="ti ti-building-arch"></i><div>ברגע שהמשימה <span class="ltr">(Mission)</span> ברורה, כל חלק אחר בעבודה נבנה לקראתה.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 07 · LIST WITH ICONS · I · Input -->
+  <section class="cat-item" id="s7" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>מה הדבר הבא? איזה אוכל נכנס פנימה.</li><li>זה האינפוט, חומר הגלם שהפונקציה עובדת עליו. בלי אינפוט אין מה לחמם.</li><li>בעבודה עם AI, האינפוט זה הטקסט, המסמכים והנתונים שאתם נותנים למודל.</li><li>זה הקצה האחד של הפונקציה.</li></ul><span class="sp-cue">▸ הבא: שקף Context.</span></aside>
+    <div class="stage"><div class="slide slide--greensoft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="head anim drop"><span class="num">I</span><h2><span class="ltr">Input</span></h2></div>
+      <p class="lead anim x" style="--i:1">החומר שעליו הפונקציה עובדת.</p>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim x" style="--i:2"><i class="ti ti-tools-kitchen-2"></i><div>האוכל שמונח בתוך המיקרוגל הוא ה-<span class="ltr">Input</span>.</div></li>
+        <li class="warn anim x" style="--i:3"><i class="ti ti-stack"></i><div>ה-<span class="ltr">Input</span> הוא חומר הגלם שעליו הפונקציה פועלת, ובלעדיו אין מה לעבד.</div></li>
+        <li class="alt anim x" style="--i:4"><i class="ti ti-file-text"></i><div>בפרומפט, ה-<span class="ltr">Input</span> הוא הטקסט, המסמך או הנתונים שנמסרים למודל.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 08 · CONCEPT WITH MOTIF · C · Context · context-trio IMG -->
+  <section class="cat-item" id="s8" data-type="concept-with-motif">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>עכשיו שימו לב לרכיב שהכי מתבלבלים בו.</li><li>אם אני אומר "תחמם לי אוכל" ושואל כמה זמן, מה תשאלו אותי בחזרה? ⏸</li><li>מה מחממים. כי קפה, שניצל ופופקורן הם לא אותו דבר, וקילו עוף זה לא חצי קילו.</li><li>זה ההבדל בין אינפוט לקונטקסט: האינפוט זה האוכל שאני נותן, הקונטקסט זה איזה אוכל זה.</li><li>והכי חשוב, הקונטקסט הוא לא תוספת, הוא חלק מהבקשה עצמה, והוא זה שקובע את התוצאה.</li></ul><span class="sp-cue">▸ הבא: שקף Input מול Context, דוגמת-הנגד.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="body-grid">
+        <div>
+          <div class="head anim drop" style="margin-bottom:1.6cqw;"><span class="num">C</span><h2><span class="ltr">Context</span></h2></div>
+          <ul class="facts" style="max-width:none;gap:1.1cqw;">
+            <li class="anim x" style="--i:2"><i class="ti ti-question-mark"></i><div>לא ניתן לענות על בקשה לחמם אוכל מבלי לדעת מה מחממים.</div></li>
+            <li class="warn anim x" style="--i:3"><i class="ti ti-adjustments"></i><div>קפה, שניצל ופופקורן צריכים כל אחד הגדרה שונה, וקילוגרם עוף אינו זהה לחצי קילוגרם.</div></li>
+            <li class="alt anim x" style="--i:4"><i class="ti ti-arrows-join"></i><div>ה-<span class="ltr">Context</span> אינו תוספת ל-<span class="ltr">Input</span> אלא חלק ממנו, והוא זה שקובע את התוצאה.</div></li>
+          </ul>
+        </div>
+        <div class="motif-wrap anim zoom" style="--i:2">
+          <img class="motif-img" src="assets/foundations-context-trio.jpg" alt="קפה לעומת שניצל לעומת פופקורן">
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 08b · LIST WITH ICONS · C · Input vs Context counter-example (NEW · dry-run D1 fix) -->
+  <section class="cat-item" id="s8b" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>וכאן ההבחנה שהכי קל ליפול בה.</li><li>הרבה אנשים חושבים שברגע שנתנו ל-AI את החומר, נתנו לו גם את ההקשר, וזה לא נכון.</li><li>ניקח בקשה אחת בדיוק, "תקצר לי את הטקסט הזה", ואותו טקסט מילה במילה. ⏸</li><li>אם זה סיכום למנכ"ל יוצא דבר אחד, ואם זה הסבר לילד בן שש יוצא משהו הפוך לגמרי.</li><li>החומר זהה, מה שהשתנה זה רק ההקשר.</li><li>אז ה-Input הוא החומר שאני מוסר, וה-Context הוא למי ולמה, ובלעדיו ה-AI פשוט מנחש.</li></ul><span class="sp-cue">▸ הבא: שקף התמונות החתוכות, מוכיחים את הקונטקסט חי.</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="bottom:10%;left:6%;width:17cqw;height:4cqw;"><use href="#squiggle-gold"/></svg>
+      <span class="kicker anim drop"><i class="ti ti-arrows-split"></i> <span class="ltr">Input</span> מול <span class="ltr">Context</span></span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 1.6cqw;">החומר נמסר, אבל ה<span class="hi">הקשר</span> עדיין חסר.</h2>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim x" style="--i:2"><i class="ti ti-file-text"></i><div>ה-<span class="ltr">Input</span> הוא החומר עצמו: הטקסט, המסמך או הנתונים שנמסרים.</div></li>
+        <li class="anim x" style="--i:3"><i class="ti ti-eye-check"></i><div>ה-<span class="ltr">Context</span> הוא הרקע שקובע כיצד לקרוא את החומר ולמי הוא מיועד.</div></li>
+        <li class="warn anim x" style="--i:4"><i class="ti ti-arrows-split"></i><div>אותה בקשה, «תקצר את הטקסט הזה», נותנת סיכום ענייני כשהיא מיועדת למנכ"ל, ותוצאה הפוכה כשהיא מיועדת להסבר לילד בן שש.</div></li>
+        <li class="alt anim x" style="--i:5"><i class="ti ti-alert-triangle"></i><div>החומר נמסר במלואו, אך כל עוד ה-<span class="ltr">Context</span> חסר, התוצאה עדיין נקבעת בניחוש.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 09 · THREE crop thumbnails -> modal (CHANGE 2) -->
+  <section class="cat-item" id="s9" data-type="image-thumbs">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>בואו נוכיח את זה, בלי להסביר.</li><li>אני מראה לכם קטע חתוך מתמונה, מה אתם רואים? ⏸</li><li>ועכשיו התמונה המלאה. עושים את זה שלוש פעמים, ונותנים רגע לצחוק.</li><li>אותו דבר בדיוק קורה בבקשה: בלי כל התמונה, קוראים אותה לא נכון.</li><li>וזה נכון לכל משימה אמיתית, נגיד לעצב design system למותג: מה הרקע, האם היה שינוי, האם יש מתחרה, האם יש עיצובים קודמים.</li><li>אין סודות במשפחה עם ה-AI.</li></ul><span class="sp-cue">▸ מראים חתוך, שואלים, חושפים מלא, שלוש פעמים. הבא: שקף Review.</span></aside>
+    <div class="stage"><div class="slide slide--dark">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop" style="margin:0 auto 1.2cqw;"><i class="ti ti-crop"></i> ה־<span class="ltr">Context</span> קובע</span>
+      <h2 class="anim x" style="--i:1;text-align:center;margin:0 auto 2.6cqw;color:#fff;">התמונה המלאה <span class="hi" style="color:var(--ink);">משנה</span> את המשמעות.</h2>
+      <div class="crop-grid">
+        <div class="crop-thumb crop-thumb--tower anim pop crop-trigger" style="--i:2" role="button" tabindex="0" aria-label="פתח את תמונת המגדל"
+             data-crop="assets/foundations-crop-A-cropped.jpg" data-full="assets/foundations-crop-A-full.jpg">
+          <img src="assets/foundations-flip-tower.jpg" alt="חיתוך מטעה: מגדל מונומנטלי">
+          <span class="crop-thumb__open"><i class="ti ti-arrows-maximize"></i> פתחו</span>
+          <span class="crop-thumb__label">מגדל</span>
+        </div>
+        <div class="crop-thumb crop-thumb--shark anim pop crop-trigger" style="--i:3" role="button" tabindex="0" aria-label="פתח את תמונת הכריש"
+             data-crop="assets/foundations-crop-B-cropped.jpg" data-full="assets/foundations-crop-B-full.jpg">
+          <img src="assets/foundations-flip-shark.jpg" alt="חיתוך מטעה: סנפיר כריש">
+          <span class="crop-thumb__open"><i class="ti ti-arrows-maximize"></i> פתחו</span>
+          <span class="crop-thumb__label">כריש</span>
+        </div>
+        <div class="crop-thumb crop-thumb--car anim pop crop-trigger" style="--i:4" role="button" tabindex="0" aria-label="פתח את תמונת המכונית"
+             data-crop="assets/foundations-crop-C-cropped.jpg" data-full="assets/foundations-crop-C-full.jpg">
+          <img src="assets/foundations-flip-car.jpg" alt="חיתוך מטעה: מכונית ספורט">
+          <span class="crop-thumb__open"><i class="ti ti-arrows-maximize"></i> פתחו</span>
+          <span class="crop-thumb__label">מכונית</span>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 10 · LIST WITH ICONS · R · Review -->
+  <section class="cat-item" id="s10" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>חזרה למיקרוגל. יש דברים שיש לי עליהם שליטה ודברים שאין.</li><li>מה בשליטתי? כמה זמן אני מחמם, לפעמים גם רמת העוצמה.</li><li>זו היכולת שלי לשלוט בתהליך ולוודא שהוא קורה כמו שצריך.</li><li>פופקורן זה שלוש דקות, הפשרה זו כבר תוכנית אחרת.</li><li>זה ה-Review, ושימו לב: זו בקרה לאורך כל הדרך, לא רק בדיקה בסוף.</li></ul><span class="sp-cue">▸ הבא: שקף הכלל המעשי, "תאשר שהבנת".</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="head anim drop"><span class="num">R</span><h2><span class="ltr">Review</span></h2></div>
+      <p class="lead anim x" style="--i:1">שכבת הבקרה על התהליך.</p>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim x" style="--i:2"><i class="ti ti-clock-hour-3"></i><div>טיימר המיקרוגל הוא סוג של בקרה: הוא קובע כמה זמן התהליך ירוץ ומאפשר לעצור אותו.</div></li>
+        <li class="warn anim x" style="--i:3"><i class="ti ti-checkup-list"></i><div>ה-<span class="ltr">Review</span> הוא השכבה המקבילה בכל משימה, הנקודה שבה העבודה נבדקת מול הכוונה המקורית.</div></li>
+        <li class="alt anim x" style="--i:4"><i class="ti ti-refresh"></i><div>הוא פועל לאורך כל התהליך ולא רק כבדיקה סופית.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 11 · STATEMENT LARGE · R practical rule -->
+  <section class="cat-item" id="s11" data-type="statement-large">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>ועכשיו איך הבקרה הזאת נכנסת לפרומפט עצמו.</li><li>הכלל פשוט: מבקשים מהמודל לאשר לפני שהוא פועל.</li><li>בניסוח מלא, "תסביר מה הבנת ותחכה לאישור כדי להמשיך".</li><li>זה יכול לבוא בכל מיני צורות, "זה חשוב לי אז תפרט", "תן לי חמש אופציות". כל דבר שהוא לא לרוץ על אוטומט.</li><li>וזה לא נימוס, זו עצירה מתוכננת: בעבודה ארוכה אתם רוצים נקודות שעוצרים בהן, בודקים, וממשיכים.</li></ul><span class="sp-cue">▸ הבא: שקף Output.</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="top:9%;left:7%;width:11cqw;height:11cqw;"><use href="#star-burst-bold"/></svg>
+      <svg class="deco" style="bottom:11%;right:7%;width:20cqw;height:5cqw;"><use href="#zigzag-mint"/></svg>
+      <p class="section-kicker anim drop" style="text-align:center;"><span class="ltr">R · REVIEW</span> — הכלל המעשי</p>
+      <p class="statement anim pop" style="--i:1">לבקש מהמודל <span class="hi">לאשר</span><br>לפני שהוא <span class="mint">פועל</span>.</p>
+    </div></div>
+  </section>
+
+  <!-- 12 · LIST WITH ICONS · O · Output -->
+  <section class="cat-item" id="s12" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>הרכיב האחרון, האאוטפוט, התוצאה המוגדרת.</li><li>שימו לב להבדל: ה-Mission זו הפעולה הכללית, "אני רוצה לחמם אוכל".</li><li>האאוטפוט זה כבר "שניצל חם מספיק כדי לאכול אותו".</li><li>כשהמשימה מעורפלת, התוצר נשאר ליד המקרה.</li><li>אז כאן מגדירים פורמט, אורך ומבנה, ואיך זה אמור להיראות כשזה מוכן.</li></ul><span class="sp-cue">▸ הבא: שקף החשיפה, "זה MICRO".</span></aside>
+    <div class="stage"><div class="slide slide--greensoft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="head anim drop"><span class="num">O</span><h2><span class="ltr">Output</span></h2></div>
+      <p class="lead anim x" style="--i:1">התוצאה המוגדרת.</p>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim x" style="--i:2"><i class="ti ti-package-export"></i><div>ה-<span class="ltr">Output</span> הוא מה שהפונקציה מחזירה בסוף.</div></li>
+        <li class="warn anim x" style="--i:3"><i class="ti ti-dice"></i><div>כשהמשימה <span class="ltr">(Mission)</span> מעורפלת, ה-<span class="ltr">Output</span> נשאר ליד המקרה.</div></li>
+        <li class="alt anim x" style="--i:4"><i class="ti ti-ruler-2"></i><div>הגדרה מדויקת של ה-<span class="ltr">Output</span>, כולל הפורמט, האורך והמבנה, מקרבת את התשובה למה שהתכוונתם.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 13 · RECAP-SUMMARY · MICRO map · 5 cards LTR M·I·C·R·O -->
+  <section class="cat-item" id="s13" data-type="recap-summary">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>אז בואו נאסוף. קיבלנו חמישה רכיבים: Mission, Input, Context, Review ו-Output. זה MICRO.</li><li>ותזכרו את זה, כי זה בעצם כל הקורס במשפט אחד: אנחנו תמיד שואפים להגיע למשימות מיקרו ברורות.</li><li>והכי חשוב, זה לא ידע חדש. אלה אותן מילים בדיוק ששמעתם על AI עד היום, רק עכשיו יש להן מפה וסדר.</li><li>ותחזיקו מילה אחת לכל הקורס: חשיבה תוצאתית.</li><li>גם המיקרו וגם הסטודיו שנראה עוד מעט הם אותו הרגל, קודם מחליטים מה התוצר ואז בונים אחורה אליו.</li></ul><span class="sp-cue">▸ עוברים על חמש האותיות אחת-אחת, קצר. הבא: שקף התרגיל הראשון.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="top:9%;left:6%;width:9cqw;height:9cqw;"><use href="#star-burst"/></svg>
+      <svg class="deco" style="bottom:9%;right:7%;width:18cqw;height:4cqw;color:var(--coral);"><use href="#zigzag"/></svg>
+      <div class="head anim drop"><span class="num"><i class="ti ti-map-2"></i></span><h2>זהו <span class="ltr">MICRO™</span> — חמישה חלקים, <span class="hi">מפה אחת</span>.</h2></div>
+      <div class="micro-map">
+        <div class="micro-card anim up-big" style="--i:1"><div class="micro-card__letter">M</div><p class="micro-card__en">Mission</p><p class="micro-card__he">המשימה הכוללת (משימה)</p></div>
+        <div class="micro-card anim up-big" style="--i:2"><div class="micro-card__letter">I</div><p class="micro-card__en">Input</p><p class="micro-card__he">החומר שעליו הפונקציה עובדת</p></div>
+        <div class="micro-card anim up-big" style="--i:3"><div class="micro-card__letter">C</div><p class="micro-card__en">Context</p><p class="micro-card__he">הרקע שקובע את התשובה</p></div>
+        <div class="micro-card anim up-big" style="--i:4"><div class="micro-card__letter">R</div><p class="micro-card__en">Review</p><p class="micro-card__he">שכבת הבקרה על התהליך</p></div>
+        <div class="micro-card anim up-big" style="--i:5"><div class="micro-card__letter">O</div><p class="micro-card__en">Output</p><p class="micro-card__he">התוצאה המוגדרת</p></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 14a · INTERACTIVE missing-component prompt 1 (Output missing) -->
+  <section class="cat-item" id="s14a" data-type="interactive-missing">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>עכשיו תרגיל קצר. אני מראה פרומפט, ואתם אומרים לי איזה רכיב מיקרו חסר בו.</li><li>טיפ: תעברו תמיד על חמש האותיות לפי הסדר, ככה לא מפספסים.</li><li>הנה הראשון: "קח את תמלול הישיבה המצורף וסכם אותו עבור הצוות, אם חסר לך מידע עצור ושאל". מה חסר? ⏸</li><li>יש Mission, Input, Context ו-Review, אבל חסר ה-Output: לא נאמר איך הסיכום צריך להיראות.</li><li>זה נראה קל, אבל זה לא.</li></ul><span class="sp-cue">▸ חושפים פרומפט אחד בכל פעם. הבא: פרומפט שני.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="mc-prompt" data-mc>
+        <div style="text-align:center;"><span class="mc-q"><i class="ti ti-search"></i> איזה רכיב <span class="ltr">MICRO™</span> חסר בפרומפט?</span></div>
+        <div class="micro-ref" style="display:flex;gap:0.7cqw;flex-wrap:wrap;justify-content:center;align-items:center;direction:ltr;margin:1.4cqw auto 2.2cqw;">
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--lavender);color:#fff;border:2px solid var(--ink);font-weight:900;font-size:0.82em;">M</span>Mission</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--sunshine);color:var(--ink);border:2px solid var(--ink);font-weight:900;font-size:0.82em;">I</span>Input</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--coral);color:#fff;border:2px solid var(--ink);font-weight:900;font-size:0.82em;">C</span>Context</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--sky);color:var(--ink);border:2px solid var(--ink);font-weight:900;font-size:0.82em;">R</span>Review</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--anchor);color:#fff;border:2px solid var(--ink);font-weight:900;font-size:0.82em;">O</span>Output</span>
+        </div>
+        <p class="mc-text">«קח את <span class="seg seg-i">תמלול הישיבה המצורף</span> ו<span class="seg seg-m">סכם אותו</span> <span class="seg seg-c">עבור הצוות שלי, כדי שנוכל לעקוב אחרי ההחלטות</span>. <span class="seg seg-r">אם חסר לך מידע, עצור ושאל</span>.»</p>
+        <div class="mc-legend">
+          <span class="mc-legend__chip m"><span class="mc-legend__sw"></span> משימה</span>
+          <span class="mc-legend__chip i"><span class="mc-legend__sw"></span> קלט</span>
+          <span class="mc-legend__chip c"><span class="mc-legend__sw"></span> הקשר</span>
+          <span class="mc-legend__chip r"><span class="mc-legend__sw"></span> בקרה</span>
+          <span class="mc-legend__chip o is-missing"><span class="mc-legend__sw"></span> פלט <span class="mc-legend__miss">חסר</span></span>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 14b · INTERACTIVE missing-component prompt 2 (Context missing) -->
+  <section class="cat-item" id="s14b" data-type="interactive-missing">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>פרומפט שני: "קח את המאמר המצורף וכתוב ממנו פוסט קצר של עד חמש שורות, אם משהו לא ברור שאל לפני". מה חסר כאן? ⏸</li><li>יש Mission, Input, Output ו-Review.</li><li>חסר הקונטקסט: פוסט קצר של מה, למי ולמה?</li><li>בלי זה אי אפשר לדעת אם זה לאינסטגרם, ללקוחות, או למשהו אחר לגמרי.</li></ul><span class="sp-cue">▸ הבא: פרומפט שלישי.</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="mc-prompt" data-mc>
+        <div style="text-align:center;"><span class="mc-q"><i class="ti ti-search"></i> איזה רכיב <span class="ltr">MICRO™</span> חסר בפרומפט?</span></div>
+        <div class="micro-ref" style="display:flex;gap:0.7cqw;flex-wrap:wrap;justify-content:center;align-items:center;direction:ltr;margin:1.4cqw auto 2.2cqw;">
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--lavender);color:#fff;border:2px solid var(--ink);font-weight:900;font-size:0.82em;">M</span>Mission</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--sunshine);color:var(--ink);border:2px solid var(--ink);font-weight:900;font-size:0.82em;">I</span>Input</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--coral);color:#fff;border:2px solid var(--ink);font-weight:900;font-size:0.82em;">C</span>Context</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--sky);color:var(--ink);border:2px solid var(--ink);font-weight:900;font-size:0.82em;">R</span>Review</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--anchor);color:#fff;border:2px solid var(--ink);font-weight:900;font-size:0.82em;">O</span>Output</span>
+        </div>
+        <p class="mc-text">«קח את <span class="seg seg-i">המאמר המצורף</span> ו<span class="seg seg-m">כתוב ממנו פוסט קצר</span> של <span class="seg seg-o">עד חמש שורות</span>. <span class="seg seg-r">אם משהו לא ברור, שאל אותי לפני</span>.»</p>
+        <div class="mc-legend">
+          <span class="mc-legend__chip m"><span class="mc-legend__sw"></span> משימה</span>
+          <span class="mc-legend__chip i"><span class="mc-legend__sw"></span> קלט</span>
+          <span class="mc-legend__chip c is-missing"><span class="mc-legend__sw"></span> הקשר <span class="mc-legend__miss">חסר</span></span>
+          <span class="mc-legend__chip r"><span class="mc-legend__sw"></span> בקרה</span>
+          <span class="mc-legend__chip o"><span class="mc-legend__sw"></span> פלט</span>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 14c · INTERACTIVE missing-component prompt 3 (Input missing) -->
+  <section class="cat-item" id="s14c" data-type="interactive-missing">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>פרומפט שלישי: "כתוב לי סיכום מנהלים של עד חצי עמוד בטון ענייני, תאשר שהבנת לפני שתתחיל". מה חסר כאן? ⏸</li><li>הטון הענייני זה קונטקסט, חצי עמוד זה אאוטפוט, "תאשר שהבנת" זה ריוויו, והמשימה ברורה.</li><li>אבל חסר האינפוט: סיכום מנהלים של מה? אין שום חומר גלם לעבוד עליו.</li></ul><span class="sp-cue">▸ הבא: שקף הסיכום, מה היה חסר בכל אחד.</span></aside>
+    <div class="stage"><div class="slide slide--greensoft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="mc-prompt" data-mc>
+        <div style="text-align:center;"><span class="mc-q"><i class="ti ti-search"></i> איזה רכיב <span class="ltr">MICRO™</span> חסר בפרומפט?</span></div>
+        <div class="micro-ref" style="display:flex;gap:0.7cqw;flex-wrap:wrap;justify-content:center;align-items:center;direction:ltr;margin:1.4cqw auto 2.2cqw;">
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--lavender);color:#fff;border:2px solid var(--ink);font-weight:900;font-size:0.82em;">M</span>Mission</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--sunshine);color:var(--ink);border:2px solid var(--ink);font-weight:900;font-size:0.82em;">I</span>Input</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--coral);color:#fff;border:2px solid var(--ink);font-weight:900;font-size:0.82em;">C</span>Context</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--sky);color:var(--ink);border:2px solid var(--ink);font-weight:900;font-size:0.82em;">R</span>Review</span>
+          <span style="display:inline-flex;align-items:center;gap:0.4em;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:0.26em 0.85em 0.26em 0.34em;font-family:var(--font-display);font-weight:700;font-size:var(--t-micro);color:var(--ink);box-shadow:3px 3px 0 0 var(--ink);"><span style="display:grid;place-items:center;width:1.65em;height:1.65em;border-radius:50%;background:var(--anchor);color:#fff;border:2px solid var(--ink);font-weight:900;font-size:0.82em;">O</span>Output</span>
+        </div>
+        <p class="mc-text">«<span class="seg seg-m">כתוב לי סיכום מנהלים</span> של <span class="seg seg-o">עד חצי עמוד</span>, <span class="seg seg-c">בטון ענייני למנכ"ל</span>. <span class="seg seg-r">תאשר שהבנת לפני שתתחיל</span>.»</p>
+        <div class="mc-legend">
+          <span class="mc-legend__chip m"><span class="mc-legend__sw"></span> משימה</span>
+          <span class="mc-legend__chip i is-missing"><span class="mc-legend__sw"></span> קלט <span class="mc-legend__miss">חסר</span></span>
+          <span class="mc-legend__chip c"><span class="mc-legend__sw"></span> הקשר</span>
+          <span class="mc-legend__chip r"><span class="mc-legend__sw"></span> בקרה</span>
+          <span class="mc-legend__chip o"><span class="mc-legend__sw"></span> פלט</span>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 14d · RECAP · what was missing -->
+  <section class="cat-item" id="s14d" data-type="recap-summary">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>אז נסכם את התרגיל: בראשון חסר Output, בשני חסר Context, בשלישי חסר Input.</li><li>שימו לב כמה הפרומפטים קצרים, ועדיין יש בהם את כל הרכיבים חוץ מאחד.</li><li>זה כל העניין במיקרו: מעט מילים, אבל כולן במקום.</li></ul><span class="sp-cue">▸ הבא: מחיצת "חלק שני — MACRO".</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="head anim drop"><span class="num"><i class="ti ti-list-check"></i></span><h2>מה <span class="hi">היה חסר</span> בכל פרומפט.</h2></div>
+      <div class="summary-grid">
+        <div class="summary-card anim up-big" style="--i:1"><p class="summary-card__num">1</p><h3>פרומפט ראשון</h3><p>ארבעת הרכיבים נכחו, אבל <span class="miss-pill"><i class="ti ti-x"></i> חסר Output</span> — לא נאמר מה התוצר אמור להיות.</p></div>
+        <div class="summary-card anim up-big" style="--i:2"><p class="summary-card__num">2</p><h3>פרומפט שני</h3><p>הכול היה מוגדר, אבל <span class="miss-pill"><i class="ti ti-x"></i> חסר Context</span> — לא צוין למי ולמה.</p></div>
+        <div class="summary-card anim up-big" style="--i:3"><p class="summary-card__num">3</p><h3>פרומפט שלישי</h3><p>המשימה ברורה, אבל <span class="miss-pill"><i class="ti ti-x"></i> חסר Input</span> — אין חומר גלם לעבוד עליו.</p></div>
+      </div>
+      <div class="micro-legend anim" style="--i:4">
+        <span class="chip m">M · Mission</span><span class="chip i">I · Input</span><span class="chip c">C · Context</span><span class="chip r">R · Review</span><span class="chip o">O · Output</span>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 15 · SECTION DIVIDER (MACRO) -->
+  <section class="cat-item" id="s15" data-type="section-divider">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>זה החלק השני.</li><li>מה קורה כשמשימה כבר לא נראית כמו "תכתוב לי מייל" או "תהפוך טקסט לטבלה"?</li><li>אלה כבר משימות מאקרו, וזה מה שאנחנו פותחים עכשיו.</li></ul><span class="sp-cue">▸ מחיצה, עוברים מהר. הבא: שקף הארוחה לעשרה.</span></aside>
+    <div class="stage"><div class="slide slide--section slide--greensoft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="section-num">02</span>
+      <svg class="deco" style="bottom:0;right:0;width:30cqw;height:14cqw;color:var(--anchor);opacity:.4;"><use href="#dots-grid"/></svg>
+      <svg class="deco" style="top:10%;left:7%;width:14cqw;height:14cqw;"><use href="#sprout-green"/></svg>
+      <p class="section-kicker anim drop"><span class="ltr">PART TWO · MACRO</span></p>
+      <h2 class="section-title anim x" style="--i:1">כשפונקציה אחת <span class="hi">אינה מספיקה</span>.</h2>
+      <p class="section-sub anim x" style="--i:2">משימות מאקרו נעצרות ומתוכננות. כאן נכנס <span class="ltr">STUDIO™</span>.</p>
+    </div></div>
+  </section>
+
+  <!-- 16 · CONCEPT WITH MOTIF · STUDIO intro · dinner-ten IMG -->
+  <section class="cat-item" id="s16" data-type="concept-with-motif">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>יש משימות שמתאימות לפונקציה אחת, כמו לכתוב מייל או להפוך טקסט לטבלה.</li><li>אבל ארוחה לעשרה אנשים, את זה אי אפשר לחמם במיקרו.</li><li>שלושה צמחונים, אחד שאוכל רק בשר בלי פחמימות, אחד רגיש לגלוטן ושני ילדים.</li><li>ארוחה כזאת חייבת להיעצר ולהיות מתוכננת: יש קניות, יש שולחן לארגן, מערך שלם של משימות.</li><li>זו משימת מאקרו, וכשאנחנו בתהליך מורכב כזה, אנחנו עוברים ל-STUDIO.</li></ul><span class="sp-cue">▸ הבא: שקף משחק הסטארטאפ.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="body-grid">
+        <div>
+          <span class="kicker anim drop"><i class="ti ti-tools-kitchen-2"></i> <span class="ltr">STUDIO™</span></span>
+          <h2 class="anim x" style="--i:1;margin:1.4cqw 0 1.4cqw;">כשמשימה גדולה <span class="hi">יותר</span> מפונקציה בודדת.</h2>
+          <ul class="facts" style="max-width:none;gap:1.1cqw;">
+            <li class="anim x" style="--i:2"><i class="ti ti-mail"></i><div>משימות מסוימות מתאימות לפונקציה אחת, כמו כתיבת אימייל או הפיכת טקסט לטבלה.</div></li>
+            <li class="warn anim x" style="--i:3"><i class="ti ti-users-group"></i><div>ארוחה לעשרה אנשים לא מתאימה לכך: שלושה צמחונים, אחד שאוכל רק בשר בלי פחמימות, אורח רגיש לגלוטן ושני ילדים.</div></li>
+            <li class="alt anim x" style="--i:4"><i class="ti ti-arrow-ramp-right-3"></i><div>משימה בגודל כזה חייבת להיעצר ולהיות מתוכננת. זוהי משימת מאקרו, ומשימות מאקרו עוברות ל-<span class="ltr">STUDIO™</span>.</div></li>
+          </ul>
+        </div>
+        <div class="motif-wrap anim zoom" style="--i:2">
+          <img class="motif-img" src="assets/foundations-dinner-ten.jpg" alt="ארוחה לעשרה והמגבלות שלה">
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 17 · LIST WITH ICONS · startup roles -->
+  <section class="cat-item" id="s17" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>בואו ניקח את זה לעולם שבחוץ, לרגע לא ארוחה אלא חברה.</li><li>נניח שאתם מקימים סטארט-אפ, מוצר שמתחרה במאנדיי, וצריך לגייס תפקידים, מההתחלה ועד שיש מוצר.</li><li>אילו תפקידים אתם צריכים? ⏸</li><li>אם נתקעים, אני מכוון את השאלה: מה בכלל צריך לקרות בתהליך, אילו שלבים עוברים? ⏸</li><li>אני לא משלים במקומכם, רק רומז על כל תפקיד ונותן לכם להוציא אותו.</li><li>המבנה הזה לא הומצא לקורס, ככה חברות באמת עובדות.</li></ul><span class="sp-cue">▸ תרגיל כיתתי, כ-15 דקות. אל תגלו את שמות התחנות, רק רמזו. הבא: כרטיסי שש התחנות.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="tag anim drop"><i class="ti ti-rocket"></i> משחק הסטארטאפ</span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 1.6cqw;">התפקידים שחברה צריכה כדי <span class="hi">לבנות מוצר</span>.</h2>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim x" style="--i:2"><i class="ti ti-building-factory-2"></i><div>חברה שעומדת לבנות אפליקציה צריכה סט מוגדר של תפקידים.</div></li>
+        <li class="warn anim x" style="--i:3"><i class="ti ti-route-2"></i><div>התהליך מוכר: חקירת השוק, קביעת מטרה, חיבור החלקים, עיצוב, תכנון ובנייה.</div></li>
+        <li class="alt anim x" style="--i:4"><i class="ti ti-check"></i><div>המבנה הזה לא הומצא עבור הקורס; זו הדרך שבה חברות כבר עובדות.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 18 · DEFINITION · S · Scout (station img) -->
+  <section class="cat-item" id="s18" data-type="definition">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>נתרגם את התפקידים שהוצאתם לשש תחנות.</li><li>הראשונה, Scout, זה כל מה שקשור לחיפוש: ללכת ולהבין מה כבר יש לי בשטח.</li><li>בסטארטאפ זה לסקור את המתחרים, להבין איך הם פותרים את הבעיה ואיפה הפערים. ⏸</li><li>ומה התוצר של התחנה הזאת? בריף שמתאר את המצב הקיים.</li></ul><span class="sp-cue">▸ הבא: תחנת Target.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="def-station">
+        <div class="def">
+          <span class="def__term anim pop">Scout <span class="gloss">· חיפוש</span></span>
+          <p class="def__meaning anim x" style="--i:1">להבין אילו <strong>חומרים כבר זמינים</strong> בהישג יד.</p>
+          <ul class="station-meta anim" style="--i:2">
+            <li><i class="ti ti-point-filled"></i><div>בסטארטאפ: לסקור את המתחרים בשוק, להבין איך הם פותרים את הבעיה, מה עובד אצלם ואיפה הפערים.</div></li>
+          </ul>
+          <span class="station-out anim" style="--i:3"><i class="ti ti-file-description"></i> התוצר: בריף שמתעד את המצב הנוכחי.</span>
+        </div>
+        <img class="station-img anim zoom" style="--i:2" src="assets/foundations-station-scout.jpg" alt="כרטיס תחנה: Scout">
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 19 · DEFINITION · T · Target (station img) -->
+  <section class="cat-item" id="s19" data-type="definition">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>התחנה הבאה, Target, זו המטרה.</li><li>מה ההבדל בין Mission ל-Target? ⏸</li><li>מטרה היא משהו גדול יותר, התוצר הסופי. למשל, "מוצר שצוותים יעדיפו על מה שקיים היום".</li><li>ובסדר שמטרה תהיה קצת אמורפית, "להרשים את המנהל", "לעבור את הראיון".</li><li>"לבנות אפליקציה" זו לא המטרה, המגבלות הן שקובעות אותה.</li><li>התחנה הזאת מעלה על השולחן את החלקים שבעבודה עם AI נוטים ללכת לאיבוד.</li></ul><span class="sp-cue">▸ הבא: תחנת Unify.</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="def-station">
+        <div class="def">
+          <span class="def__term anim pop">Target <span class="gloss">· מטרה</span></span>
+          <p class="def__meaning anim x" style="--i:1">להגדיר מה המוצר צריך להשיג: <strong>כלי שצוותים באמת יאמצו ויעדיפו על מה שקיים היום</strong>.</p>
+          <ul class="station-meta anim" style="--i:2">
+            <li><i class="ti ti-point-filled"></i><div>"לבנות אפליקציה" אינו המטרה האמיתית; המטרה נקבעת על ידי המגבלות — קהל היעד, נקודת הכאב שפותרים, והבידול מהמתחרים.</div></li>
+          </ul>
+          <span class="station-out anim" style="--i:3"><i class="ti ti-target-arrow"></i> התוצר: מטרה חדה עם דרישות ברורות.</span>
+        </div>
+        <img class="station-img anim zoom" style="--i:2" src="assets/foundations-station-target.jpg" alt="כרטיס תחנה: Target">
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 20 · DEFINITION · U · Unify (station img) -->
+  <section class="cat-item" id="s20" data-type="definition">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>Unify, חיבור.</li><li>כאן לוקחים את כל החלקים ומוודאים שהם מתחברים לכיוון אחד, ולא אוסף אקראי.</li><li>שלא בנינו חמש יכולות נחמדות בלי מוצר אחד שמחזיק אותן, ושקהל היעד, היכולות והמיצוב עדיין שייכים לאותו מוצר.</li><li>התוצר: כיוון מוצר אחד קוהרנטי שמחזיק ביחד.</li></ul><span class="sp-cue">▸ הבא: תחנת Design.</span></aside>
+    <div class="stage"><div class="slide slide--greensoft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="def-station">
+        <div class="def">
+          <span class="def__term anim pop">Unify <span class="gloss">· חיבור</span></span>
+          <p class="def__meaning anim x" style="--i:1">לחבר את החלקים הנפרדים ל<strong>כיוון מוצר קוהרנטי אחד</strong> במקום לאוסף אקראי.</p>
+          <ul class="station-meta anim" style="--i:2">
+            <li><i class="ti ti-point-filled"></i><div>היכולות, קהל היעד והמיצוב נבחרים כך שכולם שייכים לאותו מוצר אחד, ולא לאוסף מקרי.</div></li>
+          </ul>
+          <span class="station-out anim" style="--i:3"><i class="ti ti-link"></i> התוצר: כיוון מוצר קוהרנטי שמחזיק מעמד יחד.</span>
+        </div>
+        <img class="station-img anim zoom" style="--i:2" src="assets/foundations-station-unify.jpg" alt="כרטיס תחנה: Unify">
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 21 · DEFINITION · D · Design (station img) -->
+  <section class="cat-item" id="s21" data-type="definition">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>Design, עיצוב.</li><li>איך כל המוצר נראה ומרגיש.</li><li>המסכים, הצבעים והטיפוגרפיה חולקים מערכת עיצוב אחת, ככה שכל המוצר נקרא כיחידה אחת ולא צירוף מקרי.</li><li>התוצר: שפת-עיצוב מוגדרת למוצר.</li></ul><span class="sp-cue">▸ הבא: תחנת Index.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="def-station">
+        <div class="def">
+          <span class="def__term anim pop">Design <span class="gloss">· עיצוב</span></span>
+          <p class="def__meaning anim x" style="--i:1">להחליט על <strong>שפת-מוצר אחת ועקבית</strong>.</p>
+          <ul class="station-meta anim" style="--i:2">
+            <li><i class="ti ti-point-filled"></i><div>המסכים, הצבעים והטיפוגרפיה חולקים מערכת עיצוב אחת, כך שכל המוצר נקרא כיחידה אחת.</div></li>
+          </ul>
+          <span class="station-out anim" style="--i:3"><i class="ti ti-palette"></i> התוצר: שפת-עיצוב מוגדרת למוצר.</span>
+        </div>
+        <img class="station-img anim zoom" style="--i:2" src="assets/foundations-station-design.jpg" alt="כרטיס תחנה: Design">
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 22 · DEFINITION · I · Index (station img) -->
+  <section class="cat-item" id="s22" data-type="definition">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>Index, תכנון.</li><li>מה בונים, מתי, מה אפשר במקביל, ואיפה כל דבר נעשה.</li><li>היכולות מפורקות למשימות, התלויות בין החלקים מתוזמנות, ומה שאפשר לבנות מראש נעשה קודם.</li><li>התוצר: תוכנית בנייה מסודרת.</li></ul><span class="sp-cue">▸ הבא: תחנת Operate.</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="def-station">
+        <div class="def">
+          <span class="def__term anim pop">Index <span class="gloss">· תכנון</span></span>
+          <p class="def__meaning anim x" style="--i:1">לפרוס את תוכנית הבנייה: <strong>מה בונים, מתי, ומה אפשר במקביל</strong>.</p>
+          <ul class="station-meta anim" style="--i:2">
+            <li><i class="ti ti-point-filled"></i><div>היכולות מפורקות למשימות, התלויות בין החלקים מתוזמנות, ומה שאפשר לבנות מראש או במקביל מזוהה.</div></li>
+          </ul>
+          <span class="station-out anim" style="--i:3"><i class="ti ti-calendar-time"></i> התוצר: תוכנית בנייה מסודרת.</span>
+        </div>
+        <img class="station-img anim zoom" style="--i:2" src="assets/foundations-station-index.jpg" alt="כרטיס תחנה: Index">
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 23 · DEFINITION · O · Operate (station img) -->
+  <section class="cat-item" id="s23" data-type="definition">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>התחנה האחרונה, Operate, הביצוע.</li><li>כאן מחליטים איפה כל חלק נבנה בפועל: צד-לקוח, צד-שרת, או העלאה לאוויר.</li><li>כל חלק נבנה במקום המתאים, ומתזמנים שהמוצר יצא לאוויר כיחידה אחת שעובדת.</li><li>התוצר: המוצר הבנוי, משוחרר.</li></ul><span class="sp-cue">▸ הבא: שקף "הסדר לא קבוע".</span></aside>
+    <div class="stage"><div class="slide slide--greensoft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div class="def-station">
+        <div class="def">
+          <span class="def__term anim pop">Operate <span class="gloss">· ביצוע</span></span>
+          <p class="def__meaning anim x" style="--i:1">להחליט <strong>היכן כל חלק נבנה בפועל</strong>: בצד-הלקוח, בצד-השרת, או בהעלאה לאוויר.</p>
+          <ul class="station-meta anim" style="--i:2">
+            <li><i class="ti ti-point-filled"></i><div>כל חלק נבנה במקום המתאים, והכול מתוזמן כך שהמוצר יוצא לאוויר כיחידה אחת שעובדת.</div></li>
+          </ul>
+          <span class="station-out anim" style="--i:3"><i class="ti ti-rocket"></i> התוצר: המוצר הבנוי, משוחרר.</span>
+        </div>
+        <img class="station-img anim zoom" style="--i:2" src="assets/foundations-station-operate.jpg" alt="כרטיס תחנה: Operate">
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 24 · LIST WITH ICONS · using STUDIO -->
+  <section class="cat-item" id="s24" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>ככה קיבלנו את שיטת STUDIO. שני דברים חשובים לפני שממשיכים.</li><li>ראשית, הסדר לא קדוש: בדרך כלל התחנות יבואו בסדר הזה, אבל לא תמיד, לפעמים נוח יותר להתחיל מהשלד או מהעיצוב.</li><li>רק את Operate אי אפשר להתחיל בו, הוא תמיד אחרון.</li><li>ושנית, לא כל משימה צריכה את כל הסטודיו. ⏸</li><li>אם שואלים מאיפה מתחילים, התשובה: מהתחנה שהמשימה צריכה, לרוב Scout או Target, אבל לא תמיד.</li></ul><span class="sp-cue">▸ הבא: שקף המפה, "כל נושא נכנס לאות".</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="tag anim drop"><i class="ti ti-adjustments-alt"></i> כיצד משתמשים בסטודיו</span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 1.6cqw;">הסדר אינו קבוע, ולא כל משימה צריכה את <span class="hi">הסטודיו המלא</span>.</h2>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim x" style="--i:2"><i class="ti ti-arrows-shuffle"></i><div>התחנות בדרך כלל עוקבות אחר הסדר הזה, אך לא תמיד, וחלק מהעבודות מתחילות מהעיצוב <span class="ltr">(Design)</span>.</div></li>
+        <li class="warn anim x" style="--i:3"><i class="ti ti-flag-pin"></i><div>תחנת <span class="ltr">Operate</span> היא החריג, מכיוון שהיא תמיד מגיעה אחרונה ואינה יכולה להיות נקודת ההתחלה.</div></li>
+        <li class="alt anim x" style="--i:4"><i class="ti ti-list-search"></i><div>המטרה היא לדעת מה כבר קיים ומה חסר, ומשימות מסוימות דורשות רק כמה תחנות ולא את כולן.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 25 · RECAP-SUMMARY · the map -->
+  <section class="cat-item" id="s25" data-type="recap-summary">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>וזה עמוד השדרה של כל הקורס.</li><li>כל שיטה וכל כלי שנלמד מכאן והלאה נכנסים תחת אחת מהאותיות האלה, מיקרו או סטודיו.</li><li>ככה תמיד תדעו לאן שייך כל דבר חדש שאתם פוגשים.</li><li>וכל משימה גדולה, כל סטודיו, המטרה היא לפרק אותה למשימות מיקרו קטנות וברורות.</li><li>זו בדיוק הצורה שבה אני עצמי עובד: לשבת, לשאול מה נדרש עכשיו, ובמה משתמשים.</li><li>ודבר אחרון, הכי חשוב: כל התחנות האלה הן דברים שאתם כבר יודעים לעשות, כבר עשיתם מצגות וכבר תכננתם דברים בחיים.</li><li>היכולת כבר אצלכם בפנים, מה שהיה חסר זה רק המפה.</li></ul><span class="sp-cue">▸ הבא: שקף הסגירה.</span></aside>
+    <div class="stage"><div class="slide slide--greensoft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="top:9%;left:6%;width:9cqw;height:9cqw;"><use href="#star-burst"/></svg>
+      <svg class="deco" style="bottom:9%;right:7%;width:18cqw;height:4cqw;"><use href="#squiggle-gold"/></svg>
+      <div class="head anim drop"><span class="num"><i class="ti ti-map-pin-star"></i></span><h2>כל נושא בקורס שייך <span class="hi">לאחת מהאותיות</span>.</h2></div>
+      <div class="summary-grid">
+        <div class="summary-card anim up-big" style="--i:1"><p class="summary-card__num"><i class="ti ti-stack-2"></i></p><h3>הכול ממופה</h3><p>כל שיטה וכלי שיילמדו בהמשך הקורס נכנסים תחת אחת האותיות.</p></div>
+        <div class="summary-card anim up-big" style="--i:2"><p class="summary-card__num"><i class="ti ti-route"></i></p><h3>הכול במקום</h3><p>זה מה שמבהיר לאן שייך כל פיסת חומר חדשה.</p></div>
+        <div class="summary-card anim up-big" style="--i:3"><p class="summary-card__num"><i class="ti ti-anchor"></i></p><h3>עמוד השדרה</h3><p><span class="ltr">MICRO™</span> ו-<span class="ltr">STUDIO™</span> הם המפה שכל הקורס נשען עליה.</p></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 26 · CLOSING SLIDE (CORRECTION 9) -->
+  <section class="cat-item" id="s26" data-type="closing">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>לסיום, מה לוקחים הביתה מהמפגש.</li><li>אנחנו פותחים יחד תיקיות במחשב, אני שולח לכם את הקבצים, ומראה בקצרה את מערכת Benefit ואת האתר, איפה הכל יושב.</li><li>אלה המסמכים שאיתם תעבדו ושתעלו בהמשך הקורס, וכל יחידה תוסיף עליהם.</li></ul><span class="sp-cue">▸ עכשיו עוברים מהמצגת למחשב: פותחים תיקיות ומראים את מערכת Benefit והאתר. לשמור קצר, כ-5 דקות, זו לוגיסטיקה. סוף היחידה.</span></aside>
+    <div class="stage"><div class="slide slide--closing">
+      <svg class="deco" style="top:8%;left:7%;width:13cqw;height:13cqw;opacity:.5;"><use href="#dots-grid"/></svg>
+      <svg class="deco ink-sun" style="bottom:10%;right:8%;width:18cqw;height:5cqw;opacity:.8;"><use href="#squiggle-gold"/></svg>
+      <svg class="deco" style="top:12%;right:10%;width:9cqw;height:9cqw;"><use href="#star-burst"/></svg>
+      <span class="closing-logo anim drop"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <p class="closing-name anim pop" style="--i:1">Benefits</p>
+      <p class="closing-line anim" style="--i:2"><span class="ltr">AI that finally fits</span> · בן עקיבא</p>
+    </div></div>
+  </section>
+
+</main>
+
+<!-- Sprite inlined · subset of T1 symbols actually used + Benefits logo symbol -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="benefits-logo" viewBox="824 453 2250 2991"><path d="M826.492 3236.77C825.424 3122.47 824.356 2449.49 824.356 1741.27L824 453 1531.56 453C2204.58 453 2241.97 453.356 2291.11 459.765 2399.72 474.008 2482.33 498.221 2570.64 542.018 2723.41 617.505 2837 715.78 2927.09 850.376 2960.56 900.582 3002.58 982.834 3022.88 1038.74 3040.69 1086.45 3058.13 1157.67 3065.97 1213.57 3074.16 1269.47 3075.23 1407.63 3068.1 1460.68 3041.75 1653.32 2948.1 1834.56 2806.02 1968.44L2765.78 2006.54 2787.5 2024.7C2937.77 2149.32 3036.77 2323.8 3066.32 2514.65 3075.23 2572.69 3075.23 2703.73 3066.32 2759.99 3030.71 2986.09 2906.44 3178.73 2714.15 3307.27 2618.36 3371.01 2506.54 3414.45 2383.69 3435.45 2348.79 3441.51 2298.94 3442.22 1587.47 3442.93L828.63 3444 826.492 3236.77ZM2375.15 3229.65C2591.65 3181.22 2762.58 3034.87 2835.57 2835.83 2900.03 2659.93 2876.88 2476.91 2769.34 2315.61 2684.24 2188.14 2552.48 2099.47 2390.81 2061.73L2356.98 2053.9 1783.67 2051.76 1210.36 2049.98 1209.29 1442.17 1208.58 833.996 1706.04 833.996C2245.88 833.996 2233.06 833.64 2308.56 853.581 2498 904.143 2632.6 1041.59 2676.4 1229.24 2685.66 1269.12 2689.22 1378.07 2682.81 1431.84 2671.77 1527.62 2637.23 1617.71 2585.95 1684.3 2573.13 1700.67 2569.93 1702.81 2558.53 1702.81 2551.41 1702.81 2540.02 1701.03 2533.25 1699.25 2510.46 1692.48 2439.6 1681.45 2382.98 1675.39L2326.72 1669.34 2326.72 1657.95C2326.72 1649.04 2329.21 1644.42 2338.47 1638.36 2413.25 1585.66 2464.88 1501.63 2479.84 1406.2 2485.18 1372.73 2482.69 1310.78 2474.85 1281.22 2442.45 1161.94 2357.7 1079.69 2232.71 1046.57 2203.86 1038.74 2203.15 1038.74 1808.6 1038.74L1413.34 1038.74 1412.27 1414.39C1411.56 1620.91 1412.27 1803.22 1413.34 1819.25L1415.83 1848.44 1895.13 1849.87C2318.88 1850.94 2379.06 1851.65 2410.4 1856.63 2458.12 1864.47 2505.48 1875.15 2538.24 1885.83L2565.66 1894.38 2594.86 1872.66C2635.81 1842.39 2703.82 1775.09 2734.8 1734.15 2781.8 1671.48 2810.29 1618.07 2836.29 1542.58 2882.94 1407.27 2882.58 1273.39 2835.22 1136.66 2775.4 964.319 2649.34 818.329 2490.52 736.433 2426.78 703.674 2393.66 690.5 2342.74 677.325 2251.22 653.824 2286.48 654.892 1628.06 653.468L1030.53 652.044 1030.53 1946.72 1030.53 3241.04 1681.47 3239.97 2332.06 3238.9 2375.15 3229.65Z" fill="#047857" fill-rule="evenodd"/><path d="M1213 2646.36 1213 2226.07 1314.43 2226.07 1415.86 2226.07 1415.86 2544.85 1415.86 2863.62 1845.79 2863.62C2328.76 2863.62 2301.35 2865.05 2358.65 2836.55 2447.27 2792.74 2498.88 2697.29 2481.79 2608.96 2463.29 2511.37 2384.63 2440.84 2282.84 2430.51L2259.35 2428.02 2259.35 2326.51 2259.35 2225 2301.35 2227.14C2375.02 2230.7 2457.24 2257.41 2515.6 2297.3 2528.06 2305.85 2550.84 2324.73 2566.14 2339.33 2629.14 2399.53 2663.66 2462.21 2681.45 2548.41 2689.29 2587.23 2690.35 2688.39 2683.23 2724.71 2666.51 2810.91 2628.07 2882.5 2566.5 2942.34 2505.64 3001.46 2440.51 3036.73 2353.67 3057.03 2321.99 3064.51 2317.01 3064.51 1767.5 3065.58L1213 3067 1213 2646.36Z" fill="#047857" fill-rule="evenodd"/></symbol>
+<symbol id="squiggle-gold" viewBox="0 0 200 40"><path d="M5 20 Q 20 5, 35 20 T 65 20 T 95 20 T 125 20 T 155 20 T 185 20" stroke="#FBBF24" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M5 28 Q 20 13, 35 28 T 65 28 T 95 28 T 125 28 T 155 28 T 185 28" stroke="#0F172A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/></symbol>
+<symbol id="zigzag" viewBox="0 0 240 32"><path d="M5,5 L25,27 L45,5 L65,27 L85,5 L105,27 L125,5 L145,27 L165,5 L185,27 L205,5 L225,27 L235,16" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+<symbol id="zigzag-mint" viewBox="0 0 200 40"><path d="M0 20 L20 8 L40 32 L60 8 L80 32 L100 8 L120 32 L140 8 L160 32 L180 8 L200 20" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+<symbol id="dots-grid" viewBox="0 0 160 160"><defs><pattern id="dots02" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.2" fill="currentColor"/></pattern></defs><rect width="160" height="160" fill="url(#dots02)"/></symbol>
+<symbol id="dots-grid-depth" viewBox="0 0 120 120"><defs><pattern id="dpat" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2.4" fill="#064E3B"/></pattern></defs><rect width="120" height="120" fill="url(#dpat)" opacity="0.5"/></symbol>
+<symbol id="star-burst" viewBox="0 0 120 120"><path d="M60 8 L 70 42 L 105 45 L 78 68 L 88 102 L 60 82 L 32 102 L 42 68 L 15 45 L 50 42 Z" fill="#FBBF24" stroke="#0F172A" stroke-width="3" stroke-linejoin="round"/><circle cx="60" cy="60" r="10" fill="#047857" stroke="#0F172A" stroke-width="2.5"/></symbol>
+<symbol id="star-burst-bold" viewBox="0 0 140 140"><g transform="translate(70 70)"><path d="M0,-60 L14,-18 L58,-18 L24,8 L36,52 L0,26 L-36,52 L-24,8 L-58,-18 L-14,-18 Z" fill="#FCD34D" stroke="#064E3B" stroke-width="3" stroke-linejoin="round"/><circle r="10" fill="#FB7185" stroke="#064E3B" stroke-width="2.5"/></g></symbol>
+<symbol id="star-stamp-lavender" viewBox="0 0 120 120"><g stroke="#064E3B" stroke-width="3" stroke-linejoin="round"><path d="M60 6 L72 42 L110 42 L80 64 L92 100 L60 78 L28 100 L40 64 L10 42 L48 42 Z" fill="#A78BFA"/><circle cx="60" cy="60" r="10" fill="#FBBF24" stroke-width="2.5"/></g></symbol>
+<symbol id="blob-mint" viewBox="0 0 200 200"><path d="M40 60 C 30 30, 70 10, 110 25 C 150 35, 180 60, 170 100 C 165 140, 130 175, 90 170 C 45 165, 20 130, 25 100 C 28 80, 35 75, 40 60 Z" fill="#6EE7B7" stroke="#0F172A" stroke-width="3" stroke-linejoin="round"/></symbol>
+<symbol id="half-circle-lavender" viewBox="0 0 160 90"><path d="M5,85 A75,75 0 0 1 155,85 Z" fill="#A78BFA" stroke="#064E3B" stroke-width="3" stroke-linejoin="round"/><path d="M5,85 L155,85" stroke="#064E3B" stroke-width="3"/><circle cx="80" cy="55" r="14" fill="#FCD34D" stroke="#064E3B" stroke-width="2.5"/></symbol>
+<symbol id="sprout-green" viewBox="0 0 120 120"><path d="M60 110 V 55" stroke="#064E3B" stroke-width="4" stroke-linecap="round"/><path d="M60 62c-12-2-22-12-22-26 14 0 24 10 22 26z" fill="#10B981" stroke="#064E3B" stroke-width="3" stroke-linejoin="round"/><path d="M60 72c12-2 22-12 22-26-14 0-24 10-22 26z" fill="#047857" stroke="#064E3B" stroke-width="3" stroke-linejoin="round"/><ellipse cx="60" cy="112" rx="22" ry="4" fill="#064E3B" opacity="0.18"/></symbol>
+<symbol id="arrow-curve" viewBox="0 0 120 80"><path d="M6 70 Q40 6 100 24" stroke="currentColor" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M100 24 L88 14 M100 24 L92 36" stroke="currentColor" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="pres-edge prev" id="presPrev" aria-label="הקודם"></div>
+<div class="pres-edge next" id="presNext" aria-label="הבא"></div>
+<div class="pres-hud" id="presHud">
+  <button id="hudPrev" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
+  <span class="pc" id="presCounter">01 / 29</span>
+  <button id="hudNext" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
+  <button id="hudExit" aria-label="יציאה" style="margin-inline-start:6px;"><i class="ti ti-x"></i></button>
+</div>
+
+<!-- Reusable image modal · A/B states (CHANGE 3) · sits above stage + HUD in present mode.
+     Same image file in both layers: A = CSS center-crop (cover+scale), B = whole image (contain). -->
+<div class="crop-modal" id="cropModal" role="dialog" aria-modal="true" aria-label="תצוגת תמונה">
+  <div class="crop-modal__dialog">
+    <button class="crop-modal__close" id="cropModalClose" type="button" aria-label="סגור"><i class="ti ti-x"></i></button>
+    <div class="crop-modal__stage" id="cropModalStage" role="button" tabindex="0" aria-label="החליפו בין A ל-B">
+      <img class="crop-modal__img is-crop" id="cropModalCrop" src="" alt="מצב A — חיתוך">
+      <img class="crop-modal__img is-full" id="cropModalFull" src="" alt="מצב B — התמונה המלאה">
+      <span class="crop-modal__ab" id="cropModalAB" role="button" tabindex="0" aria-label="החליפו בין A ל-B"><span class="ab-a">A</span><span class="ab-b">B</span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const items = Array.from(document.querySelectorAll('.cat-item'));
+  const counter = document.getElementById('counter');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  let current = 0;
+
+  /* ===== scroll-view visibility (entrance animations) ===== */
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      en.target.classList.toggle('is-visible', en.isIntersecting && en.intersectionRatio > 0.28);
+    });
+  }, { threshold: [0, 0.28, 0.6] });
+  document.querySelectorAll('.slide').forEach(s => slideObserver.observe(s));
+
+  const trackObserver = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting && en.intersectionRatio > 0.5) {
+        current = items.indexOf(en.target);
+        counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + items.length;
+      }
+    });
+  }, { threshold: [0.5] });
+  items.forEach(it => trackObserver.observe(it));
+
+  function go(n) {
+    const i = Math.max(0, Math.min(items.length - 1, n));
+    items[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  prev.addEventListener('click', () => go(current - 1));
+  next.addEventListener('click', () => go(current + 1));
+
+  /* ============================================================
+     CLICK-TO-REVEAL step engine.
+     A forward action reveals the next pending step on the active
+     slide; only when no steps remain does it advance. Backward
+     reverses: hide the last revealed step, else go to previous slide.
+     Step kinds:
+       - generic [data-step] element  -> toggle .step-on
+         (an .imgbleed__full layer also flips its CROP/FULL badge)
+       - slide-14 .mc-prompt -> step1 = .show-color, step2 = .show-labels
+     ============================================================ */
+  function getSteps(item) {
+    const slide = item.querySelector('.slide');
+    if (!slide) return [];
+    const steps = [];
+    // slide-14 two-phase prompt: step1 colour the segments, step2 reveal bottom legend
+    const mc = slide.querySelector('[data-mc]');
+    if (mc) {
+      steps.push({
+        on: () => mc.classList.add('show-color'),
+        off: () => mc.classList.remove('show-color'),
+        isOn: () => mc.classList.contains('show-color')
+      });
+      steps.push({
+        on: () => mc.classList.add('show-legend'),
+        off: () => mc.classList.remove('show-legend'),
+        isOn: () => mc.classList.contains('show-legend')
+      });
+    }
+    // generic data-step elements, ordered by their data-step value
+    const generic = Array.from(slide.querySelectorAll('[data-step]'))
+      .sort((a, b) => (+a.dataset.step) - (+b.dataset.step));
+    generic.forEach(el => {
+      const bleed = el.closest('.imgbleed');
+      const badge = bleed ? bleed.querySelector('[data-badge]') : null;
+      steps.push({
+        on: () => { el.classList.add('step-on'); if (badge) { badge.classList.add('full'); badge.textContent = 'FULL'; } },
+        off: () => { el.classList.remove('step-on'); if (badge) { badge.classList.remove('full'); badge.textContent = 'CROP'; } },
+        isOn: () => el.classList.contains('step-on')
+      });
+    });
+    return steps;
+  }
+  function resetSteps(item) { getSteps(item).forEach(s => s.off()); }
+  function revealNext(item) {
+    const steps = getSteps(item);
+    for (const s of steps) { if (!s.isOn()) { s.on(); return true; } }
+    return false;
+  }
+  function hideLast(item) {
+    const steps = getSteps(item);
+    for (let i = steps.length - 1; i >= 0; i--) { if (steps[i].isOn()) { steps[i].off(); return true; } }
+    return false;
+  }
+
+  /* ============================================================
+     IMAGE MODAL · A / B states (CHANGE 3).
+     One reusable overlay. openCropModal(imgSrc) loads the SAME file into both
+     layers and starts in state A (CSS center-crop, the misleading view).
+     Clicking the image OR the A/B toggle switches between A (crop) and
+     B (full image, object-fit:contain — shown WHOLE, never re-cropped).
+     The × button, backdrop click, or Esc close the modal. While open the
+     present-mode click-zones + keyboard nav are disabled (cropModalOpen guard
+     + .pres-edge pointer-events:none) so the toggle/× work and do NOT advance
+     the slide.
+     ============================================================ */
+  const cropModal = document.getElementById('cropModal');
+  const cmCrop = document.getElementById('cropModalCrop');
+  const cmFull = document.getElementById('cropModalFull');
+  const cmAB = document.getElementById('cropModalAB');
+  const cmStage = document.getElementById('cropModalStage');
+  const cmClose = document.getElementById('cropModalClose');
+  const presPrevEl = document.getElementById('presPrev');
+  const presNextEl = document.getElementById('presNext');
+
+  function cropModalOpen() { return cropModal.classList.contains('open'); }
+  // hard-disable the present click-zones while the modal is open
+  function setEdgesActive(active) {
+    const pe = active ? '' : 'none';
+    if (presPrevEl) presPrevEl.style.pointerEvents = pe;
+    if (presNextEl) presNextEl.style.pointerEvents = pe;
+  }
+  function openCropModal(cropSrc, fullSrc) {
+    cmCrop.src = cropSrc;   // state A = group B, the real cropped photo
+    cmFull.src = fullSrc;   // state B = group C, the full photo
+    cropModal.classList.remove('show-full');   // start in state A (the cropped photo)
+    cropModal.classList.add('open');
+    setEdgesActive(false);                      // disable nav click-zones
+  }
+  function toggleCropState() { cropModal.classList.toggle('show-full'); }   // A <-> B
+  function closeCropModal() {
+    cropModal.classList.remove('open');
+    cropModal.classList.remove('show-full');
+    setEdgesActive(true);                       // re-enable nav click-zones
+  }
+  // open from any .crop-trigger thumbnail (click or Enter/Space)
+  document.querySelectorAll('.crop-trigger').forEach(t => {
+    const open = (e) => { e.preventDefault(); e.stopPropagation(); openCropModal(t.dataset.crop, t.dataset.full); };
+    t.addEventListener('click', open);
+    t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') open(e); });
+  });
+  // inside the modal: image click OR A/B badge toggles A<->B (closes only via × / backdrop / Esc)
+  cmStage.addEventListener('click', (e) => { e.stopPropagation(); toggleCropState(); });
+  cmAB.addEventListener('click', (e) => { e.stopPropagation(); toggleCropState(); });
+  cmAB.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); toggleCropState(); } });
+  cmClose.addEventListener('click', (e) => { e.stopPropagation(); closeCropModal(); });
+  // click on the dim backdrop (outside the dialog) closes
+  cropModal.addEventListener('click', (e) => { if (e.target === cropModal) closeCropModal(); });
+
+  /* ===== PRESENT MODE ===== */
+  const body = document.body;
+  const presBtn = document.getElementById('presentBtn');
+  const presCounter = document.getElementById('presCounter');
+  const presHud = document.getElementById('presHud');
+  let pi = 0, hudTimer = null;
+
+  function showPresent(i, opts) {
+    opts = opts || {};
+    pi = Math.max(0, Math.min(items.length - 1, i));
+    items.forEach((it, idx) => it.classList.toggle('present-active', idx === pi));
+    const active = items[pi];
+    if (!opts.keepSteps) resetSteps(active);
+    if (opts.revealAll) getSteps(active).forEach(s => s.on());
+    const slide = active.querySelector('.slide');
+    if (slide) { slide.classList.remove('is-visible'); void slide.offsetWidth; slide.classList.add('is-visible'); }
+    presCounter.textContent = String(pi + 1).padStart(2, '0') + ' / ' + items.length;
+    current = pi;
+    flashHud();
+    broadcastState();
+  }
+  function presentForward() {
+    if (cropModalOpen()) return;                      // modal captures navigation
+    const active = items[pi];
+    if (revealNext(active)) { flashHud(); broadcastState(); return; }   // consumed a step first
+    if (pi < items.length - 1) showPresent(pi + 1);   // then advance slide
+  }
+  function presentBackward() {
+    if (cropModalOpen()) return;                      // modal captures navigation
+    const active = items[pi];
+    if (hideLast(active)) { flashHud(); broadcastState(); return; }          // hid a step first
+    if (pi > 0) showPresent(pi - 1, { revealAll: true });  // prev slide, steps fully shown
+  }
+  function flashHud() {
+    presHud.classList.add('show');
+    clearTimeout(hudTimer);
+    hudTimer = setTimeout(() => presHud.classList.remove('show'), 1800);
+  }
+  function enterPresent(i) {
+    body.classList.add('presenting');
+    showPresent(i || 0);
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+  }
+  function exitPresent() {
+    body.classList.remove('presenting');
+    items.forEach(it => it.classList.remove('present-active'));
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    items[pi].scrollIntoView({ block: 'start' });
+  }
+
+  presBtn.addEventListener('click', () => {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    if (!body.classList.contains('presenting')) enterPresent(current);
+  });
+  document.getElementById('presNext').addEventListener('click', presentForward);
+  document.getElementById('presPrev').addEventListener('click', presentBackward);
+  document.getElementById('hudNext').addEventListener('click', (e) => { e.stopPropagation(); presentForward(); });
+  document.getElementById('hudPrev').addEventListener('click', (e) => { e.stopPropagation(); presentBackward(); });
+  document.getElementById('hudExit').addEventListener('click', (e) => { e.stopPropagation(); exitPresent(); });
+
+  document.addEventListener('keydown', (e) => {
+    // Modal open: capture keys so present mode is NOT exited / navigated.
+    // Esc closes the MODAL ONLY (must not exit present mode).
+    if (cropModalOpen()) {
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeCropModal(); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCropState(); }
+      else if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','PageUp','PageDown','Home','End'].includes(e.key)) { e.preventDefault(); }
+      return;
+    }
+    if (e.key === 'p' || e.key === 'P') {
+      const t = (e.target.tagName || '').toLowerCase();
+      if (t === 'input' || t === 'select' || t === 'textarea') return;
+      if (!IS_PRESENTER) { e.preventDefault(); openPresenter(); }
+      return;
+    }
+    if (!body.classList.contains('presenting')) {
+      const tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'select' || tag === 'input') return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+      else if (e.key === 'Home') go(0);
+      else if (e.key === 'End') go(items.length - 1);
+      return;
+    }
+    if (e.key === 'Escape') { exitPresent(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); presentForward(); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); presentBackward(); }
+    else if (e.key === 'Home') showPresent(0);
+    else if (e.key === 'End') showPresent(items.length - 1);
+  });
+  document.addEventListener('mousemove', () => { if (body.classList.contains('presenting')) flashHud(); });
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && body.classList.contains('presenting')) {
+      body.classList.remove('presenting');
+      items.forEach(it => it.classList.remove('present-active'));
+    }
+  });
+
+/* SP-JS-START */
+  /* ===== PRESENTER VIEW (speaker-notes second window) =====
+     P opens a synced presenter window (same file + ?presenter=1).
+     Deck = opener (broadcasts state); presenter = child (renders + sends nav).
+     postMessage opener<->child works on file:// (BroadcastChannel does not). */
+  const IS_PRESENTER = /[?&]presenter=1/.test(location.search);
+  let presenterWin = null, startedAt = null;
+
+  function broadcastState() {
+    if (!presenterWin || presenterWin.closed) return;
+    const steps = getSteps(items[pi]);
+    const totalSteps = steps.length;
+    const stepIndex = steps.filter(s => s.isOn()).length;
+    const pend = Array.from(items[pi].querySelectorAll('[data-step]:not(.step-on)'))
+      .sort((a, b) => (+a.dataset.step) - (+b.dataset.step));
+    const nextReveal = pend.length ? pend[0].textContent.replace(/\s+/g, ' ').trim().slice(0, 170) : '';
+    presenterWin.postMessage({ t: 'sp-sync', slideIndex: pi, stepIndex, totalSteps, totalSlides: items.length, startedAt, nextReveal }, '*');
+  }
+  function openPresenter() {
+    startedAt = startedAt || Date.now();
+    if (!presenterWin || presenterWin.closed) {
+      const url = location.href.split('#')[0].split('?')[0] + '?presenter=1';
+      presenterWin = window.open(url, 'sp_presenter', 'width=1040,height=740');
+    } else { presenterWin.focus(); }
+    setTimeout(broadcastState, 160);
+  }
+  function fmtClock(ms) { const s = Math.max(0, Math.floor(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+
+  function buildPresenterPanel() {
+    body.classList.add('sp-presenter-mode');
+    const root = document.createElement('div');
+    root.id = 'presenterRoot';
+    root.innerHTML =
+      '<section id="spNow"><div id="spNowLabel">עכשיו אומרים</div><div id="spNote"></div><div id="spRevealLine"></div></section>' +
+      '<section id="spNext"><div id="spNextLabel">השקף הבא</div><div id="spNextHead"></div><div id="spNextPrev"></div></section>' +
+      '<footer id="spBar"><span id="spTimer">00:00</span><span id="spPos">—</span><span id="spStep" class="is-hidden">—</span>' +
+      '<span class="sp-navbtn"><button id="spBack" type="button">‹ הקודם</button><button id="spFwd" type="button">הבא ›</button></span></footer>';
+    body.appendChild(root);
+
+    let st = { slideIndex: 0, stepIndex: 0, totalSteps: 0, totalSlides: items.length, startedAt: null, nextReveal: '' };
+
+    function renderNextPreview(idx) {
+      const box = document.getElementById('spNextPrev');
+      const head = document.getElementById('spNextHead');
+      box.innerHTML = '';
+      const nx = items[idx + 1];
+      if (!nx) { head.textContent = ''; box.innerHTML = '<div class="sp-end">— סוף המצגת —</div>'; return; }
+      const h = nx.querySelector('h1, h2, .statement, .def__term');
+      head.textContent = h ? h.textContent.replace(/\s+/g, ' ').trim() : '';
+      const REF = 1280;
+      const wrap = document.createElement('div'); wrap.className = 'sp-clonewrap'; wrap.style.width = REF + 'px';
+      const clone = nx.cloneNode(true);
+      clone.removeAttribute('id'); clone.style.margin = '0';
+      clone.querySelectorAll('.sp-notes').forEach(n => n.remove());
+      clone.querySelectorAll('.slide').forEach(s => s.classList.add('is-visible'));
+      clone.querySelectorAll('[data-step]').forEach(s => s.classList.add('step-on'));
+      wrap.appendChild(clone); box.appendChild(wrap);
+      const scale = box.clientWidth / REF;
+      wrap.style.transform = 'scale(' + scale + ')';
+      box.style.height = (REF * 9 / 16 * scale) + 'px';
+    }
+    function paint() {
+      const note = items[st.slideIndex] && items[st.slideIndex].querySelector('.sp-notes');
+      document.getElementById('spNote').innerHTML = note ? note.innerHTML : '';
+      document.getElementById('spPos').textContent = 'שקף ' + (st.slideIndex + 1) + ' / ' + st.totalSlides;
+      const stepEl = document.getElementById('spStep');
+      if (st.totalSteps > 0) { stepEl.classList.remove('is-hidden'); stepEl.textContent = 'צעד ' + st.stepIndex + ' / ' + st.totalSteps; }
+      else stepEl.classList.add('is-hidden');
+      document.getElementById('spRevealLine').textContent = st.nextReveal ? ('הבא לחשיפה: ' + st.nextReveal) : '';
+      renderNextPreview(st.slideIndex);
+    }
+    window.addEventListener('message', (ev) => { const d = ev.data || {}; if (d.t === 'sp-sync') { st = Object.assign(st, d); paint(); } });
+    document.getElementById('spBack').addEventListener('click', () => { if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'backward' }, '*'); });
+    document.getElementById('spFwd').addEventListener('click', () => { if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'forward' }, '*'); });
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowLeft', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'forward' }, '*'); }
+      else if (['ArrowRight', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'backward' }, '*'); }
+    });
+    setInterval(() => { if (st.startedAt) document.getElementById('spTimer').textContent = fmtClock(Date.now() - st.startedAt); }, 500);
+    window.addEventListener('resize', () => renderNextPreview(st.slideIndex));
+    if (window.opener) window.opener.postMessage({ t: 'sp-ready' }, '*');
+    paint();
+  }
+
+  if (IS_PRESENTER) {
+    buildPresenterPanel();
+  } else {
+    window.addEventListener('message', (ev) => {
+      const d = ev.data || {};
+      if (d.t === 'sp-ready') broadcastState();
+      else if (d.t === 'sp-cmd') { if (d.cmd === 'forward') presentForward(); else if (d.cmd === 'backward') presentBackward(); else if (d.cmd === 'exit') exitPresent(); }
+    });
+    const _pv = new URLSearchParams(location.search).get('present');
+    const _start = _pv ? Math.max(0, (parseInt(_pv, 10) || 1) - 1) : 0;
+    body.classList.add('presenting');
+    showPresent(_start);
+  }
+  /* SP-JS-END */
+</script>
+
+</body>
+</html>

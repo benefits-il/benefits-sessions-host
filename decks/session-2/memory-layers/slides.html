@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>שכבות זיכרון · Memory Layers · Benefits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Varela+Round&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<style>
+  /* ============================================================
+     Memory Layers deck · Benefits · DUPLICATED engine from chains deck (T1 lineage).
+     Engine + component CSS + sprite + animations + present-mode + presenter-view kept intact.
+     tokens.css inlined (target lives outside design-library).
+     ADDED: interactive 6-layer memory pyramid CSS (.pyr-*).
+     ============================================================ */
+
+  /* ---- tokens (inlined from 15-design-system/tokens.css) ---- */
+  :root {
+    --anchor:#047857; --ui-green:#10B981; --depth:#064E3B; --green-soft:#D1FAE5; --green-mint:#6EE7B7;
+    --canvas:#FFFBEB; --paper:#FFFFFF; --soft:#FEF3C7;
+    --ink:#0F172A; --border-soft:#FDE68A;
+    --sunshine:#FCD34D; --coral:#FB7185; --lavender:#A78BFA; --leaf:#84CC16;
+    --sky:#38BDF8; --pink:#EC4899; --teal:#2DD4BF;
+    --gray-900:#1E293B; --gray-600:#475569; --gray-500:#64748B;
+    --font-display:'Rubik', system-ui, sans-serif;
+    --font-body:'Varela Round', system-ui, sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, monospace;
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:72px;
+    --radius-sm:10px; --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-pill:999px;
+    --border:2.5px solid var(--ink); --border-bold:3px solid var(--ink);
+    --shadow-sm:3px 3px 0 0 var(--ink); --shadow-md:5px 5px 0 0 var(--ink); --shadow-lg:8px 8px 0 0 var(--ink);
+    --block-shadow:0 6px 0 0 var(--depth); --block-shadow-hover:0 8px 0 0 var(--depth); --block-shadow-active:0 2px 0 0 var(--depth);
+    --ease-bounce:cubic-bezier(0.34, 1.56, 0.64, 1); --focus-ring:3px solid var(--ui-green);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body), system-ui, sans-serif;
+    color: var(--gray-900);
+    background: var(--canvas);
+    background-image:
+      radial-gradient(circle at 10% 12%, rgba(56,189,248,0.07) 0, transparent 100px),
+      radial-gradient(circle at 90% 84%, rgba(236,72,153,0.06) 0, transparent 120px),
+      radial-gradient(circle at 50% 50%, rgba(252,211,77,0.05) 0, transparent 180px);
+    padding-bottom: 96px;
+  }
+  :is(button, a, select, summary, [tabindex]):focus-visible {
+    outline: var(--focus-ring); outline-offset: 3px; border-radius: 8px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+
+  /* ---------- Slim deck topbar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(255,251,235,0.88); backdrop-filter: blur(10px);
+    border-bottom: 3px solid var(--ink);
+    padding: 12px clamp(16px, 4vw, 40px);
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--ink); }
+  .brand__logo { height: 30px; width: auto; flex-shrink: 0; display: inline-flex; }
+  .brand__logo svg { height: 30px; width: auto; }
+  .brand__sub { font-family: var(--font-mono); font-size: 11px; color: var(--gray-600); font-weight: 600; direction: ltr; }
+  .topbar__spacer { margin-inline-start: auto; }
+  .counter { font-family: var(--font-mono); font-size: 13px; color: var(--gray-600); font-weight: 700; direction: ltr; min-width: 64px; text-align: center; }
+  .navbtn { width: 42px; height: 42px; border-radius: 50%; border: 2.5px solid var(--ink); background: var(--paper); cursor: pointer; font-size: 18px; display: grid; place-items: center; box-shadow: var(--shadow-sm); color: var(--ink); transition: all .15s var(--ease-bounce); }
+  .navbtn:hover { background: var(--sunshine); transform: translate(-1px,-1px); box-shadow: var(--shadow-md); }
+
+  /* ---------- Item wrapper ---------- */
+  .catalog { max-width: 1340px; margin: 0 auto; padding: 32px clamp(16px, 4vw, 40px) 0; }
+  .cat-item { scroll-margin-top: 84px; margin-bottom: 60px; }
+
+  /* ---------- The 16:9 stage (container-query host) ---------- */
+  .stage { container-type: inline-size; width: 100%; }
+  .slide {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+    border: 3px solid var(--ink); border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg); background: var(--canvas);
+    padding: 4.4cqw 5.2cqw;
+    display: flex; flex-direction: column; justify-content: center;
+    perspective: 1200px;
+    --t-body:   clamp(26px, 2.25cqw, 36px);
+    --t-lead:   clamp(28px, 2.7cqw, 44px);
+    --t-small:  clamp(25px, 2cqw, 31px);
+    --t-micro:  clamp(20px, 1.7cqw, 26px);
+    --t-h3:     clamp(28px, 2.5cqw, 42px);
+    --t-h2:     clamp(40px, 5cqw, 80px);
+    --t-h1:     clamp(54px, 9cqw, 150px);
+    --t-mega:   clamp(80px, 12cqw, 220px);
+    font-size: var(--t-body); line-height: 1.5; color: var(--gray-900);
+  }
+  .slide > *:not(.deco):not(.corner-mark):not(.title-logo):not(.title-glow) { position: relative; z-index: 2; }
+
+  /* ---------- Decoration helper ---------- */
+  .deco { position: absolute; pointer-events: none; z-index: 0; display: block; }
+  svg.deco { width: 100%; height: 100%; }
+  .ink-anchor { color: var(--anchor); } .ink-ink { color: var(--ink); } .ink-depth { color: var(--depth); }
+  .ink-white { color: #fff; } .ink-sun { color: var(--sunshine); }
+
+  /* ---------- Logo mark · RTL isolation ----------
+     The Benefits logo is a portrait mark (viewBox 824 453 2250 2991).
+     In an RTL document the bare <svg> inherits direction:rtl and MIRRORS the
+     glyph; force LTR + explicit aspect-preservation on every logo svg. */
+  .brand__logo svg, .cover-logo svg, .corner-mark svg, .title-logo svg, .closing-logo svg {
+    direction: ltr; unicode-bidi: isolate; overflow: visible;
+  }
+  /* ---------- Contained corner brand mark ---------- */
+  .corner-mark { position: absolute; top: 3.4cqw; left: 4.2cqw; right: auto; z-index: 3; height: 4.8cqw; min-height: 32px; max-height: 56px; width: auto; pointer-events: none; opacity: 0.92; overflow: visible; }
+  .corner-mark svg { height: 100%; width: auto; display: block; }
+  .slide--dark .corner-mark, .slide--ask .corner-mark, .slide--section .corner-mark { opacity: 1; }
+
+  /* ---------- Shared atoms ---------- */
+  .kicker { display: inline-flex; align-items: center; gap: 0.5em; background: var(--sunshine); color: var(--ink); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.45em 1em; font-family: var(--font-display); font-size: clamp(20px, 1.7cqw, 26px); font-weight: 700; box-shadow: 4px 4px 0 0 var(--ink); width: max-content; max-width: 96%; }
+  .tag { display: inline-flex; align-items: center; gap: 0.5em; background: var(--paper); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.4em 1em; font-family: var(--font-display); font-size: clamp(20px, 1.7cqw, 26px); font-weight: 700; color: var(--ink); box-shadow: 4px 4px 0 0 var(--ink); width: max-content; }
+  .head { display: flex; align-items: center; gap: 1.4cqw; margin-bottom: 2.4cqw; }
+  .num { display: grid; place-items: center; width: 6cqw; height: 6cqw; min-width: 56px; min-height: 56px; flex-shrink: 0; background: var(--anchor); color: #fff; border: 3px solid var(--ink); border-radius: 50%; font-family: var(--font-display); font-weight: 900; font-size: var(--t-h3); direction: ltr; box-shadow: 5px 5px 0 0 var(--ink); }
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink); margin: 0; }
+  .slide h2 { font-size: var(--t-h2); font-weight: 800; line-height: 1.04; letter-spacing: -0.04em; }
+  .slide h2 .hi { background: var(--sunshine); padding: 0 0.16em; border-radius: 8px; }
+  .slide h2 .pill { background: var(--anchor); color: #fff; padding: 0 0.28em; border: 4px solid var(--ink); border-radius: 14px; box-shadow: 6px 6px 0 0 var(--ink); display: inline-block; }
+  .lead { font-size: var(--t-lead); line-height: 1.45; color: var(--gray-900); margin: 0 0 2.2cqw; max-width: 40em; }
+  .lead strong { background: var(--green-soft); padding: 0 0.25em; border-radius: 6px; }
+  .muted { color: var(--gray-600); }
+  .ltr { direction: ltr; unicode-bidi: isolate; }
+
+  /* facts list */
+  .facts { display: grid; gap: 1.3cqw; list-style: none; padding: 0; margin: 0; }
+  .facts li { display: flex; gap: 1.2cqw; align-items: center; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 18px; padding: 1.3cqw 1.6cqw; box-shadow: 5px 5px 0 0 var(--ink); font-size: var(--t-body); line-height: 1.4; }
+  .facts li i { background: var(--anchor); color: #fff; width: 3.4cqw; height: 3.4cqw; min-width: 40px; min-height: 40px; border-radius: 50%; border: 2.5px solid var(--ink); display: grid; place-items: center; flex-shrink: 0; font-size: var(--t-small); }
+  .facts li.alt i { background: var(--coral); } .facts li.warn i { background: var(--sunshine); color: var(--ink); }
+  .facts li.sky i { background: var(--sky); color: var(--ink); } .facts li.lav i { background: var(--lavender); }
+  .facts li strong { font-family: var(--font-display); }
+
+  .card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-xl); padding: 2.6cqw; box-shadow: 8px 8px 0 0 var(--ink); position: relative; overflow: hidden; }
+  .body-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3.4cqw; align-items: center; }
+
+  /* columns + panels */
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4cqw; align-items: stretch; }
+  .cols-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.8cqw; align-items: stretch; }
+  .panel { border: 3px solid var(--ink); border-radius: var(--radius-lg); padding: 2.4cqw; box-shadow: 7px 7px 0 0 var(--ink); background: var(--paper); }
+  .panel h3 { font-size: var(--t-h3); font-weight: 700; margin: 0 0 0.9cqw; }
+  .panel p { font-size: var(--t-small); line-height: 1.45; margin: 0; }
+
+  /* summary cards */
+  .summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.8cqw; }
+  .summary-card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-xl); padding: 2.4cqw; box-shadow: 7px 7px 0 0 var(--ink); }
+  .summary-card__num { font-family: var(--font-display); font-weight: 900; font-size: clamp(48px,6cqw,90px); line-height: 1; color: var(--anchor); margin: 0 0 0.8cqw; direction: ltr; }
+  .summary-card:nth-child(2) .summary-card__num { color: var(--pink); }
+  .summary-card:nth-child(3) .summary-card__num { color: var(--sky); }
+  .summary-card h3 { font-size: var(--t-h3); font-weight: 700; margin: 0 0 0.6cqw; }
+  .summary-card p { font-size: var(--t-small); margin: 0; line-height: 1.45; }
+
+  /* big statement */
+  .statement { font-family: var(--font-display); font-weight: 900; font-size: clamp(42px,5.8cqw,104px); line-height: 1.1; letter-spacing: -0.03em; text-align: center; color: var(--ink); margin: 0; max-width: 92%; align-self: center; }
+  .statement .hi { background: var(--sunshine); padding: 0 0.15em; border-radius: 10px; }
+  .statement .mint { color: var(--anchor); }
+
+  /* definition */
+  .def { align-self: center; max-width: 88%; text-align: center; margin: 0 auto; }
+  .def__term { display: inline-flex; align-items: baseline; gap: 0.4em; font-family: var(--font-display); font-weight: 900; font-size: clamp(40px,5cqw,88px); background: var(--anchor); color: #fff; border: 4px solid var(--ink); border-radius: 18px; padding: 0.08em 0.4em; box-shadow: 9px 9px 0 0 var(--ink); margin-bottom: 2cqw; letter-spacing: -0.02em; direction: ltr; }
+  .def__term .gloss { font-family: var(--font-display); font-weight: 700; font-size: 0.5em; color: var(--sunshine); letter-spacing: 0; }
+  .def__meaning { font-size: var(--t-lead); line-height: 1.4; color: var(--gray-900); }
+  .def__meaning strong { background: var(--sunshine); padding: 0 0.2em; border-radius: 8px; }
+
+  /* cover / title */
+  .slide--cover { text-align: center; align-items: center; justify-content: center; }
+  .slide--cover h1 { font-size: clamp(40px,6.4cqw,104px); font-weight: 900; line-height: 1.02; letter-spacing: -0.04em; margin: 0 0 1.4cqw; }
+  .cover-logo { width: 18cqw; max-width: 220px; height: auto; margin: 0 auto 1.4cqw; display: block; }
+  .cover-logo svg { width: 100%; height: auto; display: block; }
+
+  /* ===== TITLE slide · calm dark-green hero ===== */
+  .slide--title { background: var(--depth); color: #fff; text-align: center; align-items: center; justify-content: center; overflow: hidden; }
+  .title-glow { position: absolute; inset: -18%; z-index: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 22% 26%, rgba(16,185,129,0.30) 0, transparent 42%),
+      radial-gradient(circle at 80% 74%, rgba(110,231,183,0.16) 0, transparent 44%),
+      radial-gradient(circle at 64% 14%, rgba(252,211,77,0.12) 0, transparent 40%); }
+  .title-eyebrow { display: inline-flex; align-items: center; gap: 0.55em; background: rgba(255,255,255,0.08); color: var(--green-mint);
+    border: 2.5px solid var(--green-mint); border-radius: var(--radius-pill); padding: 0.5em 1.3em;
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(20px,1.8cqw,28px); margin-bottom: 2.4cqw; }
+  .title-eyebrow .dot { width: 0.72em; height: 0.72em; border-radius: 50%; background: var(--green-mint); flex: none; }
+  .title-eyebrow .ltr { color: var(--green-mint); }
+  .slide--title h1 { font-family: var(--font-display); font-weight: 900; color: #fff;
+    font-size: clamp(46px,7cqw,118px); line-height: 1.04; letter-spacing: -0.035em; margin: 0 0 2.6cqw; max-width: 94%; }
+  .slide--title h1 .ltr { color: #fff; }
+  .slide--title h1 .stamp { display: inline-block; background: var(--sunshine); color: var(--ink);
+    padding: 0 0.22em; border: 5px solid var(--ink); border-radius: 16px;
+    box-shadow: 8px 8px 0 0 rgba(0,0,0,0.42); transform: rotate(-2deg); }
+  .slide--title .tagline { font-family: var(--font-display); font-weight: 500; color: rgba(255,255,255,0.9);
+    font-size: clamp(22px,2.3cqw,34px); line-height: 1.45; margin: 0; max-width: 80%; }
+  .slide--title .tagline strong { color: var(--green-mint); font-weight: 600; }
+  .title-logo { position: absolute; bottom: 3.4cqw; left: 4cqw; right: auto; z-index: 3;
+    width: 7.5cqw; max-width: 84px; min-width: 50px; height: auto; opacity: 0.95; }
+  .title-logo svg { width: 100%; height: auto; display: block; filter: brightness(0) invert(1); }
+
+  /* ===== closing slide ===== */
+  .slide--closing { background: var(--depth); color: #fff; text-align: center; align-items: center; justify-content: center; }
+  .closing-logo { width: 20cqw; max-width: 240px; height: auto; margin: 0 auto 3cqw; display: block; }
+  .closing-logo svg { width: 100%; height: auto; display: block; filter: brightness(0) invert(1); }
+  .closing-name { font-family: var(--font-display); font-weight: 900; font-size: clamp(56px,9cqw,150px); line-height: 1; letter-spacing: -0.03em; color: #fff; margin: 0 0 2.2cqw; direction: ltr; unicode-bidi: isolate; }
+  .closing-line { display: inline-flex; align-items: center; gap: 0.6em; font-family: var(--font-display); font-weight: 600; font-size: clamp(26px,2.7cqw,42px); color: var(--green-mint); background: rgba(255,255,255,0.06); border: 2.5px solid var(--green-mint); border-radius: var(--radius-pill); padding: 0.5em 1.4em; }
+  .closing-line .ltr { color: #fff; }
+
+  /* section divider */
+  .slide--section { justify-content: center; }
+  .section-kicker { font-family: var(--font-display); font-size: var(--t-h3); font-weight: 700; color: var(--anchor); letter-spacing: 0.08em; margin-bottom: 1cqw; }
+  .section-num { font-family: var(--font-display); font-weight: 900; font-size: clamp(140px,16cqw,300px); line-height: 0.85; color: var(--ink); letter-spacing: -0.05em; opacity: 0.12; position: absolute; top: 2cqw; inset-inline-start: 5cqw; z-index: 1; direction: ltr; }
+  .section-title { font-family: var(--font-display); font-weight: 900; font-size: clamp(44px,6.4cqw,110px); line-height: 1.02; letter-spacing: -0.03em; color: var(--ink); margin: 0; max-width: 90%; }
+  .section-title .hi { background: var(--sunshine); padding: 0 0.12em; border-radius: 10px; }
+  .section-sub { font-family: var(--font-display); font-weight: 500; font-size: var(--t-lead); color: var(--gray-900); margin: 1.4cqw 0 0; max-width: 80%; }
+
+  /* ---------- COLOUR-FORWARD canvases ---------- */
+  .slide--dark { background: var(--depth); color: #fff; }
+  .slide--dark h2, .slide--dark h1, .slide--dark h3, .slide--dark h4 { color: #fff; }
+  .slide--dark .lead { color: var(--green-mint); }
+  .slide--sun { background: var(--sunshine); }
+  .slide--sky { background: var(--sky); }
+  .slide--coral { background: var(--coral); }
+  .slide--lav { background: var(--lavender); }
+  .slide--soft { background: var(--soft); }
+  .slide--greensoft { background: var(--green-soft); }
+
+  /* framework letter row (LTR) — reused for SPOKE */
+  .micro-map { display: grid; grid-template-columns: repeat(5,1fr); gap: 1.4cqw; direction: ltr; }
+  .micro-card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg); padding: 1.8cqw 1.2cqw; box-shadow: 6px 6px 0 0 var(--ink); text-align: center; }
+  .micro-card__letter { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px,4cqw,60px); line-height: 1; margin: 0 auto 0.8cqw; color: #fff; width: 7cqw; height: 7cqw; min-width: 64px; min-height: 64px; border-radius: 50%; border: 3px solid var(--ink); display: grid; place-items: center; box-shadow: 4px 4px 0 0 var(--ink); }
+  .micro-card__en { font-family: var(--font-display); font-weight: 700; font-size: var(--t-small); direction: ltr; margin: 0 0 0.3cqw; color: var(--ink); }
+  .micro-card__he { font-size: var(--t-micro); margin: 0; color: var(--gray-900); line-height: 1.3; direction: rtl; }
+
+  /* footnote */
+  .footnote { font-family: var(--font-display); font-size: var(--t-micro); color: var(--gray-500); margin-top: 1.6cqw; }
+
+  /* ============================================================
+     Reused from chains deck — flow links, numbered cards, copy blocks, demo pair.
+     ============================================================ */
+  .link { display: grid; place-items: center; text-align: center; background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg); box-shadow: 5px 5px 0 0 var(--ink); padding: 0.85cqw 1.3cqw; font-family: var(--font-display); font-weight: 800; font-size: var(--t-small); color: var(--ink); flex: 1 1 0; min-width: 0; line-height: 1.15; }
+  .link__role { font-family: var(--font-display); font-weight: 600; font-size: var(--t-micro); color: var(--gray-600); margin-top: 0.2em; }
+  .link--first { background: var(--green-soft); }
+  .link--next { background: var(--sunshine); }
+  .link--depth { background: var(--anchor); color: #fff; }
+  .link--depth .link__role { color: var(--green-mint); }
+  .chain-arrow { display: grid; place-items: center; gap: 0.25em; flex: none; color: var(--anchor); }
+  .chain-arrow i { font-size: clamp(30px,3.4cqw,52px); line-height: 1; }
+  .chain-prod { font-family: var(--font-display); font-weight: 700; font-size: var(--t-micro); color: var(--ink); background: var(--paper); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.15em 0.7em; box-shadow: 3px 3px 0 0 var(--ink); white-space: nowrap; }
+
+  /* numbered cards */
+  .ncard { position: relative; }
+  .ncard__n { position: absolute; top: -1.1cqw; inset-inline-start: 1.2cqw; width: 3cqw; height: 3cqw; min-width: 38px; min-height: 38px; background: var(--anchor); color: #fff; border: 2.5px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-weight: 900; font-size: var(--t-small); direction: ltr; box-shadow: 3px 3px 0 0 var(--ink); }
+  .ncard:nth-child(2) .ncard__n { background: var(--coral); }
+  .ncard:nth-child(3) .ncard__n { background: var(--sky); color: var(--ink); }
+  .ncard h3 { font-size: var(--t-h3); font-weight: 800; margin: 0.6cqw 0 0.5cqw; line-height: 1.12; }
+  .ncard p { font-size: var(--t-small); line-height: 1.4; margin: 0; color: var(--gray-900); }
+
+  /* SPOKE letter list (slide 9) */
+  .spoke-list { display: grid; gap: 1cqw; list-style: none; padding: 0; margin: 0; }
+  .spoke-list li { display: flex; gap: 1.2cqw; align-items: center; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 18px; padding: 1cqw 1.5cqw; box-shadow: 5px 5px 0 0 var(--ink); font-size: var(--t-small); line-height: 1.36; }
+  .spoke-list li .ltr-letter { flex: none; display: grid; place-items: center; width: 4cqw; height: 4cqw; min-width: 48px; min-height: 48px; background: var(--anchor); color: #fff; border: 2.5px solid var(--ink); border-radius: 50%; font-family: var(--font-display); font-weight: 900; font-size: var(--t-h3); direction: ltr; }
+  .spoke-list li b { font-family: var(--font-display); font-weight: 800; }
+  .spoke-list li.is-key { background: var(--green-soft); border-color: var(--anchor); box-shadow: 6px 6px 0 0 var(--anchor); }
+  .spoke-list li.is-key .ltr-letter { background: var(--sunshine); color: var(--ink); transform: rotate(-3deg); box-shadow: 4px 4px 0 0 var(--ink); }
+  .spoke-key-tag { flex: none; align-self: center; font-family: var(--font-display); font-weight: 700; font-size: clamp(17px,1.35cqw,21px); background: var(--anchor); color: #fff; border: 2px solid var(--ink); border-radius: var(--radius-pill); padding: 0.18em 0.8em; white-space: nowrap; }
+
+  /* demo pair (live demo card) */
+  .demo-pair { display: flex; align-items: center; justify-content: center; gap: 1.6cqw; margin: 1.2cqw auto 0; flex-wrap: nowrap; }
+  .demo-pair .link { flex: 0 1 auto; min-width: 0; font-size: var(--t-h3); padding: 1.2cqw 1.8cqw; }
+  .demo-pair .chain-arrow i { font-size: clamp(38px,4.2cqw,66px); color: var(--green-mint); }
+
+  /* ============================================================
+     NEW for memory-layers deck — interactive 6-layer memory pyramid.
+     Benefits DS language (ink borders, hard offset shadows). Reveals base→apex.
+     ============================================================ */
+  .pyr { display: flex; flex-direction: column; align-items: center; gap: 0.85cqw; width: 100%; }
+  .pyr-band { width: var(--w, 100%); margin: 0 auto; display: flex; align-items: center; gap: 1cqw;
+    background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg);
+    box-shadow: 5px 5px 0 0 var(--ink); padding: 0.8cqw 1.5cqw; }
+  .pyr-name { flex: none; font-family: var(--font-display); font-weight: 800; font-size: clamp(22px,1.9cqw,28px); color: var(--ink); line-height: 1.12; }
+  .pyr-gloss { font-family: var(--font-display); font-weight: 600; font-size: 0.62em; color: var(--gray-500); margin-inline-start: 0.45em; }
+  .pyr-cap { flex: 1 1 auto; min-width: 0; font-size: clamp(19px,1.48cqw,23px); line-height: 1.3; color: var(--gray-600); }
+  .pyr-tag { flex: none; align-self: center; font-family: var(--font-display); font-weight: 700; font-size: clamp(17px,1.3cqw,20px);
+    background: var(--soft); color: var(--ink); border: 2px solid var(--ink); border-radius: var(--radius-pill); padding: 0.2em 0.75em; white-space: nowrap; }
+  .pyr-band.is-kb { background: var(--anchor); border-color: var(--ink); box-shadow: 7px 7px 0 0 var(--ink); }
+  .pyr-band.is-kb .pyr-name { color: #fff; }
+  .pyr-band.is-kb .pyr-gloss { color: var(--green-mint); }
+  .pyr-band.is-kb .pyr-cap { color: var(--green-soft); }
+  .pyr-band.is-kb .pyr-tag { background: var(--sunshine); color: var(--ink); }
+  .pyr-band.is-rag { background: var(--canvas); border-style: dashed; box-shadow: none; opacity: 0.82; margin-bottom: 1.1cqw; }
+  .pyr-band.is-rag .pyr-tag { background: var(--paper); color: var(--gray-600); }
+  .pyr-activity { display: inline-flex; align-items: center; gap: 0.5em; background: var(--paper); border: 2.5px solid var(--ink);
+    border-radius: var(--radius-pill); padding: 0.36em 0.95em; font-family: var(--font-display); font-weight: 700; font-size: clamp(18px,1.5cqw,23px); color: var(--ink); box-shadow: 4px 4px 0 0 var(--ink); max-width: 60%; }
+
+  /* ============================================================
+     ENTRANCE / EXIT — transition-driven (reverses on leave).
+     ============================================================ */
+  .anim { opacity: 0; transform: translateY(32px); transition: opacity .55s var(--ease-bounce), transform .55s var(--ease-bounce); transition-delay: calc(var(--i, 0) * 75ms); }
+  .anim.x      { transform: translateX(56px); }
+  .anim.xr     { transform: translateX(-56px); }
+  .anim.pop    { transform: scale(0.55); }
+  .anim.up-big { transform: translateY(64px); }
+  .anim.drop   { transform: translateY(-56px); }
+  .anim.rot    { transform: rotate(-7deg) translateY(36px) scale(0.94); }
+  .anim.rotr   { transform: rotate(7deg) translateY(36px) scale(0.94); }
+  .anim.zoom   { transform: scale(0.2); }
+  .is-visible .anim { opacity: 1; transform: none; }
+
+  /* ============================================================
+     CLICK-TO-REVEAL step system.
+     ============================================================ */
+  [data-step] { transition: opacity .5s var(--ease-bounce), transform .5s var(--ease-bounce); }
+  .slide [data-step]:not(.step-on),
+  .is-visible [data-step]:not(.step-on) { opacity: 0; transform: translateY(24px); }
+  .slide [data-step].step-on,
+  .is-visible [data-step].step-on { opacity: 1; transform: none; }
+
+  @media (max-width: 560px) {
+    .brand__sub { display:none; }
+  }
+
+  /* ===== PRESENT MODE ===== */
+  .present-btn { display:inline-flex; align-items:center; gap:0.5em; font-family:var(--font-body); font-weight:700; font-size:14px; background:var(--anchor); color:#fff; border:2.5px solid var(--ink); border-radius:var(--radius-pill); padding:9px 18px; box-shadow:var(--shadow-sm); cursor:pointer; transition:all .15s var(--ease-bounce); }
+  .present-btn:hover { background:var(--depth); transform:translate(-1px,-1px); box-shadow:var(--shadow-md); }
+  body.presenting { overflow:hidden; background:#0b0b0b; }
+  body.presenting .topbar { display:none; }
+  body.presenting .catalog { max-width:none; margin:0; padding:0; }
+  body.presenting .cat-item { display:none; margin:0; }
+  body.presenting .cat-item.present-active { display:block; }
+  body.presenting .cat-item.present-active .stage {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:min(100vw, 177.78vh); height:min(56.25vw, 100vh); z-index:500;
+  }
+  body.presenting .cat-item.present-active .slide {
+    width:100%; height:100%; aspect-ratio:auto; border:0; border-radius:0; box-shadow:none;
+  }
+  /* click zones */
+  .pres-edge { position:fixed; top:0; bottom:0; z-index:550; display:none; cursor:pointer; }
+  body.presenting .pres-edge { display:block; }
+  .pres-edge.prev { right:0; width:24%; } /* RTL: right side = previous */
+  .pres-edge.next { left:0; width:76%; }  /* RTL: left/most = next */
+  /* floating HUD */
+  .pres-hud { position:fixed; z-index:600; bottom:20px; left:50%; transform:translateX(-50%);
+    display:none; align-items:center; gap:12px; background:rgba(15,23,42,0.82); color:#fff;
+    border-radius:var(--radius-pill); padding:8px 14px; font-family:var(--font-mono); font-size:13px;
+    backdrop-filter:blur(8px); direction:rtl; opacity:0; transition:opacity .35s; }
+  body.presenting .pres-hud { display:flex; }
+  body.presenting .pres-hud:hover, body.presenting .pres-hud.show { opacity:1; }
+  .pres-hud button { background:transparent; border:0; color:#fff; cursor:pointer; font-size:20px; line-height:1; display:grid; place-items:center; padding:2px; }
+  .pres-hud .pc { min-width:58px; text-align:center; font-weight:700; direction:ltr; }
+  /* SP-CSS-START */
+  /* ===== PRESENTER VIEW (speaker-notes window · ?presenter=1) ===== */
+  .sp-notes{display:none}
+  body.sp-presenter-mode{background:#0f1115;overflow:auto;height:auto;margin:0}
+  body.sp-presenter-mode .topbar,
+  body.sp-presenter-mode #catalog,
+  body.sp-presenter-mode .pres-edge,
+  body.sp-presenter-mode .pres-hud{display:none!important}
+  #presenterRoot{display:none}
+  body.sp-presenter-mode #presenterRoot{
+    display:grid;direction:rtl;box-sizing:border-box;min-height:100vh;
+    padding:clamp(16px,2.2vw,30px);gap:clamp(14px,1.8vw,24px);
+    grid-template-columns:1.25fr 0.75fr;grid-template-rows:1fr auto;
+    grid-template-areas:"now next" "bar bar";
+    color:#e8eaf0;font-family:'Rubik','Varela Round',system-ui,sans-serif;
+  }
+  #presenterRoot section,#presenterRoot footer{background:#171a21;border:1px solid #272d39;border-radius:18px;padding:clamp(16px,1.9vw,28px);min-height:0}
+  #spNowLabel,#spNextLabel{font-size:14px;letter-spacing:.05em;color:#8b93a3;margin-bottom:12px}
+  #spNow{grid-area:now;display:flex;flex-direction:column}
+  #spNote{font-size:clamp(22px,2.3vw,34px);line-height:1.5;font-weight:500;overflow:auto;flex:1}
+  #spNote:empty::before{content:'— אין הערה לשקף הזה —';color:#565d6b;font-size:.62em}
+  #spNote .sp-points{margin:.1em 0 0;padding-inline-start:1.2em;list-style:disc}
+  #spNote .sp-points li{margin:.5em 0;line-height:1.5}
+  #spNote .sp-points strong{color:#fff;font-weight:700}
+  #spNote .sp-paste{position:relative;margin:.7em 0 .1em;padding:.7em .9em;border:1px solid #2f6b53;border-radius:10px;background:rgba(16,185,129,.09);line-height:1.55;font-size:.9em}
+  #spNote .sp-paste__tag{display:inline-block;margin-bottom:.45em;padding:.12em .8em;border-radius:999px;background:#10B981;color:#06281d;font-size:.62em;font-weight:700;letter-spacing:.02em}
+  #spNote .sp-paste__copy{position:absolute;top:.5em;inset-inline-end:.6em;display:inline-flex;align-items:center;gap:.3em;padding:.22em .75em;border-radius:999px;border:1px solid #2f6b53;background:#10B981;color:#06281d;font-family:inherit;font-size:.6em;font-weight:700;cursor:pointer}
+  #spNote .sp-paste__copy:hover{background:#34d399}
+  #spNote .sp-paste__copy.ok{background:#6EE7B7}
+  #spNote .sp-paste__text{white-space:pre-wrap;line-height:1.55}
+  #spNote .sp-cue{display:block;margin-top:.6em;padding:.45em .72em;border-radius:10px;background:rgba(252,183,0,.12);border:1px solid rgba(252,183,0,.32);color:#fcd873;font-size:.6em;font-weight:600;line-height:1.45}
+  #spRevealLine{margin-top:14px;padding-top:12px;border-top:1px dashed #2c313d;color:#9aa3b4;font-size:clamp(15px,1.5vw,20px)}
+  #spRevealLine:empty{display:none;border:0;margin:0;padding:0}
+  #spNext{grid-area:next;display:flex;flex-direction:column;gap:12px}
+  #spNextHead{font-size:clamp(18px,1.8vw,26px);font-weight:700;line-height:1.3;color:#fff}
+  #spNextPrev{position:relative;overflow:hidden;border-radius:12px;background:#0b0d11;width:100%}
+  #spNextPrev .sp-clonewrap{position:absolute;top:0;right:0;transform-origin:top right}
+  #spNextPrev .sp-end{display:grid;place-items:center;height:100%;color:#565d6b;font-size:20px}
+  #spNextPrev .cat-item{margin:0}
+  #spBar{grid-area:bar;display:flex;align-items:center;gap:clamp(16px,2.2vw,32px);padding:12px clamp(18px,2vw,26px)}
+  #spTimer{font-variant-numeric:tabular-nums;font-weight:800;font-size:clamp(30px,3.2vw,48px);color:#fcb700;letter-spacing:.02em}
+  #spPos,#spStep{color:#aeb6c6;font-size:clamp(18px,1.9vw,26px);font-variant-numeric:tabular-nums}
+  #spStep.is-hidden{display:none}
+  #presenterRoot .sp-navbtn{margin-inline-start:auto;display:flex;gap:10px}
+  #presenterRoot .sp-navbtn button{font:inherit;font-size:clamp(16px,1.6vw,20px);background:#262d39;color:#e8eaf0;border:0;border-radius:10px;padding:10px 18px;cursor:pointer}
+  #presenterRoot .sp-navbtn button:hover{background:#333c4b}
+  /* SP-CSS-END */
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand__logo" aria-label="Benefits"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+    שכבות זיכרון
+    <span class="brand__sub">· Memory Layers · Lesson 2</span>
+  </div>
+  <div class="topbar__spacer"></div>
+  <span class="counter" id="counter">01 / 11</span>
+  <button class="navbtn" id="prev" type="button" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
+  <button class="navbtn" id="next" type="button" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
+  <button class="present-btn" id="presentBtn" type="button"><i class="ti ti-presentation"></i> מסך מלא</button>
+</header>
+
+<main class="catalog" id="catalog">
+
+  <!-- 01 · TITLE · calm dark-green hero -->
+  <section class="cat-item" id="s1" data-type="title">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>היום אנחנו הולכים לחשוף את מה ששתלנו לכם ביחידת הבית של Notion.</li><li>אנחנו נבין איך AI באמת "זוכר" דברים, ובעיקר — מה אנחנו צריכים לעשות עם זה כדי לעבוד נכון.</li></ul><span class="sp-cue">▸ קליק למעבר שקף. הבא: שקף הפתיחה.</span></aside>
+    <div class="stage"><div class="slide slide--title">
+      <span class="title-glow" aria-hidden="true"></span>
+      <svg class="deco" style="top:9%;right:8%;width:5.5cqw;height:5.5cqw;" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="var(--sunshine)" stroke="var(--ink)" stroke-width="6"/></svg>
+      <svg class="deco" style="top:11%;left:6%;width:7.5cqw;height:7.5cqw;opacity:.92;" aria-hidden="true" viewBox="0 0 100 100">
+        <rect x="14" y="64" width="72" height="16" rx="4" fill="var(--green-mint)" stroke="var(--ink)" stroke-width="4"/>
+        <rect x="24" y="42" width="52" height="16" rx="4" fill="var(--sunshine)" stroke="var(--ink)" stroke-width="4"/>
+        <rect x="34" y="20" width="32" height="16" rx="4" fill="var(--coral)" stroke="var(--ink)" stroke-width="4"/>
+      </svg>
+      <span class="title-eyebrow anim drop"><span class="dot"></span> <span class="ltr">Memory Layers</span>™ · מפגש <span class="ltr">2</span></span>
+      <h1 class="anim pop" style="--i:1">תפסיקו לנסות לגרום ל-<span class="ltr">AI</span> לזכור — שמרו את הזיכרון <span class="stamp">מחוץ לו</span></h1>
+      <span class="title-logo anim drop" style="--i:3" aria-label="Benefits"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+    </div></div>
+  </section>
+
+  <!-- 02 · ACTIVITY · opening poll -->
+  <section class="cat-item" id="s2" data-type="activity">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>בואו נתחיל בשאלה פשוטה.</li><li>סיפרתם ל-AI שאתם אוהבים קפה? עשיתם סוכן, כתבתם לו מידע — ואתם רוצים שהוא יזכור משהו? יש לכם מידע שאתם רוצים שהוא יזכור, אולי משהו אחר? ⏸</li><li>מעניין לשמוע מה ניסיתם לעשות ואיך זה עבד לכם.</li></ul><span class="sp-cue">▸ הקשבה לתשובות הקהל ומעבר. הבא: שתי הדרכים האנושיות לזכור.</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="bottom:8%;left:6%;width:18cqw;height:4cqw;"><use href="#squiggle-gold"/></svg>
+      <span class="kicker anim drop"><i class="ti ti-message-circle-question"></i> פתיחה</span>
+      <h2 class="anim x" style="--i:1;margin:1.1cqw 0 1.8cqw;">מה ניסיתם לעשות כדי לגרום ל-<span class="ltr">AI</span> <span class="hi">לזכור</span>?</h2>
+      <ul class="facts" style="max-width:none;">
+        <li class="anim x" style="--i:2"><i class="ti ti-bookmark"></i><div>חשבו על פעם שבה רציתם שהמודל ישמור על משהו — העדפה, עובדה, פרט עליכם או על העבודה שלכם.</div></li>
+        <li class="warn anim x" style="--i:3"><i class="ti ti-eye-off"></i><div>איפה זה עבד, ואיפה הוא שכח את זה בשקט?</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 03 · TWO-COLUMN-COMPARE · two ways humans remember -->
+  <section class="cat-item" id="s3" data-type="two-column-compare">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>כדי להבין את הבעיה, בואו נסתכל קודם עלינו.</li><li>לבני אדם יש שתי דרכים לזכור. או שמשהו מפעיל רגש — וככה זוכרים בלי לחזור על זה. או שחוזרים על משהו שוב ושוב עד שמבינים שהוא חשוב (spaced repetition). שינה עוזרת לקבע.</li><li>אצל המכונה זה עובד אחרת לגמרי.</li></ul><span class="sp-cue">▸ מעבר לשקף ההבדל המהותי. הבא: ההבדל המהותי — AI הוא stateless.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-brain"></i> איך אנחנו זוכרים</span>
+      <h2 class="anim x" style="--i:1;margin:1cqw 0 1.6cqw;font-size:clamp(32px,3.9cqw,54px);">בני אדם זוכרים ב<span class="hi">שתי דרכים</span>.</h2>
+      <div class="cols-2">
+        <div class="panel anim x" style="--i:2"><h3><i class="ti ti-bolt" style="color:var(--coral);"></i> רגש</h3><p>כשמשהו מרגש אותנו, הוא מקודד בצורה עמוקה ונשאר בלי שנצטרך לחזור עליו.</p></div>
+        <div class="panel anim x" style="--i:3"><h3><i class="ti ti-repeat" style="color:var(--anchor);"></i> חזרה לאורך זמן</h3><p>חזרה על משהו שוב ושוב מסמנת אותו כחשוב, והשינה מגבשת אותו.</p></div>
+      </div>
+      <p class="footnote anim" style="--i:4;text-align:center;margin-top:2cqw;">שתי הדרכים הללו הן דרכים שבהן התודעה שומרת על מצב (<span class="ltr">state</span>) מרגע אחד למשנהו.</p>
+    </div></div>
+  </section>
+
+  <!-- 04 · BIG STATEMENT · every message is a fresh read -->
+  <section class="cat-item" id="s4" data-type="big-statement">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>האמת היא ש-AI הוא stateless. כל הודעה היא קריאה מחודשת של ההיסטוריה.</li><li>(עכשיו חושפים: אין רגש/שינה/מנגנון) ל-AI אין amygdala, אין hippocampus, אין שינה, אין consolidation. המשקלים שלו קפואים מרגע סיום האימון.</li><li>(עכשיו חושפים: לא ממשיך מאיפה שעצר) הוא לא באמת ממשיך לעבוד מאיפה שהוא עצר קודם.</li><li>(עכשיו חושפים: כש"זוכר" המערכת מזריקה את ההיסטוריה לחלון ההקשר) בכל פעם שהוא כאילו "זוכר" משהו, המערכת פשוט מזריקה את כל ההיסטוריה מחדש לתוך חלון ההקשר שלו.</li></ul><span class="sp-cue">▸ מעבר לפירמידה. הבא: פירמידת שש השכבות.</span></aside>
+    <div class="stage"><div class="slide slide--dark">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="top:9%;right:7%;width:13cqw;height:13cqw;opacity:.4;"><use href="#dots-grid"/></svg>
+      <svg class="deco ink-sun" style="bottom:9%;left:7%;width:18cqw;height:5cqw;opacity:.8;"><use href="#squiggle-gold"/></svg>
+      <p class="section-kicker anim drop" style="text-align:center;color:var(--green-mint);">ההבדל המהותי</p>
+      <p class="statement anim pop" style="--i:1;color:#fff;font-size:clamp(38px,5cqw,86px);margin:0 auto 2.2cqw;">כל הודעה היא <span class="hi" style="color:var(--ink);">קריאה מחודשת</span> של כל ההיסטוריה.</p>
+      <div class="cols-3" data-step="1" style="max-width:96%;margin:0 auto;">
+        <div class="panel" style="padding:1.5cqw 1.7cqw;"><p style="font-size:var(--t-micro);margin:0;line-height:1.4;color:var(--gray-900);">ל-<span class="ltr">AI</span> אין רגש, אין גיבוש זיכרון בשינה, ואין מנגנון שמעביר רגע קדימה — המשקלים קפואים מסיום האימון.</p></div>
+        <div class="panel" style="padding:1.5cqw 1.7cqw;"><p style="font-size:var(--t-micro);margin:0;line-height:1.4;color:var(--gray-900);">הוא לא ממשיך מהמקום שבו עצר; הוא קורא הכל מחדש בכל פנייה.</p></div>
+        <div class="panel" style="padding:1.5cqw 1.7cqw;"><p style="font-size:var(--t-micro);margin:0;line-height:1.4;color:var(--gray-900);">כשנראה ש<span class="ltr">Claude</span> "זוכר", המערכת מזריקה את היסטוריית השיחה לחלון ההקשר (<span class="ltr">context window</span>) בכל בקשה.</p></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 05 · CONCEPT · the interactive 6-layer memory pyramid (THE special element) -->
+  <section class="cat-item" id="s5" data-type="concept">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>בואו נמפה את זה לפירמידה של שש שכבות זיכרון, מהבסיס למעלה.</li><li>אילו סוגי זיכרון של AI אתם מכירים? אם אתם לא מכירים את זה בשם — תארו לי חוויה של זיכרון שהיתה לכם. ⏸</li><li>(עכשיו חושפים: היסטוריית השיחה) הבסיס הוא היסטוריית השיחה.</li><li>(עכשיו חושפים: System prompt) מעליו יש את ה-System prompt.</li><li>(עכשיו חושפים: Memory) השכבה הבאה היא Memory.</li><li>(עכשיו חושפים: Knowledge) מעליה יש את קבצי ה-Knowledge. מארבע השכבות האלה הסוכן רק קורא.</li><li>(עכשיו חושפים: Notion) מעליהן נמצאת Notion, שהיא השכבה הראשונה שהסוכן גם כותב אליה.</li><li>(עכשיו חושפים: RAG) ובפסגה יש לנו את RAG, ואנחנו לא מדברים על זה כרגע.</li></ul><span class="sp-cue">▸ מעבר לשינוי בתפיסה. הבא: Notion הוא הזיכרון, קלוד הוא המעבד.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1.2cqw;margin-bottom:0.6cqw;">
+        <span class="kicker anim drop"><i class="ti ti-stack-2"></i> שש שכבות של זיכרון</span>
+        <span class="pyr-activity anim drop" style="--i:1"><i class="ti ti-bulb" style="color:var(--anchor);"></i> פעילות · אילו סוגי זיכרון אתם מכירים?</span>
+      </div>
+      <h2 class="anim x" style="--i:1;margin:0.4cqw 0 1.2cqw;font-size:clamp(26px,2.7cqw,40px);">מהשכבה <span class="hi">הקרובה אליכם</span> ביותר ועד לזו הרחוקה ביותר.</h2>
+      <div class="pyr">
+        <div class="pyr-band is-rag anim up-big" data-step="6" style="--w:62%"><span class="pyr-name"><span class="ltr">RAG</span><span class="pyr-gloss">כמו <span class="ltr">NotebookLM</span></span></span><span class="pyr-cap">שליפה ממקורות; נפגוש את זה בהמשך.</span><span class="pyr-tag">בהמשך</span></div>
+        <div class="pyr-band is-kb anim up-big" data-step="5" style="--w:73%"><span class="pyr-name"><span class="ltr">knowledgebase</span><span class="pyr-gloss">מאגר ידע חי · <span class="ltr">Notion</span></span></span><span class="pyr-cap">כאן זה לא נעצר: הסוכן גם קורא וגם כותב, בשליפה לפי-צורך (just-in-time), והמאגר בשליטתכם המלאה.</span><span class="pyr-tag">קריאה + כתיבה</span></div>
+        <div class="pyr-band anim up-big" data-step="4" style="--w:81%"><span class="pyr-name"><span class="ltr">Knowledge</span><span class="pyr-gloss">קובצי ידע</span></span><span class="pyr-cap">טוב כחומר ייחוס שהסוכן נשען עליו; מפסיק לעזור כשרוצים שהוא גם יכתוב, כי הוא לקריאה בלבד ומתעדכן ידנית.</span><span class="pyr-tag">קריאה בלבד</span></div>
+        <div class="pyr-band anim up-big" data-step="3" style="--w:88%"><span class="pyr-name"><span class="ltr">Memory</span><span class="pyr-gloss">זיכרון מובנה</span></span><span class="pyr-cap">טוב להמשכיות קלה בין שיחות; מפסיק לעזור כשפרטים נופלים ואין לכם שליטה על מה נשמר.</span><span class="pyr-tag">קריאה בלבד</span></div>
+        <div class="pyr-band anim up-big" data-step="2" style="--w:94%"><span class="pyr-name"><span class="ltr">System prompt</span><span class="pyr-gloss">הוראת המערכת</span></span><span class="pyr-cap">טוב להתנהגות יציבה ועקבית; מפסיק לעזור כשצריך מידע שמשתנה, כי הוא קבוע ולא לומד.</span><span class="pyr-tag">קריאה בלבד</span></div>
+        <div class="pyr-band anim up-big" data-step="1" style="--w:100%"><span class="pyr-name">היסטוריית השיחה</span><span class="pyr-cap">טובה לזכירה מושלמת בתוך השיחה; מפסיקה לעזור כשהשיחה נגמרת, או מתארכת ומאבדת פוקוס.</span><span class="pyr-tag">קריאה בלבד</span></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 06 · BIG STATEMENT · Notion is the memory, Claude is the processor -->
+  <section class="cat-item" id="s6" data-type="big-statement">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>איך אנחנו בעצם הולכים להפוך את Notion ממאגר מידע לשכבות זיכרון שיש לנו מקסימום שליטה — ידנית או אוטומטית — דרך קלוד?</li><li>אנחנו הולכים לייצר סוכן שיש לו גישה ל-Notion. הסוכן הזה נקרא סוכן Benefit.</li><li>(עכשיו חושפים: משתמשים במנוע כפי שהוא ושומרים את המצב בחוץ) הרעיון הוא שאנחנו משתמשים במנוע ה-LLM כפי שהוא, אבל שומרים את המצב שלו בחוץ.</li><li>(עכשיו חושפים: המאגר לא שוכח כי הוא בסיס נתונים ולא מודל) המאגר הזה לא שוכח שום דבר, פשוט כי הוא בסיס נתונים ולא מודל.</li></ul><span class="sp-cue">▸ מעבר להצגת Benefit. הבא: הכירו את Benefit.</span></aside>
+    <div class="stage"><div class="slide slide--dark">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="top:9%;left:7%;width:13cqw;height:13cqw;opacity:.4;"><use href="#dots-grid"/></svg>
+      <p class="section-kicker anim drop" style="text-align:center;color:var(--green-mint);">השינוי בתפיסה</p>
+      <p class="statement anim pop" style="--i:1;color:#fff;font-size:clamp(36px,4.7cqw,80px);margin:0 auto 2cqw;"><span class="ltr" style="color:var(--ink);background:var(--sunshine);padding:0 0.14em;border-radius:10px;">Notion</span> הוא הזיכרון, <span class="ltr" style="color:var(--green-mint);">Claude</span> הוא המעבד.</p>
+      <div class="demo-pair anim up-big" style="--i:2;margin-bottom:1.6cqw;">
+        <div class="link link--depth"><span class="ltr">Notion</span><span class="link__role">מאגר זיכרון</span></div>
+        <div class="chain-arrow"><i class="ti ti-arrows-left-right"></i><span class="chain-prod">קריאה + כתיבה</span></div>
+        <div class="link link--next"><span class="ltr">Claude</span><span class="link__role">מעבד</span></div>
+      </div>
+      <div class="cols-2" data-step="1" style="max-width:88%;margin:0 auto;">
+        <div class="panel" style="padding:1.4cqw 1.7cqw;"><p style="font-size:var(--t-micro);margin:0;line-height:1.4;color:var(--gray-900);">במקום לכפות התמדה (<span class="ltr">persistence</span>) על מנוע חסר מצב, משתמשים במנוע כפי שהוא ושומרים את המצב מחוץ לו. המאגר אינו שוכח — הוא בסיס נתונים, לא מודל.</p></div>
+        <div class="panel" style="padding:1.4cqw 1.7cqw;"><p style="font-size:var(--t-micro);margin:0;line-height:1.4;color:var(--gray-900);">זהו הרגע שיחידת הבית של <span class="ltr">Notion</span> הכינה את הקרקע לקראתו: המחברת הזו היא הזיכרון של הסוכן.</p></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 07 · LIST WITH ICONS · meet Benefit -->
+  <section class="cat-item" id="s7" data-type="list-with-icons">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>מה Benefit יודע לעשות? Benefit יודע לקרוא את התכנים של הקורס, את השיטות, את הכלים, להעיר ולייעץ לכם לגבי הדברים שלמדתם במהלך הקורס.</li><li>הוא גם יודע לשמור את הדברים של הקורס. איך? בעזרת סקילים.</li><li>הכי חשוב — יש לכם גישה ידנית לכל החומר הזה... אני ממליץ לא לגעת בזה ידנית, אבל אם צריך לתקן שם או תאריך או להוסיף משהו — תמיד אפשר.</li></ul><span class="sp-cue">▸ מעבר להדגמה. הבא: הדגמה חיה — קריאה מ-Notion.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-robot"></i> הכירו את <span class="ltr">Benefit</span></span>
+      <h2 class="anim x" style="--i:1;margin:0.9cqw 0 1.4cqw;font-size:clamp(30px,3.5cqw,50px);">סוכן שקורא וכותב את ידע הקורס שלכם ב-<span class="ltr">Notion</span>.</h2>
+      <ul class="facts" style="max-width:none;gap:1cqw;">
+        <li class="anim x" style="--i:2"><i class="ti ti-book-2"></i><div><span class="ltr">Benefit</span> קורא את תכני הקורס, השיטות והכלים, מעיר ומייעץ על מה שלמדתם, ושומר דברים חדשים בחזרה — באמצעות סקילים.</div></li>
+        <li class="sky anim x" style="--i:3"><i class="ti ti-gift"></i><div>מה שאתם מרוויחים: השיח של <span class="ltr">Claude</span>, סוכן שאתם כבר מכירים, תיעוד מדויק ומאורגן, ושליפה לפי-צורך (<span class="ltr">just-in-time</span>).</div></li>
+        <li class="warn anim x" style="--i:4"><i class="ti ti-hand-finger"></i><div>והכי חשוב: גישה ידנית — אתם תמיד יכולים לפתוח את <span class="ltr">Notion</span> ולראות, לתקן או לבדוק כל דבר בעצמכם.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 08 · LIVE DEMO (READ) · minimal dark card -->
+  <section class="cat-item" id="s8" data-type="live-demo">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>בואו נראה את זה עובד בלייב עוד לפני שאנחנו בונים אותו.</li><li>אני פונה אליו ושואל אותו: תגיד, אתה יכול להסביר לי מה זה שיטת מיקרו?</li><li>תראו איך הוא שולף את זה ישר מתוך Notion ומסביר לנו את זה בשנייה.</li></ul><div class="sp-paste"><span class="sp-paste__tag">הפרומפט להדגמה — להדבקה ל-Claude</span><button class="sp-paste__copy" type="button" aria-label="העתקה" onclick="const t=this.closest('.sp-paste').querySelector('.sp-paste__text');if(navigator.clipboard){navigator.clipboard.writeText(t.innerText);this.classList.add('ok');this.textContent='הועתק';}"><i class="ti ti-copy"></i> העתק</button><div class="sp-paste__text">תגיד, אתה יכול להסביר לי מה זה שיטת מיקרו?</div></div><span class="sp-cue">▸ ראינו שליפה חיה. הבא: התקנת Benefit מהמארז.</span></aside>
+    <div class="stage"><div class="slide slide--dark" style="text-align:center;align-items:center;justify-content:center;">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="top:9%;right:7%;width:13cqw;height:13cqw;opacity:.45;"><use href="#dots-grid"/></svg>
+      <svg class="deco ink-sun" style="bottom:10%;right:8%;width:18cqw;height:5cqw;opacity:.8;"><use href="#squiggle-gold"/></svg>
+      <span class="title-eyebrow anim drop"><i class="ti ti-player-play"></i> הדגמה חיה</span>
+      <div class="demo-pair anim pop" style="--i:1">
+        <div class="link link--next"><span class="ltr">Benefit</span></div>
+        <div class="chain-arrow"><i class="ti ti-arrow-narrow-left"></i><span class="chain-prod">קריאה</span></div>
+        <div class="link link--first"><span class="ltr">Notion</span></div>
+      </div>
+      <p class="lead anim x" style="--i:2;max-width:74%;margin:2cqw auto 0;color:var(--green-mint);">הסוכן <span class="ltr">Benefit</span> מופעל לקריאת שיטה שנלמדה מתוך מאגר <span class="ltr">Notion</span>.</p>
+    </div></div>
+  </section>
+
+  <!-- 10 · LIVE DEMO (BUILD) · minimal dark card -->
+  <section class="cat-item" id="s10" data-type="live-demo">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>עכשיו אנחנו עוברים לחלק המעשי של השיעור, זה ייקח לנו בערך רבע שעה.</li><li>כנסו לדף ההורדה, תורידו את המארז של Benefit ותתקינו אותו — אל תעתיקו שום דבר ידנית.</li><li>המארז הזה כולל את הסוכן, את קבצי הידע ואת הסקילים שלו, ואנחנו נתקין עכשיו ביחד שני סקילים של שמירה ושליפה.</li><li>שווה לומר להם: אחד מקבצי-הידע הוא מבנה-הקורס שלכם, ולכן כשאתם כותבים ל-Benefit משהו חדש, הוא יודע לבד איפה לתייק אותו. זה המפתח.</li><li>אני עושה את זה איתכם בקצב משותף, ומי שקצת נתקע — הכל טוב, תכתבו בוואטסאפ ונשלים את זה בבית.</li></ul><div class="sp-paste"><span class="sp-paste__tag">דף ההורדה — לשיתוף עם הכיתה</span><button class="sp-paste__copy" type="button" aria-label="העתקה" onclick="const t=this.closest('.sp-paste').querySelector('.sp-paste__text');if(navigator.clipboard){navigator.clipboard.writeText(t.innerText);this.classList.add('ok');this.textContent='הועתק';}"><i class="ti ti-copy"></i> העתק</button><div class="sp-paste__text">https://benefits-il.dev/benefit-agent</div></div><span class="sp-cue">▸ ליווי הסטודנטים בהתקנה. הבא: מתנסים בסקילים ומשימת בית.</span></aside>
+    <div class="stage"><div class="slide slide--dark" style="text-align:center;align-items:center;justify-content:center;">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="top:9%;right:7%;width:13cqw;height:13cqw;opacity:.45;"><use href="#dots-grid"/></svg>
+      <svg class="deco ink-sun" style="bottom:10%;left:7%;width:18cqw;height:5cqw;opacity:.8;"><use href="#squiggle-gold"/></svg>
+      <span class="title-eyebrow anim drop"><i class="ti ti-player-play"></i> הדגמה חיה · בנייה</span>
+      <div class="demo-pair anim pop" style="--i:1">
+        <div class="link link--first">דף הורדה</div>
+        <div class="chain-arrow"><i class="ti ti-arrow-narrow-left"></i><span class="chain-prod">התקנה</span></div>
+        <div class="link link--depth"><span class="ltr">Benefit</span></div>
+      </div>
+      <p class="lead anim x" style="--i:2;max-width:74%;margin:2cqw auto 0;color:var(--green-mint);">מורידים את מארז <span class="ltr">Benefit</span> מדף ההורדה ומתקינים — בקצב משותף בכיתה.</p>
+    </div></div>
+  </section>
+
+  <!-- 11 · RECAP SUMMARY · two skills now, two at home -->
+  <section class="cat-item" id="s11" data-type="recap-summary">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>אז התקנו שני סקילים בכיתה, ואת השניים שנשארו, STUDIO ו-MICRO, אתם תתקינו בבית מאותו דף הורדה.</li><li>בשורה התחתונה, יצאתם עם סוכן שלא מנסה לזכור — ומאגר שלא שוכח. את שאר הסקילים תתקינו בבית.</li></ul><div class="sp-paste"><span class="sp-paste__tag">דף ההורדה — לשיתוף עם הכיתה</span><button class="sp-paste__copy" type="button" aria-label="העתקה" onclick="const t=this.closest('.sp-paste').querySelector('.sp-paste__text');if(navigator.clipboard){navigator.clipboard.writeText(t.innerText);this.classList.add('ok');this.textContent='הועתק';}"><i class="ti ti-copy"></i> העתק</button><div class="sp-paste__text">https://benefits-il.dev/benefit-agent</div></div><span class="sp-cue">▸ מעבר לשקף סיום. הבא: שקף הסיום.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-checkbox"></i> נסו את זה, ואז קחו את זה הביתה</span>
+      <h2 class="anim x" style="--i:1;margin:0.9cqw 0 1.4cqw;font-size:clamp(30px,3.6cqw,52px);">שני סקילים <span class="hi">עכשיו</span>, שניים בבית.</h2>
+      <div class="cols-2">
+        <div class="panel anim x" style="--i:2;background:var(--green-soft);border-color:var(--anchor);box-shadow:7px 7px 0 0 var(--anchor);">
+          <h3><i class="ti ti-player-play" style="color:var(--anchor);"></i> בכיתה · עכשיו</h3>
+          <p style="margin-bottom:0.8cqw;"><b>שמירה</b> — מבקשים מ-<span class="ltr">Benefit</span> ליצור עמוד ב-<span class="ltr">Notion</span> (כתיבה).</p>
+          <p><b>שליפה</b> — קריאת עמוד אחד דרך האינדקס (שליפה לפי-צורך: אינדקס ← בחירה ← טעינה). חווים את שני הכיוונים על הסוכן שלכם.</p>
+        </div>
+        <div class="panel anim x" style="--i:3">
+          <h3><i class="ti ti-home" style="color:var(--gray-600);"></i> בבית</h3>
+          <p style="margin-bottom:0.8cqw;">מתקינים את שני הסקילים הנותרים — <b>ייעוץ ופירוק לפי <span class="ltr">STUDIO</span></b>, ו<b>בונה פרומפט לפי <span class="ltr">MICRO</span></b>.</p>
+          <p>ומסיימים לבנות את <span class="ltr">Benefit</span> למי שלא סיים בכיתה.</p>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 12 · CLOSING SLIDE -->
+  <section class="cat-item" id="s12" data-type="closing">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>זהו חברים, בנינו היום סוכן שלא מנסה לזכור ומאגר שלא שוכח.</li><li>דף הסיכום של השיעור כבר נשלח אליכם ישירות. נתראה במשימה הבאה.</li></ul><span class="sp-cue">▸ סגירת המצגת ופתיחת שאלות.</span></aside>
+    <div class="stage"><div class="slide slide--closing">
+      <svg class="deco" style="top:8%;left:7%;width:13cqw;height:13cqw;opacity:.5;"><use href="#dots-grid"/></svg>
+      <svg class="deco ink-sun" style="bottom:10%;right:8%;width:18cqw;height:5cqw;opacity:.8;"><use href="#squiggle-gold"/></svg>
+      <svg class="deco" style="top:12%;right:10%;width:9cqw;height:9cqw;"><use href="#star-burst"/></svg>
+      <span class="closing-logo anim drop"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <p class="closing-name anim pop" style="--i:1">Benefits</p>
+      <p class="closing-line anim" style="--i:2"><span class="ltr">AI that finally fits</span> · בן עקיבא</p>
+    </div></div>
+  </section>
+
+</main>
+
+<!-- Sprite inlined · subset of T1 symbols used + Benefits logo symbol -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="benefits-logo" viewBox="824 453 2250 2991"><path d="M826.492 3236.77C825.424 3122.47 824.356 2449.49 824.356 1741.27L824 453 1531.56 453C2204.58 453 2241.97 453.356 2291.11 459.765 2399.72 474.008 2482.33 498.221 2570.64 542.018 2723.41 617.505 2837 715.78 2927.09 850.376 2960.56 900.582 3002.58 982.834 3022.88 1038.74 3040.69 1086.45 3058.13 1157.67 3065.97 1213.57 3074.16 1269.47 3075.23 1407.63 3068.1 1460.68 3041.75 1653.32 2948.1 1834.56 2806.02 1968.44L2765.78 2006.54 2787.5 2024.7C2937.77 2149.32 3036.77 2323.8 3066.32 2514.65 3075.23 2572.69 3075.23 2703.73 3066.32 2759.99 3030.71 2986.09 2906.44 3178.73 2714.15 3307.27 2618.36 3371.01 2506.54 3414.45 2383.69 3435.45 2348.79 3441.51 2298.94 3442.22 1587.47 3442.93L828.63 3444 826.492 3236.77ZM2375.15 3229.65C2591.65 3181.22 2762.58 3034.87 2835.57 2835.83 2900.03 2659.93 2876.88 2476.91 2769.34 2315.61 2684.24 2188.14 2552.48 2099.47 2390.81 2061.73L2356.98 2053.9 1783.67 2051.76 1210.36 2049.98 1209.29 1442.17 1208.58 833.996 1706.04 833.996C2245.88 833.996 2233.06 833.64 2308.56 853.581 2498 904.143 2632.6 1041.59 2676.4 1229.24 2685.66 1269.12 2689.22 1378.07 2682.81 1431.84 2671.77 1527.62 2637.23 1617.71 2585.95 1684.3 2573.13 1700.67 2569.93 1702.81 2558.53 1702.81 2551.41 1702.81 2540.02 1701.03 2533.25 1699.25 2510.46 1692.48 2439.6 1681.45 2382.98 1675.39L2326.72 1669.34 2326.72 1657.95C2326.72 1649.04 2329.21 1644.42 2338.47 1638.36 2413.25 1585.66 2464.88 1501.63 2479.84 1406.2 2485.18 1372.73 2482.69 1310.78 2474.85 1281.22 2442.45 1161.94 2357.7 1079.69 2232.71 1046.57 2203.86 1038.74 2203.15 1038.74 1808.6 1038.74L1413.34 1038.74 1412.27 1414.39C1411.56 1620.91 1412.27 1803.22 1413.34 1819.25L1415.83 1848.44 1895.13 1849.87C2318.88 1850.94 2379.06 1851.65 2410.4 1856.63 2458.12 1864.47 2505.48 1875.15 2538.24 1885.83L2565.66 1894.38 2594.86 1872.66C2635.81 1842.39 2703.82 1775.09 2734.8 1734.15 2781.8 1671.48 2810.29 1618.07 2836.29 1542.58 2882.94 1407.27 2882.58 1273.39 2835.22 1136.66 2775.4 964.319 2649.34 818.329 2490.52 736.433 2426.78 703.674 2393.66 690.5 2342.74 677.325 2251.22 653.824 2286.48 654.892 1628.06 653.468L1030.53 652.044 1030.53 1946.72 1030.53 3241.04 1681.47 3239.97 2332.06 3238.9 2375.15 3229.65Z" fill="#047857" fill-rule="evenodd"/><path d="M1213 2646.36 1213 2226.07 1314.43 2226.07 1415.86 2226.07 1415.86 2544.85 1415.86 2863.62 1845.79 2863.62C2328.76 2863.62 2301.35 2865.05 2358.65 2836.55 2447.27 2792.74 2498.88 2697.29 2481.79 2608.96 2463.29 2511.37 2384.63 2440.84 2282.84 2430.51L2259.35 2428.02 2259.35 2326.51 2259.35 2225 2301.35 2227.14C2375.02 2230.7 2457.24 2257.41 2515.6 2297.3 2528.06 2305.85 2550.84 2324.73 2566.14 2339.33 2629.14 2399.53 2663.66 2462.21 2681.45 2548.41 2689.29 2587.23 2690.35 2688.39 2683.23 2724.71 2666.51 2810.91 2628.07 2882.5 2566.5 2942.34 2505.64 3001.46 2440.51 3036.73 2353.67 3057.03 2321.99 3064.51 2317.01 3064.51 1767.5 3065.58L1213 3067 1213 2646.36Z" fill="#047857" fill-rule="evenodd"/></symbol>
+<symbol id="squiggle-gold" viewBox="0 0 200 40"><path d="M5 20 Q 20 5, 35 20 T 65 20 T 95 20 T 125 20 T 155 20 T 185 20" stroke="#FBBF24" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M5 28 Q 20 13, 35 28 T 65 28 T 95 28 T 125 28 T 155 28 T 185 28" stroke="#0F172A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/></symbol>
+<symbol id="dots-grid" viewBox="0 0 160 160"><defs><pattern id="dots02" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.2" fill="currentColor"/></pattern></defs><rect width="160" height="160" fill="url(#dots02)"/></symbol>
+<symbol id="star-burst" viewBox="0 0 120 120"><path d="M60 8 L 70 42 L 105 45 L 78 68 L 88 102 L 60 82 L 32 102 L 42 68 L 15 45 L 50 42 Z" fill="#FBBF24" stroke="#0F172A" stroke-width="3" stroke-linejoin="round"/><circle cx="60" cy="60" r="10" fill="#047857" stroke="#0F172A" stroke-width="2.5"/></symbol>
+</svg>
+
+<div class="pres-edge prev" id="presPrev" aria-label="הקודם"></div>
+<div class="pres-edge next" id="presNext" aria-label="הבא"></div>
+<div class="pres-hud" id="presHud">
+  <button id="hudPrev" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
+  <span class="pc" id="presCounter">01 / 11</span>
+  <button id="hudNext" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
+  <button id="hudExit" aria-label="יציאה" style="margin-inline-start:6px;"><i class="ti ti-x"></i></button>
+</div>
+
+<script>
+  const items = Array.from(document.querySelectorAll('.cat-item'));
+  const counter = document.getElementById('counter');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  let current = 0;
+
+  /* ===== scroll-view visibility (entrance animations) ===== */
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      en.target.classList.toggle('is-visible', en.isIntersecting && en.intersectionRatio > 0.28);
+    });
+  }, { threshold: [0, 0.28, 0.6] });
+  document.querySelectorAll('.slide').forEach(s => slideObserver.observe(s));
+
+  const trackObserver = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting && en.intersectionRatio > 0.5) {
+        current = items.indexOf(en.target);
+        counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + items.length;
+      }
+    });
+  }, { threshold: [0.5] });
+  items.forEach(it => trackObserver.observe(it));
+
+  function go(n) {
+    const i = Math.max(0, Math.min(items.length - 1, n));
+    items[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  prev.addEventListener('click', () => go(current - 1));
+  next.addEventListener('click', () => go(current + 1));
+
+  /* ============================================================
+     CLICK-TO-REVEAL step engine.
+     ============================================================ */
+  function getSteps(item) {
+    const slide = item.querySelector('.slide');
+    if (!slide) return [];
+    const steps = [];
+    const generic = Array.from(slide.querySelectorAll('[data-step]'))
+      .sort((a, b) => (+a.dataset.step) - (+b.dataset.step));
+    generic.forEach(el => {
+      steps.push({
+        on: () => el.classList.add('step-on'),
+        off: () => el.classList.remove('step-on'),
+        isOn: () => el.classList.contains('step-on')
+      });
+    });
+    return steps;
+  }
+  function resetSteps(item) { getSteps(item).forEach(s => s.off()); }
+  function revealNext(item) {
+    const steps = getSteps(item);
+    for (const s of steps) { if (!s.isOn()) { s.on(); return true; } }
+    return false;
+  }
+  function hideLast(item) {
+    const steps = getSteps(item);
+    for (let i = steps.length - 1; i >= 0; i--) { if (steps[i].isOn()) { steps[i].off(); return true; } }
+    return false;
+  }
+
+  /* ===== PRESENT MODE ===== */
+  const body = document.body;
+  const presBtn = document.getElementById('presentBtn');
+  const presCounter = document.getElementById('presCounter');
+  const presHud = document.getElementById('presHud');
+  let pi = 0, hudTimer = null;
+
+  function showPresent(i, opts) {
+    opts = opts || {};
+    pi = Math.max(0, Math.min(items.length - 1, i));
+    items.forEach((it, idx) => it.classList.toggle('present-active', idx === pi));
+    const active = items[pi];
+    if (!opts.keepSteps) resetSteps(active);
+    if (opts.revealAll) getSteps(active).forEach(s => s.on());
+    const slide = active.querySelector('.slide');
+    if (slide) { slide.classList.remove('is-visible'); void slide.offsetWidth; slide.classList.add('is-visible'); }
+    presCounter.textContent = String(pi + 1).padStart(2, '0') + ' / ' + items.length;
+    current = pi;
+    flashHud();
+    broadcastState();
+  }
+  function presentForward() {
+    const active = items[pi];
+    if (revealNext(active)) { flashHud(); broadcastState(); return; }
+    if (pi < items.length - 1) showPresent(pi + 1);
+  }
+  function presentBackward() {
+    const active = items[pi];
+    if (hideLast(active)) { flashHud(); broadcastState(); return; }
+    if (pi > 0) showPresent(pi - 1, { revealAll: true });
+  }
+  function flashHud() {
+    presHud.classList.add('show');
+    clearTimeout(hudTimer);
+    hudTimer = setTimeout(() => presHud.classList.remove('show'), 1800);
+  }
+  function enterPresent(i) {
+    body.classList.add('presenting');
+    showPresent(i || 0);
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+  }
+  function exitPresent() {
+    body.classList.remove('presenting');
+    items.forEach(it => it.classList.remove('present-active'));
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    items[pi].scrollIntoView({ block: 'start' });
+  }
+
+  presBtn.addEventListener('click', () => {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    if (!body.classList.contains('presenting')) enterPresent(current);
+  });
+  document.getElementById('presNext').addEventListener('click', presentForward);
+  document.getElementById('presPrev').addEventListener('click', presentBackward);
+  document.getElementById('hudNext').addEventListener('click', (e) => { e.stopPropagation(); presentForward(); });
+  document.getElementById('hudPrev').addEventListener('click', (e) => { e.stopPropagation(); presentBackward(); });
+  document.getElementById('hudExit').addEventListener('click', (e) => { e.stopPropagation(); exitPresent(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'p' || e.key === 'P') {
+      const t = (e.target.tagName || '').toLowerCase();
+      if (t === 'input' || t === 'select' || t === 'textarea') return;
+      if (!IS_PRESENTER) { e.preventDefault(); openPresenter(); }
+      return;
+    }
+    if (!body.classList.contains('presenting')) {
+      const tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'select' || tag === 'input') return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+      else if (e.key === 'Home') go(0);
+      else if (e.key === 'End') go(items.length - 1);
+      return;
+    }
+    if (e.key === 'Escape') { exitPresent(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); presentForward(); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); presentBackward(); }
+    else if (e.key === 'Home') showPresent(0);
+    else if (e.key === 'End') showPresent(items.length - 1);
+  });
+  document.addEventListener('mousemove', () => { if (body.classList.contains('presenting')) flashHud(); });
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && body.classList.contains('presenting')) {
+      body.classList.remove('presenting');
+      items.forEach(it => it.classList.remove('present-active'));
+    }
+  });
+
+/* SP-JS-START */
+  /* ===== PRESENTER VIEW (speaker-notes second window) ===== */
+  const IS_PRESENTER = /[?&]presenter=1/.test(location.search);
+  let presenterWin = null, startedAt = null;
+
+  function broadcastState() {
+    if (!presenterWin || presenterWin.closed) return;
+    const steps = getSteps(items[pi]);
+    const totalSteps = steps.length;
+    const stepIndex = steps.filter(s => s.isOn()).length;
+    const pend = Array.from(items[pi].querySelectorAll('[data-step]:not(.step-on)'))
+      .sort((a, b) => (+a.dataset.step) - (+b.dataset.step));
+    const nextReveal = pend.length ? pend[0].textContent.replace(/\s+/g, ' ').trim().slice(0, 170) : '';
+    presenterWin.postMessage({ t: 'sp-sync', slideIndex: pi, stepIndex, totalSteps, totalSlides: items.length, startedAt, nextReveal }, '*');
+  }
+  function openPresenter() {
+    startedAt = startedAt || Date.now();
+    if (!presenterWin || presenterWin.closed) {
+      const url = location.href.split('#')[0].split('?')[0] + '?presenter=1';
+      presenterWin = window.open(url, 'sp_presenter', 'width=1040,height=740');
+    } else { presenterWin.focus(); }
+    setTimeout(broadcastState, 160);
+  }
+  function fmtClock(ms) { const s = Math.max(0, Math.floor(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+
+  function buildPresenterPanel() {
+    body.classList.add('sp-presenter-mode');
+    const root = document.createElement('div');
+    root.id = 'presenterRoot';
+    root.innerHTML =
+      '<section id="spNow"><div id="spNowLabel">עכשיו אומרים</div><div id="spNote"></div><div id="spRevealLine"></div></section>' +
+      '<section id="spNext"><div id="spNextLabel">השקף הבא</div><div id="spNextHead"></div><div id="spNextPrev"></div></section>' +
+      '<footer id="spBar"><span id="spTimer">00:00</span><span id="spPos">—</span><span id="spStep" class="is-hidden">—</span>' +
+      '<span class="sp-navbtn"><button id="spBack" type="button">‹ הקודם</button><button id="spFwd" type="button">הבא ›</button></span></footer>';
+    body.appendChild(root);
+
+    let st = { slideIndex: 0, stepIndex: 0, totalSteps: 0, totalSlides: items.length, startedAt: null, nextReveal: '' };
+
+    function renderNextPreview(idx) {
+      const box = document.getElementById('spNextPrev');
+      const head = document.getElementById('spNextHead');
+      box.innerHTML = '';
+      const nx = items[idx + 1];
+      if (!nx) { head.textContent = ''; box.innerHTML = '<div class="sp-end">— סוף המצגת —</div>'; return; }
+      const h = nx.querySelector('h1, h2, .statement, .def__term');
+      head.textContent = h ? h.textContent.replace(/\s+/g, ' ').trim() : '';
+      const REF = 1280;
+      const wrap = document.createElement('div'); wrap.className = 'sp-clonewrap'; wrap.style.width = REF + 'px';
+      const clone = nx.cloneNode(true);
+      clone.removeAttribute('id'); clone.style.margin = '0';
+      clone.querySelectorAll('.sp-notes').forEach(n => n.remove());
+      clone.querySelectorAll('.slide').forEach(s => s.classList.add('is-visible'));
+      clone.querySelectorAll('[data-step]').forEach(s => s.classList.add('step-on'));
+      wrap.appendChild(clone); box.appendChild(wrap);
+      const scale = box.clientWidth / REF;
+      wrap.style.transform = 'scale(' + scale + ')';
+      box.style.height = (REF * 9 / 16 * scale) + 'px';
+    }
+    function paint() {
+      const note = items[st.slideIndex] && items[st.slideIndex].querySelector('.sp-notes');
+      document.getElementById('spNote').innerHTML = note ? note.innerHTML : '';
+      document.getElementById('spPos').textContent = 'שקף ' + (st.slideIndex + 1) + ' / ' + st.totalSlides;
+      const stepEl = document.getElementById('spStep');
+      if (st.totalSteps > 0) { stepEl.classList.remove('is-hidden'); stepEl.textContent = 'צעד ' + st.stepIndex + ' / ' + st.totalSteps; }
+      else stepEl.classList.add('is-hidden');
+      document.getElementById('spRevealLine').textContent = st.nextReveal ? ('הבא לחשיפה: ' + st.nextReveal) : '';
+      renderNextPreview(st.slideIndex);
+    }
+    window.addEventListener('message', (ev) => { const d = ev.data || {}; if (d.t === 'sp-sync') { st = Object.assign(st, d); paint(); } });
+    document.getElementById('spBack').addEventListener('click', () => { if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'backward' }, '*'); });
+    document.getElementById('spFwd').addEventListener('click', () => { if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'forward' }, '*'); });
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowLeft', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'forward' }, '*'); }
+      else if (['ArrowRight', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'backward' }, '*'); }
+    });
+    setInterval(() => { if (st.startedAt) document.getElementById('spTimer').textContent = fmtClock(Date.now() - st.startedAt); }, 500);
+    window.addEventListener('resize', () => renderNextPreview(st.slideIndex));
+    if (window.opener) window.opener.postMessage({ t: 'sp-ready' }, '*');
+    paint();
+  }
+
+  if (IS_PRESENTER) {
+    buildPresenterPanel();
+  } else {
+    window.addEventListener('message', (ev) => {
+      const d = ev.data || {};
+      if (d.t === 'sp-ready') broadcastState();
+      else if (d.t === 'sp-cmd') { if (d.cmd === 'forward') presentForward(); else if (d.cmd === 'backward') presentBackward(); else if (d.cmd === 'exit') exitPresent(); }
+    });
+    const _pv = new URLSearchParams(location.search).get('present');
+    const _start = _pv ? Math.max(0, (parseInt(_pv, 10) || 1) - 1) : 0;
+    body.classList.add('presenting');
+    showPresent(_start);
+    /* inert print/screenshot helper: ?reveal=1 shows every step on the start slide */
+    if (new URLSearchParams(location.search).get('reveal')) getSteps(items[_start]).forEach(s => s.on());
+  }
+  /* SP-JS-END */
+</script>
+
+</body>
+</html>

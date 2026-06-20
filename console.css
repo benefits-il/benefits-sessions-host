@@ -1,0 +1,95 @@
+/* ===========================================================================
+   console.css — רכיבים מנחה-בלבד עבור benefits-sessions-host (קונסולת-הוראה).
+   נטען בשכבה מעל delivery.css (שמועתק זהה-בייט מ-benefits-sessions).
+   delivery.css נשאר ירושה-נקייה — כל מה שספציפי לקונסולה יושב כאן בלבד.
+   פלטה מאופקת: ירוק/מנטה כעוגן אחד plus צהוב להערת-המעבר.
+   =========================================================================== */
+
+/* התת-כותרת במותג מסומנת כקונסולת-הוראה */
+.brand__sub.is-host{ color:var(--anchor); }
+
+/* רמז "מנחה-בלבד" בשער ובאינדקס */
+.host-flag{
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:var(--font-head); font-weight:700; font-size:13px;
+  letter-spacing:.04em; color:var(--anchor);
+  background:var(--mint-pale); border:1.5px solid var(--mint-soft);
+  border-radius:var(--r-pill); padding:6px 14px;
+}
+.host-flag i{ font-size:15px; }
+
+/* ---- כרטיס-צעד: צעד-הוראה אחד = יחידה אחת ---- */
+.step{
+  background:var(--white); border:1.5px solid var(--border-soft);
+  border-radius:var(--r-lg); padding:16px 18px;
+  display:grid; gap:14px; box-shadow:var(--sh-sm);
+}
+.step__head{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.step__gidx{
+  inline-size:38px; block-size:38px; flex-shrink:0; border-radius:11px;
+  display:grid; place-items:center;
+  background:var(--depth); color:var(--cream);
+  font-family:var(--font-head); font-weight:900; font-size:18px; line-height:1;
+}
+.step__title{
+  font-family:var(--font-head); font-weight:800; font-size:18px;
+  color:var(--depth); margin:0;
+}
+.step__head .num{ margin-inline-start:0; }
+
+/* ---- סלוט-מצגת ---- */
+.deck-slot{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.deck-missing{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-head); font-weight:700; font-size:14.5px;
+  color:var(--gray-600); background:var(--surface-2);
+  border:1.5px dashed var(--border-soft); border-radius:var(--r-pill);
+  padding:9px 16px; cursor:default;
+}
+.deck-missing i{ font-size:16px; }
+
+/* ---- רשימת לינקים: לפתיחה ושליחה ---- */
+.linkset{ display:grid; gap:9px; }
+.linkset__lab{
+  font-family:var(--font-head); font-weight:700; font-size:12.5px;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--anchor);
+}
+.linkrow{ display:flex; flex-wrap:wrap; gap:8px; }
+.linkchip{
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:var(--font-head); font-weight:600; font-size:14.5px;
+  color:var(--depth); background:var(--mint-pale);
+  border:1.5px solid var(--mint-soft); border-radius:var(--r-pill);
+  padding:8px 14px;
+  transition:transform var(--m-quick), box-shadow var(--m-quick), background var(--m-quick);
+}
+.linkchip:hover{ transform:translateY(-2px); box-shadow:var(--sh-sm); background:var(--mint-soft); }
+.linkchip i{ font-size:16px; color:var(--anchor); }
+.linkchip.is-tbd{
+  color:var(--gray-600); background:var(--surface-2);
+  border-style:dashed; border-color:var(--border-soft); cursor:default;
+}
+.linkchip.is-tbd:hover{ transform:none; box-shadow:none; background:var(--surface-2); }
+.linkchip.is-tbd i{ color:var(--gray-500); }
+
+/* ---- הערת-מעבר (border-inline-start = הצד הימני ב-RTL) ---- */
+.xnote{
+  border-inline-start:4px solid var(--sun-deep);
+  background:var(--surface-pale);
+  border-radius:0 var(--r-sm) var(--r-sm) 0;
+  padding:11px 15px; font-size:15.5px; color:var(--gray-700); line-height:1.55;
+}
+.xnote__lab{
+  display:block; font-family:var(--font-head); font-weight:700;
+  font-size:12px; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--sun-deep); margin-block-end:3px;
+}
+.xnote b{ color:var(--depth); font-family:var(--font-head); font-weight:700; }
+.xnote.is-tbd{ border-inline-start-color:var(--gray-500); }
+.xnote.is-tbd .xnote__lab{ color:var(--gray-500); }
+
+/* כותרת-רצועה: מונה-צעדים קטן בצד */
+.lane-head .ln-count{
+  margin-inline-start:auto; font-family:var(--font-head); font-weight:700;
+  font-size:13px; color:var(--gray-600);
+}
