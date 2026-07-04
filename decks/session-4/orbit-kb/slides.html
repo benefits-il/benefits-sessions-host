@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>מאגר ידע בשיטת ORBIT · מפגש 4 · Benefits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Varela+Round&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<style>
+  /* ============================================================
+     ORBIT knowledge-base deck · session 4 · Benefits.
+     Engine DUPLICATED from session-3 presentations deck (T1 lineage):
+     16:9 stage, catalog + present mode, data-step reveals,
+     presenter view (?presenter=1 / P), crop-modal kept as engine part.
+     ============================================================ */
+
+  /* ---- tokens (inlined) ---- */
+  :root {
+    --anchor:#047857; --ui-green:#10B981; --depth:#064E3B; --green-soft:#D1FAE5; --green-mint:#6EE7B7;
+    --canvas:#FFFBEB; --paper:#FFFFFF; --soft:#FEF3C7;
+    --ink:#0F172A; --border-soft:#FDE68A;
+    --sunshine:#FCD34D; --coral:#FB7185; --lavender:#A78BFA; --leaf:#84CC16;
+    --sky:#38BDF8; --pink:#EC4899; --teal:#2DD4BF;
+    --gray-900:#1E293B; --gray-600:#475569; --gray-500:#64748B;
+    --font-display:'Rubik', system-ui, sans-serif;
+    --font-body:'Varela Round', system-ui, sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, monospace;
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:72px;
+    --radius-sm:10px; --radius-md:14px; --radius-lg:20px; --radius-xl:28px; --radius-pill:999px;
+    --border:2.5px solid var(--ink); --border-bold:3px solid var(--ink);
+    --shadow-sm:3px 3px 0 0 var(--ink); --shadow-md:5px 5px 0 0 var(--ink); --shadow-lg:8px 8px 0 0 var(--ink);
+    --block-shadow:0 6px 0 0 var(--depth); --block-shadow-hover:0 8px 0 0 var(--depth); --block-shadow-active:0 2px 0 0 var(--depth);
+    --ease-bounce:cubic-bezier(0.34, 1.56, 0.64, 1); --focus-ring:3px solid var(--ui-green);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body), system-ui, sans-serif;
+    color: var(--gray-900);
+    background: var(--canvas);
+    background-image:
+      radial-gradient(circle at 10% 12%, rgba(56,189,248,0.07) 0, transparent 100px),
+      radial-gradient(circle at 90% 84%, rgba(236,72,153,0.06) 0, transparent 120px),
+      radial-gradient(circle at 50% 50%, rgba(252,211,77,0.05) 0, transparent 180px);
+    padding-bottom: 96px;
+  }
+  :is(button, a, select, summary, [tabindex]):focus-visible {
+    outline: var(--focus-ring); outline-offset: 3px; border-radius: 8px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+
+  /* ---------- Slim deck topbar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(255,251,235,0.88); backdrop-filter: blur(10px);
+    border-bottom: 3px solid var(--ink);
+    padding: 12px clamp(16px, 4vw, 40px);
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--ink); }
+  .brand__logo { height: 30px; width: auto; flex-shrink: 0; display: inline-flex; }
+  .brand__logo svg { height: 30px; width: auto; }
+  .brand__sub { font-family: var(--font-mono); font-size: 11px; color: var(--gray-600); font-weight: 600; direction: ltr; }
+  .topbar__spacer { margin-inline-start: auto; }
+  .counter { font-family: var(--font-mono); font-size: 13px; color: var(--gray-600); font-weight: 700; direction: ltr; min-width: 64px; text-align: center; }
+  .navbtn { width: 42px; height: 42px; border-radius: 50%; border: 2.5px solid var(--ink); background: var(--paper); cursor: pointer; font-size: 18px; display: grid; place-items: center; box-shadow: var(--shadow-sm); color: var(--ink); transition: all .15s var(--ease-bounce); }
+  .navbtn:hover { background: var(--sunshine); transform: translate(-1px,-1px); box-shadow: var(--shadow-md); }
+
+  /* ---------- Item wrapper ---------- */
+  .catalog { max-width: 1340px; margin: 0 auto; padding: 32px clamp(16px, 4vw, 40px) 0; }
+  .cat-item { scroll-margin-top: 84px; margin-bottom: 60px; }
+
+  /* ---------- The 16:9 stage ---------- */
+  .stage { container-type: inline-size; width: 100%; }
+  .slide {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+    border: 3px solid var(--ink); border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg); background: var(--canvas);
+    padding: 4.4cqw 5.2cqw;
+    display: flex; flex-direction: column; justify-content: center;
+    perspective: 1200px;
+    --t-body:   clamp(26px, 2.25cqw, 36px);
+    --t-lead:   clamp(28px, 2.7cqw, 44px);
+    --t-small:  clamp(25px, 2cqw, 31px);
+    --t-micro:  clamp(20px, 1.7cqw, 26px);
+    --t-h3:     clamp(28px, 2.5cqw, 42px);
+    --t-h2:     clamp(40px, 5cqw, 80px);
+    --t-h1:     clamp(54px, 9cqw, 150px);
+    --t-mega:   clamp(80px, 12cqw, 220px);
+    font-size: var(--t-body); line-height: 1.5; color: var(--gray-900);
+  }
+  .slide > *:not(.deco):not(.corner-mark):not(.title-logo):not(.title-glow) { position: relative; z-index: 2; }
+
+  /* ---------- Decoration helper ---------- */
+  .deco { position: absolute; pointer-events: none; z-index: 0; display: block; }
+  svg.deco { width: 100%; height: 100%; }
+  .ink-anchor { color: var(--anchor); } .ink-ink { color: var(--ink); } .ink-depth { color: var(--depth); }
+  .ink-white { color: #fff; } .ink-sun { color: var(--sunshine); }
+
+  /* ---------- Logo mark (never mirrored / clipped in RTL) ---------- */
+  .brand__logo svg, .cover-logo svg, .corner-mark svg, .closing-logo svg, .title-logo svg {
+    direction: ltr; unicode-bidi: isolate; overflow: visible;
+  }
+  .corner-mark { position: absolute; bottom: 2.4cqw; left: 2.8cqw; z-index: 3; height: 4.2cqw; min-height: 28px; max-height: 46px; width: auto; pointer-events: none; opacity: 0.9; overflow: visible; }
+  .corner-mark svg { height: 100%; width: auto; display: block; }
+  .slide--dark .corner-mark, .slide--section .corner-mark { opacity: 1; }
+
+  /* ---------- Shared atoms ---------- */
+  .kicker { display: inline-flex; align-items: center; gap: 0.5em; background: var(--sunshine); color: var(--ink); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.45em 1em; font-family: var(--font-display); font-size: clamp(20px, 1.7cqw, 26px); font-weight: 700; box-shadow: 4px 4px 0 0 var(--ink); width: max-content; max-width: 96%; }
+  .tag { display: inline-flex; align-items: center; gap: 0.5em; background: var(--paper); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.4em 1em; font-family: var(--font-display); font-size: clamp(20px, 1.7cqw, 26px); font-weight: 700; color: var(--ink); box-shadow: 4px 4px 0 0 var(--ink); width: max-content; }
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink); margin: 0; }
+  .slide h2 { font-size: var(--t-h2); font-weight: 800; line-height: 1.04; letter-spacing: -0.04em; }
+  .slide h2 .hi { background: var(--sunshine); padding: 0 0.16em; border-radius: 8px; }
+  .lead { font-size: var(--t-lead); line-height: 1.45; color: var(--gray-900); margin: 0 0 2.2cqw; max-width: 40em; }
+  .lead strong { background: var(--green-soft); padding: 0 0.25em; border-radius: 6px; }
+  .muted { color: var(--gray-600); }
+  .ltr { direction: ltr; unicode-bidi: isolate; }
+
+  /* facts list */
+  .facts { display: grid; gap: 1.3cqw; list-style: none; padding: 0; margin: 0; }
+  .facts li { display: flex; gap: 1.2cqw; align-items: center; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 18px; padding: 1.3cqw 1.6cqw; box-shadow: 5px 5px 0 0 var(--ink); font-size: var(--t-body); line-height: 1.4; }
+  .facts li i { background: var(--anchor); color: #fff; width: 3.4cqw; height: 3.4cqw; min-width: 40px; min-height: 40px; border-radius: 50%; border: 2.5px solid var(--ink); display: grid; place-items: center; flex-shrink: 0; font-size: var(--t-small); }
+  .facts li.alt i { background: var(--coral); } .facts li.warn i { background: var(--sunshine); color: var(--ink); }
+  .facts li.sky i { background: var(--sky); color: var(--ink); } .facts li.lav i { background: var(--lavender); }
+  .facts li strong { font-family: var(--font-display); }
+
+  .card { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-xl); padding: 2.6cqw; box-shadow: 8px 8px 0 0 var(--ink); position: relative; overflow: hidden; }
+  .body-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3.4cqw; align-items: center; }
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4cqw; align-items: stretch; }
+  .panel { border: 3px solid var(--ink); border-radius: var(--radius-lg); padding: 2.4cqw; box-shadow: 7px 7px 0 0 var(--ink); background: var(--paper); }
+  .panel h3 { font-size: var(--t-h3); font-weight: 700; margin: 0 0 0.9cqw; }
+  .panel p { font-size: var(--t-small); line-height: 1.45; margin: 0; }
+  .footnote { font-family: var(--font-display); font-size: var(--t-micro); color: var(--gray-500); margin-top: 1.6cqw; }
+
+  /* ===== TITLE slide · calm dark-green hero ===== */
+  .slide--title { background: var(--depth); color: #fff; text-align: center; align-items: center; justify-content: center; overflow: hidden; }
+  .title-glow { position: absolute; inset: -18%; z-index: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 22% 26%, rgba(16,185,129,0.30) 0, transparent 42%),
+      radial-gradient(circle at 80% 74%, rgba(110,231,183,0.16) 0, transparent 44%),
+      radial-gradient(circle at 64% 14%, rgba(252,211,77,0.12) 0, transparent 40%); }
+  .title-eyebrow { display: inline-flex; align-items: center; gap: 0.55em; background: rgba(255,255,255,0.08); color: var(--green-mint);
+    border: 2.5px solid var(--green-mint); border-radius: var(--radius-pill); padding: 0.5em 1.3em;
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(20px,1.8cqw,28px); margin-bottom: 2cqw; }
+  .title-eyebrow .dot { width: 0.72em; height: 0.72em; border-radius: 50%; background: var(--green-mint); flex: none; }
+  .title-eyebrow .ltr { color: var(--green-mint); }
+  .slide--title h1 { font-family: var(--font-display); font-weight: 900; color: #fff;
+    font-size: clamp(40px,5.4cqw,92px); line-height: 1.22; letter-spacing: -0.035em; margin: 0 0 3cqw; max-width: 94%; }
+  .slide--title h1 .ltr { color: #fff; }
+  .slide--title h1 .stamp { display: inline-block; background: var(--sunshine); color: var(--ink);
+    padding: 0 0.22em; border: 5px solid var(--ink); border-radius: 16px;
+    box-shadow: 8px 8px 0 0 rgba(0,0,0,0.42); transform: rotate(-2deg); direction: ltr; unicode-bidi: isolate; }
+  .title-logo { display: block; width: 10cqw; max-width: 112px; min-width: 76px; height: auto; margin: 0 auto 1.8cqw; opacity: 1; }
+  .title-logo svg { width: 100%; height: auto; display: block; filter: brightness(0) invert(1); }
+
+  /* ===== ORBIT letter row (title) · forced LTR, reveal highlights ===== */
+  .orb-row { display: flex; gap: 1.6cqw; direction: ltr; justify-content: center; margin: 0 0 4.6cqw; }
+  .orb-card { position: relative; width: 10cqw; min-width: 92px; border-radius: 20px; border: 3px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.07); padding: 1.5cqw 0 1.1cqw; text-align: center; }
+  .orb-card__letter { font-family: var(--font-display); font-weight: 900; font-size: clamp(38px,4.6cqw,78px); line-height: 1; color: #fff; direction: ltr; }
+  .orb-card__name { font-family: var(--font-display); font-weight: 600; font-size: clamp(15px,1.3cqw,21px); color: var(--green-mint); direction: ltr; margin-top: 0.6cqw; }
+  /* the reveal highlight: ring around the card + a name tag hanging below */
+  .orb-hl { position: absolute; inset: -0.55cqw; z-index: 2; pointer-events: none;
+    border: 4px solid var(--sunshine); border-radius: 24px;
+    box-shadow: 0 0 0 5px rgba(252,211,77,0.22); }
+  .orb-hl[data-step]:not(.step-on) { transform: none; }
+  .orb-hl[data-step].step-on { transform: none; }
+  .orb-hl__tag { position: absolute; top: calc(100% + 1cqw); left: 50%; transform: translateX(-50%);
+    background: var(--sunshine); color: var(--ink); border: 2.5px solid var(--ink); border-radius: var(--radius-pill);
+    padding: 0.28em 0.85em; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(15px,1.35cqw,22px); white-space: nowrap; box-shadow: 3px 3px 0 0 rgba(0,0,0,0.35); direction: rtl; }
+
+  /* ===== slide 2 · two circles meet one production band ===== */
+  .kb-merge { display: flex; align-items: center; justify-content: center; gap: 2cqw; direction: rtl; margin: 0 auto; max-width: 94%; }
+  .kb-merge__pair { display: flex; flex-direction: column; gap: 1.6cqw; }
+  .kb-circle { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    width: 12cqw; height: 12cqw; min-width: 112px; min-height: 112px; border-radius: 50%;
+    border: 3px solid var(--ink); background: var(--paper); box-shadow: 6px 6px 0 0 var(--ink); padding: 1cqw; }
+  .kb-circle--b { background: var(--sunshine); }
+  .kb-circle--o { background: var(--lavender); }
+  .kb-circle__en { font-family: var(--font-display); font-weight: 800; font-size: clamp(17px,1.6cqw,26px); direction: ltr; color: var(--ink); }
+  .kb-circle__he { font-size: clamp(17px,1.5cqw,24px); color: var(--gray-900); margin-top: 0.35cqw; line-height: 1.25; }
+  .kb-merge__arrow { color: var(--anchor); font-size: clamp(40px,4.5cqw,72px); display: grid; place-items: center; flex: 0 0 auto; }
+  .kb-band { display: flex; flex-direction: column; align-items: center; gap: 0.7cqw; background: var(--anchor); color: #fff;
+    border: 3px solid var(--ink); border-radius: var(--radius-xl); box-shadow: 8px 8px 0 0 var(--ink); padding: 2.6cqw 3.4cqw; }
+  .kb-band i { font-size: clamp(30px,3cqw,50px); color: var(--sunshine); }
+  .kb-band__name { font-family: var(--font-display); font-weight: 900; font-size: clamp(28px,3.2cqw,54px); direction: ltr; unicode-bidi: isolate; }
+  .kb-band__sub { font-size: var(--t-micro); color: var(--green-soft); }
+
+  /* ===== slide 3 · four-station production line (RTL, arrows ←) ===== */
+  .kb-line { display: flex; align-items: stretch; justify-content: center; gap: 0.5cqw; direction: rtl; max-width: 98%; margin: 0 auto; }
+  .kb-line__seg { flex: 1 1 0; min-width: 0; display: flex; align-items: center; gap: 0.5cqw; }
+  .kb-station { flex: 1 1 auto; min-width: 0; background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg);
+    box-shadow: 6px 6px 0 0 var(--ink); padding: 1.8cqw 1.1cqw; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 0.7cqw; }
+  .kb-station__n { display: grid; place-items: center; width: 4.2cqw; height: 4.2cqw; min-width: 44px; min-height: 44px; border-radius: 50%;
+    background: var(--anchor); color: #fff; border: 2.5px solid var(--ink); font-family: var(--font-display); font-weight: 900;
+    font-size: var(--t-small); box-shadow: 3px 3px 0 0 var(--ink); direction: ltr; }
+  .kb-line__seg:nth-child(2) .kb-station__n { background: var(--coral); }
+  .kb-line__seg:nth-child(3) .kb-station__n { background: var(--lavender); }
+  .kb-line__seg:nth-child(4) .kb-station__n { background: var(--sky); color: var(--ink); }
+  .kb-station__t { font-family: var(--font-display); font-weight: 700; font-size: var(--t-small); color: var(--ink); line-height: 1.25; }
+  .kb-station__s { font-size: var(--t-micro); color: var(--gray-600); line-height: 1.35; }
+  .kb-line__arrow { flex: 0 0 auto; color: var(--anchor); font-size: clamp(30px,3.2cqw,52px); display: grid; place-items: center; }
+
+  /* ===== slide 4 · one prompt fans out to tools, tools return files ===== */
+  .kb-fan { display: flex; align-items: center; justify-content: center; gap: 1.6cqw; direction: rtl; max-width: 97%; margin: 0 auto; }
+  .kb-prompt { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg); box-shadow: 7px 7px 0 0 var(--ink);
+    padding: 2.2cqw 1.8cqw; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.8cqw; max-width: 21cqw; min-width: 170px; }
+  .kb-prompt i { display: grid; place-items: center; width: 5cqw; height: 5cqw; min-width: 52px; min-height: 52px; border-radius: 50%;
+    background: var(--anchor); color: #fff; border: 3px solid var(--ink); font-size: var(--t-h3); box-shadow: 4px 4px 0 0 var(--ink); }
+  .kb-prompt__t { font-family: var(--font-display); font-weight: 800; font-size: var(--t-small); color: var(--ink); line-height: 1.25; }
+  .kb-prompt__s { font-size: var(--t-micro); color: var(--gray-600); line-height: 1.35; }
+  .kb-col { display: flex; flex-direction: column; gap: 1.3cqw; justify-content: center; }
+  .kb-tool { display: flex; align-items: center; gap: 0.8cqw; background: var(--paper); border: 2.5px solid var(--ink);
+    border-radius: var(--radius-pill); padding: 0.75cqw 1.5cqw; box-shadow: 4px 4px 0 0 var(--ink);
+    font-family: var(--font-display); font-weight: 700; font-size: var(--t-small); color: var(--ink); }
+  .kb-tool i { color: var(--anchor); font-size: 1.15em; }
+  .kb-file { display: flex; align-items: center; gap: 0.7cqw; background: var(--green-soft); border: 2.5px solid var(--anchor);
+    border-radius: 12px; padding: 0.75cqw 1.2cqw; font-family: var(--font-mono); font-weight: 600;
+    font-size: clamp(17px,1.5cqw,24px); direction: ltr; unicode-bidi: isolate; color: var(--depth); }
+  .kb-file i { color: var(--anchor); }
+
+  /* ===== slide 5 · Stage-1 master-index sample (real column format, LTR) ===== */
+  .kb-index-wrap { width: 100%; }
+  table.kb-index { direction: ltr; width: 100%; border-collapse: separate; border-spacing: 0;
+    background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: 7px 7px 0 0 var(--ink); font-size: clamp(17px,1.5cqw,24px); }
+  .kb-index th { background: var(--ink); color: #fff; font-family: var(--font-mono); font-weight: 600; text-align: left;
+    padding: 0.7cqw 0.9cqw; font-size: clamp(15px,1.25cqw,20px); line-height: 1.25; }
+  .kb-index td { padding: 0.8cqw 0.9cqw; border-top: 2px solid #E2E8F0; vertical-align: middle; text-align: left; line-height: 1.35; }
+  .kb-index td.he { direction: rtl; text-align: right; font-family: var(--font-body); }
+  .kb-index td.mono { font-family: var(--font-mono); font-size: 0.82em; }
+  .kb-index td.n { font-family: var(--font-mono); font-weight: 700; color: var(--gray-500); }
+  .kb-index tbody[data-step]:not(.step-on) { transform: none; }
+  .kb-index tbody[data-step].step-on { transform: none; }
+  .kb-index tr.is-contra td { background: #FFF1F2; }
+  .q-chip { display: inline-block; font-family: var(--font-mono); font-weight: 700; font-size: 0.78em;
+    border: 2px solid var(--ink); border-radius: var(--radius-pill); padding: 0.08em 0.6em; }
+  .q-high { background: var(--green-soft); color: var(--depth); }
+  .q-med { background: var(--soft); color: #92400E; }
+  .q-low { background: #FEE2E2; color: #B91C1C; }
+  .contra-chip { display: inline-flex; align-items: center; gap: 0.35em; background: var(--coral); color: #fff;
+    border: 2px solid var(--ink); border-radius: var(--radius-pill); padding: 0.08em 0.6em;
+    font-family: var(--font-mono); font-weight: 700; font-size: 0.78em; white-space: nowrap; }
+
+  /* ===== slide 6 · the real KB, two panels ===== */
+  .kb-proof { display: grid; grid-template-columns: 1fr 1.08fr; gap: 2.2cqw; align-items: stretch; }
+  .kb-pane { background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg);
+    box-shadow: 7px 7px 0 0 var(--ink); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+  .kb-pane__bar { display: flex; align-items: center; gap: 0.7cqw; background: var(--ink); color: #fff;
+    padding: 0.65cqw 1.1cqw; font-family: var(--font-mono); font-size: clamp(14px,1.2cqw,19px); direction: ltr; }
+  .kb-pane__bar .wdot { width: 0.9em; height: 0.9em; border-radius: 50%; flex: none; }
+  .kb-pane__body { padding: 1.1cqw 1.3cqw; direction: ltr; text-align: left; flex: 1; min-height: 0; }
+  ul.kb-files { list-style: none; margin: 0; padding: 0; font-family: var(--font-mono); font-weight: 500;
+    font-size: clamp(14px,1.24cqw,19px); direction: ltr; display: flex; flex-direction: column; gap: 0.34cqw; color: var(--gray-900); }
+  .kb-files li { display: flex; align-items: center; gap: 0.55em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kb-files li i { color: var(--anchor); flex: none; }
+  .kb-files li.nav { background: var(--sunshine); border: 2px solid var(--ink); border-radius: 8px;
+    padding: 0.12em 0.5em; font-weight: 700; width: max-content; max-width: 100%; }
+  .kb-files li.nav i { color: var(--ink); }
+  .kb-files li.more { color: var(--gray-500); }
+  .kb-doc { font-family: var(--font-mono); direction: ltr; text-align: left;
+    font-size: clamp(13px,1.14cqw,18px); color: var(--gray-900); line-height: 1.4; }
+  .kb-doc__title { font-family: var(--font-mono); font-weight: 700; font-size: 1.2em; margin: 0 0 0.7em; color: var(--ink); }
+  .kb-doc table { border-collapse: collapse; width: 100%; }
+  .kb-doc th, .kb-doc td { border: 1.5px solid #CBD5E1; padding: 0.3em 0.55em; text-align: left; vertical-align: top; }
+  .kb-doc th { background: #F1F5F9; font-weight: 700; }
+  .kb-doc .dim { color: var(--gray-500); }
+  .kb-count { display: inline-flex; align-items: center; gap: 0.45em; background: var(--green-soft); color: var(--depth);
+    border: 2.5px solid var(--anchor); border-radius: var(--radius-pill); padding: 0.28em 0.9em;
+    font-family: var(--font-display); font-weight: 700; font-size: var(--t-micro); }
+
+  /* ===== closing slide ===== */
+  .slide--closing { background: var(--depth); color: #fff; text-align: center; align-items: center; justify-content: center; }
+  .closing-logo { width: 20cqw; max-width: 240px; height: auto; margin: 0 auto 3cqw; display: block; }
+  .closing-logo svg { width: 100%; height: auto; display: block; filter: brightness(0) invert(1); }
+  .closing-name { font-family: var(--font-display); font-weight: 900; font-size: clamp(56px,9cqw,150px); line-height: 1; letter-spacing: -0.03em; color: #fff; margin: 0 0 2.2cqw; direction: ltr; unicode-bidi: isolate; }
+  .closing-line { display: inline-flex; align-items: center; gap: 0.6em; font-family: var(--font-display); font-weight: 600; font-size: clamp(26px,2.7cqw,42px); color: var(--green-mint); background: rgba(255,255,255,0.06); border: 2.5px solid var(--green-mint); border-radius: var(--radius-pill); padding: 0.5em 1.4em; }
+  .closing-line .ltr { color: #fff; }
+
+  /* ---------- colour canvases ---------- */
+  .slide--dark { background: var(--depth); color: #fff; }
+  .slide--dark h2, .slide--dark h1, .slide--dark h3, .slide--dark h4 { color: #fff; }
+  .slide--dark .lead { color: var(--green-mint); }
+  .slide--soft { background: var(--soft); }
+  .slide--greensoft { background: var(--green-soft); }
+
+  /* ============================================================
+     ENTRANCE / EXIT animations
+     ============================================================ */
+  .anim { opacity: 0; transform: translateY(32px); transition: opacity .55s var(--ease-bounce), transform .55s var(--ease-bounce); transition-delay: calc(var(--i, 0) * 75ms); }
+  .anim.x      { transform: translateX(56px); }
+  .anim.xr     { transform: translateX(-56px); }
+  .anim.pop    { transform: scale(0.55); }
+  .anim.up-big { transform: translateY(64px); }
+  .anim.drop   { transform: translateY(-56px); }
+  .anim.zoom   { transform: scale(0.2); }
+  .is-visible .anim { opacity: 1; transform: none; }
+
+  /* ============================================================
+     CLICK-TO-REVEAL step system
+     ============================================================ */
+  [data-step] { transition: opacity .5s var(--ease-bounce), transform .5s var(--ease-bounce); }
+  .slide [data-step]:not(.step-on),
+  .is-visible [data-step]:not(.step-on) { opacity: 0; transform: translateY(24px); }
+  .slide [data-step].step-on,
+  .is-visible [data-step].step-on { opacity: 1; transform: none; }
+
+  @media (max-width: 560px) {
+    .brand__sub { display:none; }
+  }
+
+  /* ===== PRESENT MODE ===== */
+  .present-btn { display:inline-flex; align-items:center; gap:0.5em; font-family:var(--font-body); font-weight:700; font-size:14px; background:var(--anchor); color:#fff; border:2.5px solid var(--ink); border-radius:var(--radius-pill); padding:9px 18px; box-shadow:var(--shadow-sm); cursor:pointer; transition:all .15s var(--ease-bounce); }
+  .present-btn:hover { background:var(--depth); transform:translate(-1px,-1px); box-shadow:var(--shadow-md); }
+  body.presenting { overflow:hidden; background:#0b0b0b; }
+  body.presenting .topbar { display:none; }
+  body.presenting .catalog { max-width:none; margin:0; padding:0; }
+  body.presenting .cat-item { display:none; margin:0; }
+  body.presenting .cat-item.present-active { display:block; }
+  body.presenting .cat-item.present-active .stage {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:min(100vw, 177.78vh); height:min(56.25vw, 100vh); z-index:500;
+  }
+  body.presenting .cat-item.present-active .slide {
+    width:100%; height:100%; aspect-ratio:auto; border:0; border-radius:0; box-shadow:none;
+  }
+  .pres-edge { position:fixed; top:0; bottom:0; z-index:550; display:none; cursor:pointer; }
+  body.presenting .pres-edge { display:block; }
+  .pres-edge.prev { right:0; width:24%; } /* RTL: right side = previous */
+  .pres-edge.next { left:0; width:76%; }  /* RTL: left/most = next */
+  .pres-hud { position:fixed; z-index:600; bottom:20px; left:50%; transform:translateX(-50%);
+    display:none; align-items:center; gap:12px; background:rgba(15,23,42,0.82); color:#fff;
+    border-radius:var(--radius-pill); padding:8px 14px; font-family:var(--font-mono); font-size:13px;
+    backdrop-filter:blur(8px); direction:rtl; opacity:0; transition:opacity .35s; }
+  body.presenting .pres-hud { display:flex; }
+  body.presenting .pres-hud:hover, body.presenting .pres-hud.show { opacity:1; }
+  .pres-hud button { background:transparent; border:0; color:#fff; cursor:pointer; font-size:20px; line-height:1; display:grid; place-items:center; padding:2px; }
+  .pres-hud .pc { min-width:58px; text-align:center; font-weight:700; direction:ltr; }
+
+  /* ===== reusable fullscreen image modal (engine part; unused on this deck) ===== */
+  .crop-modal { position: fixed; inset: 0; z-index: 900; display: none; align-items: center; justify-content: center;
+    background: rgba(6,30,24,0.9); backdrop-filter: blur(6px); padding: clamp(16px,4vw,48px); }
+  .crop-modal.open { display: flex; }
+  .crop-modal__dialog { position: relative; width: min(94vw, 1360px); height: min(86vh, 860px); display: flex; flex-direction: column; align-items: center; }
+  .crop-modal__stage { position: relative; width: 100%; flex: 1 1 auto; min-height: 0; border: 4px solid var(--ink);
+    border-radius: var(--radius-xl); box-shadow: 12px 12px 0 0 #000; overflow: hidden; background: var(--depth); cursor: pointer; }
+  .crop-modal__img { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .5s var(--ease-bounce); }
+  .crop-modal__img.is-crop { object-fit: contain; background: var(--depth); }
+  .crop-modal__img.is-full { object-fit: contain; opacity: 0; background: var(--depth); }
+  .crop-modal.show-full .crop-modal__img.is-crop { opacity: 0; }
+  .crop-modal.show-full .crop-modal__img.is-full { opacity: 1; }
+  .crop-modal__ab { position: absolute; top: 16px; inset-inline-end: 16px; z-index: 6; display: inline-flex; align-items: stretch;
+    border: 3px solid var(--ink); border-radius: var(--radius-pill); overflow: hidden; box-shadow: 4px 4px 0 0 var(--ink);
+    font-family: var(--font-mono); font-weight: 700; font-size: 18px; direction: ltr; cursor: pointer; background: var(--paper); }
+  .crop-modal__ab span { display: grid; place-items: center; padding: 0.3em 0.95em; color: var(--gray-600); transition: background .25s, color .25s; }
+  .crop-modal__ab .ab-a { background: var(--sunshine); color: var(--ink); }
+  .crop-modal__ab .ab-b { color: var(--gray-500); }
+  .crop-modal.show-full .crop-modal__ab .ab-a { background: var(--paper); color: var(--gray-500); }
+  .crop-modal.show-full .crop-modal__ab .ab-b { background: var(--anchor); color: #fff; }
+  .crop-modal__close { position: absolute; top: -18px; inset-inline-end: -18px; z-index: 8; width: 56px; height: 56px; border-radius: 50%; background: var(--coral); color: #fff; border: 3px solid var(--ink); box-shadow: 4px 4px 0 0 var(--ink); cursor: pointer; display: grid; place-items: center; font-size: 28px; line-height: 1; transition: transform .15s var(--ease-bounce); }
+  .crop-modal__close:hover { transform: rotate(90deg) scale(1.05); }
+
+  /* SP-CSS-START */
+  /* ===== PRESENTER VIEW (speaker-notes window · ?presenter=1) ===== */
+  .sp-notes{display:none}
+  body.sp-presenter-mode{background:#0f1115;overflow:auto;height:auto;margin:0}
+  body.sp-presenter-mode .topbar,
+  body.sp-presenter-mode #catalog,
+  body.sp-presenter-mode .pres-edge,
+  body.sp-presenter-mode .pres-hud,
+  body.sp-presenter-mode .crop-modal{display:none!important}
+  #presenterRoot{display:none}
+  body.sp-presenter-mode #presenterRoot{
+    display:grid;direction:rtl;box-sizing:border-box;min-height:100vh;
+    padding:clamp(16px,2.2vw,30px);gap:clamp(14px,1.8vw,24px);
+    grid-template-columns:1.25fr 0.75fr;grid-template-rows:1fr auto;
+    grid-template-areas:"now next" "bar bar";
+    color:#e8eaf0;font-family:'Rubik','Varela Round',system-ui,sans-serif;
+  }
+  #presenterRoot section,#presenterRoot footer{background:#171a21;border:1px solid #272d39;border-radius:18px;padding:clamp(16px,1.9vw,28px);min-height:0}
+  #spNowLabel,#spNextLabel{font-size:14px;letter-spacing:.05em;color:#8b93a3;margin-bottom:12px}
+  #spNow{grid-area:now;display:flex;flex-direction:column}
+  #spNote{font-size:clamp(22px,2.3vw,34px);line-height:1.5;font-weight:500;overflow:auto;flex:1}
+  #spNote:empty::before{content:'— אין הערה לשקף הזה —';color:#565d6b;font-size:.62em}
+  #spNote .sp-cue{display:block;margin-top:.6em;padding:.45em .72em;border-radius:10px;background:rgba(252,183,0,.12);border:1px solid rgba(252,183,0,.32);color:#fcd873;font-size:.6em;font-weight:600;line-height:1.45}
+  #spRevealLine{margin-top:14px;padding-top:12px;border-top:1px dashed #2c313d;color:#9aa3b4;font-size:clamp(15px,1.5vw,20px)}
+  #spRevealLine:empty{display:none;border:0;margin:0;padding:0}
+  #spNext{grid-area:next;display:flex;flex-direction:column;gap:12px}
+  #spNextHead{font-size:clamp(18px,1.8vw,26px);font-weight:700;line-height:1.3;color:#fff}
+  #spNextPrev{position:relative;overflow:hidden;border-radius:12px;background:#0b0d11;width:100%}
+  #spNextPrev .sp-clonewrap{position:absolute;top:0;right:0;transform-origin:top right}
+  #spNextPrev .sp-end{display:grid;place-items:center;height:100%;color:#565d6b;font-size:20px}
+  #spNextPrev .cat-item{margin:0}
+  #spBar{grid-area:bar;display:flex;align-items:center;gap:clamp(16px,2.2vw,32px);padding:12px clamp(18px,2vw,26px)}
+  #spTimer{font-variant-numeric:tabular-nums;font-weight:800;font-size:clamp(30px,3.2vw,48px);color:#fcb700;letter-spacing:.02em}
+  #spPos,#spStep{color:#aeb6c6;font-size:clamp(18px,1.9vw,26px);font-variant-numeric:tabular-nums}
+  #spStep.is-hidden{display:none}
+  #presenterRoot .sp-navbtn{margin-inline-start:auto;display:flex;gap:10px}
+  #presenterRoot .sp-navbtn button{font:inherit;font-size:clamp(16px,1.6vw,20px);background:#262d39;color:#e8eaf0;border:0;border-radius:10px;padding:10px 18px;cursor:pointer}
+  #presenterRoot .sp-navbtn button:hover{background:#333c4b}
+  #spNote ul.sp-points { margin:0 0 .2em; padding-inline-start:1.15em; display:flex; flex-direction:column; gap:.6em; }
+  #spNote ul.sp-points li { line-height:1.5; }
+  /* SP-CSS-END */
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand__logo" aria-label="Benefits"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+    <span>מאגר ידע בשיטת <span class="ltr">ORBIT</span></span>
+    <span class="brand__sub">· session 4</span>
+  </div>
+  <div class="topbar__spacer"></div>
+  <span class="counter" id="counter">01 / 08</span>
+  <button class="navbtn" id="prev" type="button" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
+  <button class="navbtn" id="next" type="button" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
+  <button class="present-btn" id="presentBtn" type="button"><i class="ti ti-presentation"></i> מסך מלא</button>
+</header>
+
+<main class="catalog" id="catalog">
+  <!-- 01 · TITLE · letters -> first sentence · B + O reveal -->
+  <section class="cat-item" id="s1" data-type="title">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>בשיעור שעבר למדנו חמש אותיות, וכל אחת מהן עבדה לבד.</li><li><strong>«אות בודדת היא מילה; compound הוא משפט.»</strong> היום מרכיבים את המשפט הראשון.</li><li>המילה הראשונה במשפט היא Boomerang — חיפוש שמפזר שאלות לכמה כלים. (עכשיו חושפים: ההדגשה של B)</li><li>המילה השנייה היא Orchestrate — המנצח שמנהל את התהליך. (עכשיו חושפים: ההדגשה של O)</li></ul><span class="sp-cue">▸ שני צעדים על השקף — קודם B, אחר כך O. הבא: שקף החיבור של kb-builder. ◂</span></aside>
+    <div class="stage"><div class="slide slide--title">
+      <span class="title-glow" aria-hidden="true"></span>
+      <svg class="deco" style="top:8%;right:6%;width:5.4cqw;height:5.4cqw;" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="var(--sunshine)" stroke="var(--ink)" stroke-width="6"/></svg>
+      <svg class="deco" style="bottom:9%;right:8%;width:4.6cqw;height:4.6cqw;transform:rotate(14deg);" viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84" rx="10" fill="var(--lavender)" stroke="var(--ink)" stroke-width="6"/></svg>
+      <span class="title-logo anim drop" aria-label="Benefits"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="title-eyebrow anim drop" style="--i:1"><span class="dot"></span> <span class="ltr">ORBIT™</span> · מאגר ידע · מפגש <span class="ltr">4</span></span>
+      <h1 class="anim pop" style="--i:2">בשיעור שעבר למדנו אותיות; היום מרכיבים מהן <span class="stamp" style="direction:rtl;">משפט</span>.</h1>
+      <div class="orb-row anim up-big" style="--i:3">
+        <div class="orb-card"><div class="orb-card__letter">O</div><div class="orb-card__name">Orchestrate</div><span class="orb-hl" data-step="2"><span class="orb-hl__tag">המנצח שמנהל</span></span></div>
+        <div class="orb-card"><div class="orb-card__letter">R</div><div class="orb-card__name">Recon</div></div>
+        <div class="orb-card"><div class="orb-card__letter">B</div><div class="orb-card__name">Boomerang</div><span class="orb-hl" data-step="1"><span class="orb-hl__tag">החיפוש שמפזר</span></span></div>
+        <div class="orb-card"><div class="orb-card__letter">I</div><div class="orb-card__name">Interchange</div></div>
+        <div class="orb-card"><div class="orb-card__letter">T</div><div class="orb-card__name">Transfer</div></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 02 · DIAGRAM · two circles meet one production band -->
+  <section class="cat-item" id="s2" data-type="diagram">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>הצד הראשון הוא Boomerang: שאלה אחת מתפזרת לכמה כלי מחקר במקביל. (עכשיו חושפים: העיגול של Boomerang)</li><li>הצד השני הוא Orchestrate: מנצח שמנהל את השלבים ומתאם את התהליך כולו. (עכשיו חושפים: העיגול של Orchestrate)</li><li>kb-builder מחבר את שניהם לפס ייצור אחד של מאגר ידע. (עכשיו חושפים: פס הייצור)</li><li><strong>«שני הסקילים האלה הם לא קסם. הם בנויים בדיוק מהאותיות שאתם כבר מכירים.»</strong></li><li><strong>«והקסם: אתם לא כותבים אף פרומפט. הסקיל כותב לכם את כולם, שלב אחרי שלב.»</strong></li></ul><span class="sp-cue">▸ שלושה צעדים על השקף: עיגול, עיגול, פס ייצור. הבא: שקף ארבעת השלבים. ◂</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco ink-ink" style="top:6%;left:4%;width:9cqw;height:9cqw;opacity:.10;"><use href="#dots-grid"/></svg>
+      <span class="kicker anim drop" style="margin:0 auto 1.2cqw;"><i class="ti ti-link"></i> המשפט הראשון</span>
+      <h2 class="anim x" style="--i:1;text-align:center;margin:0 auto 1.8cqw;max-width:98%;font-size:clamp(34px,4.2cqw,66px);"><span class="ltr">kb-builder</span> <span class="hi">מחבר</span> את החיפוש של <span class="ltr">Boomerang</span> עם הניהול של <span class="ltr">Orchestrate</span>.</h2>
+      <div class="kb-merge">
+        <div class="kb-merge__pair">
+          <div class="kb-circle kb-circle--b" data-step="1"><span class="kb-circle__en">Boomerang</span><span class="kb-circle__he">חיפוש מפוזר</span></div>
+          <div class="kb-circle kb-circle--o" data-step="2"><span class="kb-circle__en">Orchestrate</span><span class="kb-circle__he">ניהול השלבים</span></div>
+        </div>
+        <i class="ti ti-arrow-narrow-left kb-merge__arrow" aria-hidden="true"></i>
+        <div class="kb-band" data-step="3"><i class="ti ti-settings-2" aria-hidden="true"></i><span class="kb-band__name">kb-builder</span><span class="kb-band__sub">פס ייצור אחד למאגר ידע</span></div>
+      </div>
+      <p class="footnote anim" style="--i:2;text-align:center;margin-top:1.6cqw;">הסקיל מראיין על נושא, מטרה, קהל ועומק — ומחזיר את כל פרומפטי השלבים, מסודרים ומתויגים.</p>
+    </div></div>
+  </section>
+
+  <!-- 03 · PROCESS-STEPS · four-station production line -->
+  <section class="cat-item" id="s3" data-type="process-steps">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>הפס מתחיל במחקר מפוזר — זה השלב שרץ אצלכם ממש עכשיו. (עכשיו חושפים: מחקר מפוזר)</li><li>הממצאים נכנסים לאינדקס: טבלת אב עם ציון איכות וסימון סתירות לכל ממצא. (עכשיו חושפים: אינדקס)</li><li>מהאינדקס נבנית תוכנית פרקים, והיא מחכה לאישור שלכם לפני הכתיבה. (עכשיו חושפים: תוכנית פרקים)</li><li>בסוף מגיעה הכתיבה העוקבת: קובץ לכל פרק, ובסיום קובץ ניווט אחד. (עכשיו חושפים: כתיבה עוקבת)</li></ul><span class="sp-cue">▸ ארבעה צעדים, צעד לכל תחנה בפס. הבא: שקף המחקר המפוזר מקרוב. ◂</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop" style="margin:0 auto 1.6cqw;"><i class="ti ti-route"></i> פס הייצור</span>
+      <h2 class="anim x" style="--i:1;text-align:center;margin:0 auto 2.8cqw;">השרשרת עוברת <span class="hi">ארבעה שלבים</span>, מהשאלה ועד מאגר שלם.</h2>
+      <div class="kb-line">
+        <div class="kb-line__seg" data-step="1">
+          <div class="kb-station"><span class="kb-station__n">1</span><div class="kb-station__t">מחקר מפוזר</div><div class="kb-station__s">רץ עכשיו בכמה כלים</div></div>
+          <i class="ti ti-arrow-narrow-left kb-line__arrow" aria-hidden="true"></i>
+        </div>
+        <div class="kb-line__seg" data-step="2">
+          <div class="kb-station"><span class="kb-station__n">2</span><div class="kb-station__t">אינדקס</div><div class="kb-station__s">ציון איכות + סימון סתירות</div></div>
+          <i class="ti ti-arrow-narrow-left kb-line__arrow" aria-hidden="true"></i>
+        </div>
+        <div class="kb-line__seg" data-step="3">
+          <div class="kb-station"><span class="kb-station__n">3</span><div class="kb-station__t">תוכנית פרקים</div><div class="kb-station__s">מחכה לאישור שלכם</div></div>
+          <i class="ti ti-arrow-narrow-left kb-line__arrow" aria-hidden="true"></i>
+        </div>
+        <div class="kb-line__seg" data-step="4">
+          <div class="kb-station"><span class="kb-station__n">4</span><div class="kb-station__t">כתיבה עוקבת</div><div class="kb-station__s">קובץ לכל פרק + קובץ ניווט</div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 04 · DIAGRAM · one prompt, several tools, one results file each -->
+  <section class="cat-item" id="s4" data-type="diagram">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>מה שרץ אצלכם עכשיו הוא בדיוק השלב הראשון של הפס.</li><li>הסקיל כתב פרומפט מחקר אחד, ואותו פרומפט נשלח לכמה כלים — בכיתה שיגרנו אותו לשניים.</li><li>כל כלי מחזיר קובץ תוצאות משלו, וכל הקבצים נאספים לתיקייה אחת. (עכשיו חושפים: קובצי התוצאות)</li><li>ריצה איטית היא בסדר גמור: לא מחכים לה, והפרומפטים של ההמשך כבר אצלכם.</li></ul><span class="sp-cue">▸ צעד אחד — קובצי התוצאות. הבא: שקף דוגמת האינדקס. ◂</span></aside>
+    <div class="stage"><div class="slide slide--greensoft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco" style="top:7%;left:5%;width:11cqw;height:3cqw;opacity:.6;"><use href="#zigzag-mint"/></svg>
+      <span class="kicker anim drop"><i class="ti ti-radar-2"></i> השלב שרץ עכשיו</span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 2.4cqw;">מה שרץ אצלכם עכשיו הוא השלב הראשון: <span class="hi">מחקר מפוזר</span> בכמה כלים.</h2>
+      <div class="kb-fan anim up-big" style="--i:2">
+        <div class="kb-prompt"><i class="ti ti-file-text" aria-hidden="true"></i><span class="kb-prompt__t">פרומפט מחקר אחד</span><span class="kb-prompt__s">נכתב על ידי הסקיל</span></div>
+        <i class="ti ti-arrow-narrow-left kb-merge__arrow" aria-hidden="true"></i>
+        <div class="kb-col">
+          <div class="kb-tool"><i class="ti ti-sparkles" aria-hidden="true"></i> המחקר של קלוד</div>
+          <div class="kb-tool"><i class="ti ti-diamond" aria-hidden="true"></i> <span class="ltr">Gemini</span></div>
+          <div class="kb-tool"><i class="ti ti-search" aria-hidden="true"></i> <span class="ltr">Perplexity</span></div>
+        </div>
+        <i class="ti ti-arrow-narrow-left kb-merge__arrow" aria-hidden="true"></i>
+        <div class="kb-col" data-step="1">
+          <div class="kb-file"><i class="ti ti-file-download" aria-hidden="true"></i> research-claude.md</div>
+          <div class="kb-file"><i class="ti ti-file-download" aria-hidden="true"></i> research-gemini.md</div>
+          <div class="kb-file"><i class="ti ti-file-download" aria-hidden="true"></i> research-perplexity.md</div>
+        </div>
+      </div>
+      <p class="footnote anim" style="--i:3;text-align:center;margin-top:2.2cqw;">שלושה כלים בדוגמה; בכיתה שני כלים מספיקים.</p>
+    </div></div>
+  </section>
+
+  <!-- 05 · INDEX-SAMPLE · Stage-1 master-index rows, TUESDAY demo, contradiction pair -->
+  <section class="cat-item" id="s5" data-type="index-sample">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>אחרי שכל קובצי המחקר נשמרו, פרומפט האינדקס בונה מהם טבלת אב אחת.</li><li>כל ממצא מקבל שורה: מה נמצא, מאיזה קובץ מקור, ובאיזו איכות. (עכשיו חושפים: שתי השורות הראשונות)</li><li>ממצא שחוזר בכמה כלים מקבל שורה אחת עם כל קובצי המקור — כמו בשורה השנייה.</li><li>כשכלים סותרים זה את זה, כל גרסה מקבלת שורה, והסימון מפנה לשורה המתנגשת. (עכשיו חושפים: שורות הסתירה)</li><li>שורת סתירה היא יתרון של השיטה: יודעים מה לבדוק לפני שכותבים את הפרק.</li></ul><span class="sp-cue">▸ שני צעדים: קודם השורות הרגילות, אחר כך זוג הסתירה. הדוגמה על TUESDAY — אצל הלומדים הטבלה תיראה כך על התחום שלהם. הבא: שקף המאגר האמיתי. ◂</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div style="display:flex;align-items:center;gap:1.2cqw;flex-wrap:wrap;margin-bottom:1.4cqw;">
+        <span class="kicker anim drop"><i class="ti ti-table"></i> שלב האינדקס</span>
+        <span class="tag anim drop" style="--i:1;font-size:var(--t-micro);">דוגמה: מאגר על <span class="ltr">TUESDAY</span></span>
+      </div>
+      <h2 class="anim x" style="--i:1;margin:0 0 2cqw;">האינדקס ממפה כל ממצא: מה נמצא, באיזו איכות, ואיפה יש <span class="hi">סתירות</span>.</h2>
+      <div class="kb-index-wrap anim up-big" style="--i:2">
+        <table class="kb-index">
+          <thead>
+            <tr><th>#</th><th>Information Found</th><th>Sub-Topic</th><th>Source File</th><th>Quality (HIGH/MEDIUM/LOW)</th><th>Notes</th></tr>
+          </thead>
+          <tbody data-step="1">
+            <tr><td class="n">1</td><td class="he">עצמאים מנהלים לבד ארבעה עד שישה פרויקטים במקביל</td><td class="he">קהל היעד</td><td class="mono">research-claude.md</td><td><span class="q-chip q-high">HIGH</span></td><td class="mono">—</td></tr>
+            <tr><td class="n">2</td><td class="he">כלי הניהול הקיימים בנויים לצוותים, לא לאדם אחד</td><td class="he">מתחרים</td><td class="mono">research-claude.md<br>research-gemini.md</td><td><span class="q-chip q-high">HIGH</span></td><td class="mono">—</td></tr>
+          </tbody>
+          <tbody data-step="2">
+            <tr class="is-contra"><td class="n">3</td><td class="he">התמחור המקובל בתחום הוא מנוי חודשי</td><td class="he">תמחור</td><td class="mono">research-claude.md</td><td><span class="q-chip q-med">MEDIUM</span></td><td><span class="contra-chip"><i class="ti ti-alert-triangle" aria-hidden="true"></i> CONTRADICTION with #4</span></td></tr>
+            <tr class="is-contra"><td class="n">4</td><td class="he">התמחור המקובל בתחום הוא תשלום חד־פעמי</td><td class="he">תמחור</td><td class="mono">research-gemini.md</td><td><span class="q-chip q-low">LOW</span></td><td><span class="contra-chip"><i class="ti ti-alert-triangle" aria-hidden="true"></i> CONTRADICTION with #3</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="footnote anim" style="--i:3;">ממצא שחוזר בכמה כלים מקבל שורה אחת עם כל קובצי המקור.</p>
+    </div></div>
+  </section>
+
+  <!-- 06 · REAL-OUTPUT · the actual KB: chapter files + navigation index head -->
+  <section class="cat-item" id="s6" data-type="real-output">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>זה לא שרטוט — זה מאגר אמיתי שנבנה בשיטה הזאת ועובד אצלנו בסטודיו, בתחום כתיבת משחקי הקופסה.</li><li>בצד אחד תיקיית הפרקים: תשעה עשר פרקים, קובץ נפרד לכל פרק.</li><li>קובץ הניווט נפתח בתוכן עניינים וממפה כל משימה לפרק המתאים. (עכשיו חושפים: קובץ הניווט)</li><li>סוכן שעובד עם המאגר טוען רק את הפרק שהוא צריך — חיסכון עצום בטוקנים, בדיוק כמו ביחידת השפה המשותפת.</li></ul><span class="sp-cue">▸ צעד אחד — נפתח קובץ הניווט בפאנל השמאלי. הבא: שקף ההמשך בשלושה צעדים. ◂</span></aside>
+    <div class="stage"><div class="slide slide--dark">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <div style="display:flex;align-items:center;gap:1.2cqw;flex-wrap:wrap;margin-bottom:1.2cqw;">
+        <span class="kicker anim drop"><i class="ti ti-database"></i> מאגר אמיתי</span>
+        <span class="kb-count anim drop" style="--i:1"><i class="ti ti-files" aria-hidden="true"></i> 19 פרקים + קובץ ניווט</span>
+      </div>
+      <h2 class="anim x" style="--i:1;margin:0 0 1.8cqw;max-width:98%;">התוצאה היא תיקיית פרקים עם <span class="hi" style="color:var(--ink);">קובץ ניווט</span> — מאגר שסוכן יודע לקרוא.</h2>
+      <div class="kb-proof">
+        <div class="kb-pane anim x" style="--i:2">
+          <div class="kb-pane__bar"><span class="wdot" style="background:var(--coral);"></span><span class="wdot" style="background:var(--sunshine);"></span><span class="wdot" style="background:var(--ui-green);"></span> knowledge/spell/chapters/</div>
+          <div class="kb-pane__body">
+            <ul class="kb-files">
+              <li class="nav"><i class="ti ti-compass" aria-hidden="true"></i> 00-navigation-index.md</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-01-introduction.md</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-02-rulebook-structure.md</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-03-rulebook-writing-style.md</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-04-setup-first-turn.md</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-05-card-text-conventions.md</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-06-box-copy-marketing-text.md</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-07-reference-cards-player-aids.md</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-08-board-component-labeling.md</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-09-anti-patterns.md</li>
+              <li class="more"><i class="ti ti-dots-vertical" aria-hidden="true"></i> …</li>
+              <li><i class="ti ti-file-text" aria-hidden="true"></i> chapter-19-gaps-open-questions.md</li>
+            </ul>
+          </div>
+        </div>
+        <div class="kb-pane" data-step="1">
+          <div class="kb-pane__bar"><span class="wdot" style="background:var(--coral);"></span><span class="wdot" style="background:var(--sunshine);"></span><span class="wdot" style="background:var(--ui-green);"></span> 00-navigation-index.md</div>
+          <div class="kb-pane__body">
+            <div class="kb-doc">
+              <p class="kb-doc__title"># Mr. Spell KB -- Navigation Index</p>
+              <table>
+                <thead><tr><th>Chapter</th><th>File</th><th>Key Topics</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>chapter-01-introduction.md</td><td>KB purpose, Golden Rule, chapter map…</td></tr>
+                  <tr><td>2</td><td>chapter-02-rulebook-structure.md</td><td>Section order, TOC, glossary…</td></tr>
+                  <tr><td>3</td><td>chapter-03-rulebook-writing-style.md</td><td>Voice, terminology control, tense…</td></tr>
+                  <tr><td class="dim" colspan="3">… 16 more chapters …</td></tr>
+                </tbody>
+              </table>
+              <p class="dim" style="margin:0.7em 0 0;">## Task-to-Chapter Lookup</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 07 · HOME · three continuation steps -->
+  <section class="cat-item" id="s7" data-type="home">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>כשריצת מחקר חוזרת, שומרים את התוצאה כקובץ בתיקייה — בשם research ועם שם הכלי. (עכשיו חושפים: שמירת תוצאות)</li><li>מי שהספיק מדביק את פרומפט האינדקס ומקבל את טבלת האב שלו. (עכשיו חושפים: אינדקס)</li><li>את ההמשך עושים בבית מאותה נקודה בדיוק: פרק אחד לכל שיחה, ופרקים שלא תלויים זה בזה רצים במקביל. (עכשיו חושפים: פרקים בבית)</li><li>מאגר הידע הזה, יחד עם העיצוב שבחרתם היום, ישמש אתכם בפרויקט הסיום.</li></ul><span class="sp-cue">▸ שלושה צעדים, צעד לכל שורה. הבא: שקף הסיום. ◂</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <svg class="deco ink-sun" style="top:6%;left:5%;width:12cqw;height:3.4cqw;opacity:.8;"><use href="#squiggle-gold"/></svg>
+      <span class="kicker anim drop"><i class="ti ti-player-track-next"></i> ממשיכים מכאן</span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 2.2cqw;max-width:98%;">פרק אחד לכל שיחה, ו<span class="hi">המשך מדויק</span> מאיפה שעצרתם — גם בבית.</h2>
+      <ul class="facts" style="max-width:none;">
+        <li data-step="1"><i class="ti ti-device-floppy"></i><div><strong>שמירת תוצאות</strong> — כל ריצה שחוזרת נשמרת כקובץ בתיקיית העבודה, בשם <span class="ltr">research</span> ועם שם הכלי.</div></li>
+        <li class="warn" data-step="2"><i class="ti ti-table"></i><div><strong>אינדקס</strong> — מדביקים את פרומפט האינדקס ומקבלים את טבלת האב.</div></li>
+        <li class="sky" data-step="3"><i class="ti ti-home"></i><div><strong>פרקים בבית</strong> — ממשיכים מאותה נקודה: פרק אחד לכל שיחה, ופרקים בלתי תלויים רצים במקביל.</div></li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- 08 · CLOSING · brand -->
+  <section class="cat-item" id="s8" data-type="closing">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>בנינו עמוד, נתנו לו מראה, והתחלנו לבנות לעסק ידע מסודר — שלושת אלה נפגשים בפרויקט הסיום.</li><li>חוזרים עכשיו לריצות ובודקים מה כבר חזר.</li></ul><span class="sp-cue">▸ סוף המצגת. חוזרים לחלון של קלוד קוד. ◂</span></aside>
+    <div class="stage"><div class="slide slide--closing">
+      <svg class="deco" style="top:8%;left:7%;width:13cqw;height:13cqw;opacity:.5;"><use href="#dots-grid"/></svg>
+      <svg class="deco ink-sun" style="bottom:10%;right:8%;width:18cqw;height:5cqw;opacity:.8;"><use href="#squiggle-gold"/></svg>
+      <svg class="deco" style="top:12%;right:10%;width:9cqw;height:9cqw;"><use href="#star-burst"/></svg>
+      <span class="closing-logo anim drop" style="--i:1"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <p class="closing-name anim pop" style="--i:2">Benefits</p>
+      <p class="closing-line anim" style="--i:3"><span class="ltr">AI that finally fits</span> · בן עקיבא</p>
+    </div></div>
+  </section>
+</main>
+
+<!-- Sprite inlined · symbols used + Benefits logo symbol -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="benefits-logo" viewBox="824 453 2250 2991"><path d="M826.492 3236.77C825.424 3122.47 824.356 2449.49 824.356 1741.27L824 453 1531.56 453C2204.58 453 2241.97 453.356 2291.11 459.765 2399.72 474.008 2482.33 498.221 2570.64 542.018 2723.41 617.505 2837 715.78 2927.09 850.376 2960.56 900.582 3002.58 982.834 3022.88 1038.74 3040.69 1086.45 3058.13 1157.67 3065.97 1213.57 3074.16 1269.47 3075.23 1407.63 3068.1 1460.68 3041.75 1653.32 2948.1 1834.56 2806.02 1968.44L2765.78 2006.54 2787.5 2024.7C2937.77 2149.32 3036.77 2323.8 3066.32 2514.65 3075.23 2572.69 3075.23 2703.73 3066.32 2759.99 3030.71 2986.09 2906.44 3178.73 2714.15 3307.27 2618.36 3371.01 2506.54 3414.45 2383.69 3435.45 2348.79 3441.51 2298.94 3442.22 1587.47 3442.93L828.63 3444 826.492 3236.77ZM2375.15 3229.65C2591.65 3181.22 2762.58 3034.87 2835.57 2835.83 2900.03 2659.93 2876.88 2476.91 2769.34 2315.61 2684.24 2188.14 2552.48 2099.47 2390.81 2061.73L2356.98 2053.9 1783.67 2051.76 1210.36 2049.98 1209.29 1442.17 1208.58 833.996 1706.04 833.996C2245.88 833.996 2233.06 833.64 2308.56 853.581 2498 904.143 2632.6 1041.59 2676.4 1229.24 2685.66 1269.12 2689.22 1378.07 2682.81 1431.84 2671.77 1527.62 2637.23 1617.71 2585.95 1684.3 2573.13 1700.67 2569.93 1702.81 2558.53 1702.81 2551.41 1702.81 2540.02 1701.03 2533.25 1699.25 2510.46 1692.48 2439.6 1681.45 2382.98 1675.39L2326.72 1669.34 2326.72 1657.95C2326.72 1649.04 2329.21 1644.42 2338.47 1638.36 2413.25 1585.66 2464.88 1501.63 2479.84 1406.2 2485.18 1372.73 2482.69 1310.78 2474.85 1281.22 2442.45 1161.94 2357.7 1079.69 2232.71 1046.57 2203.86 1038.74 2203.15 1038.74 1808.6 1038.74L1413.34 1038.74 1412.27 1414.39C1411.56 1620.91 1412.27 1803.22 1413.34 1819.25L1415.83 1848.44 1895.13 1849.87C2318.88 1850.94 2379.06 1851.65 2410.4 1856.63 2458.12 1864.47 2505.48 1875.15 2538.24 1885.83L2565.66 1894.38 2594.86 1872.66C2635.81 1842.39 2703.82 1775.09 2734.8 1734.15 2781.8 1671.48 2810.29 1618.07 2836.29 1542.58 2882.94 1407.27 2882.58 1273.39 2835.22 1136.66 2775.4 964.319 2649.34 818.329 2490.52 736.433 2426.78 703.674 2393.66 690.5 2342.74 677.325 2251.22 653.824 2286.48 654.892 1628.06 653.468L1030.53 652.044 1030.53 1946.72 1030.53 3241.04 1681.47 3239.97 2332.06 3238.9 2375.15 3229.65Z" fill="#047857" fill-rule="evenodd"/><path d="M1213 2646.36 1213 2226.07 1314.43 2226.07 1415.86 2226.07 1415.86 2544.85 1415.86 2863.62 1845.79 2863.62C2328.76 2863.62 2301.35 2865.05 2358.65 2836.55 2447.27 2792.74 2498.88 2697.29 2481.79 2608.96 2463.29 2511.37 2384.63 2440.84 2282.84 2430.51L2259.35 2428.02 2259.35 2326.51 2259.35 2225 2301.35 2227.14C2375.02 2230.7 2457.24 2257.41 2515.6 2297.3 2528.06 2305.85 2550.84 2324.73 2566.14 2339.33 2629.14 2399.53 2663.66 2462.21 2681.45 2548.41 2689.29 2587.23 2690.35 2688.39 2683.23 2724.71 2666.51 2810.91 2628.07 2882.5 2566.5 2942.34 2505.64 3001.46 2440.51 3036.73 2353.67 3057.03 2321.99 3064.51 2317.01 3064.51 1767.5 3065.58L1213 3067 1213 2646.36Z" fill="#047857" fill-rule="evenodd"/></symbol>
+<symbol id="squiggle-gold" viewBox="0 0 200 40"><path d="M5 20 Q 20 5, 35 20 T 65 20 T 95 20 T 125 20 T 155 20 T 185 20" stroke="#FBBF24" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M5 28 Q 20 13, 35 28 T 65 28 T 95 28 T 125 28 T 155 28 T 185 28" stroke="#0F172A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/></symbol>
+<symbol id="zigzag-mint" viewBox="0 0 200 40"><path d="M0 20 L20 8 L40 32 L60 8 L80 32 L100 8 L120 32 L140 8 L160 32 L180 8 L200 20" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+<symbol id="dots-grid" viewBox="0 0 160 160"><defs><pattern id="dots02" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.2" fill="currentColor"/></pattern></defs><rect width="160" height="160" fill="url(#dots02)"/></symbol>
+<symbol id="star-burst" viewBox="0 0 120 120"><path d="M60 8 L 70 42 L 105 45 L 78 68 L 88 102 L 60 82 L 32 102 L 42 68 L 15 45 L 50 42 Z" fill="#FBBF24" stroke="#0F172A" stroke-width="3" stroke-linejoin="round"/><circle cx="60" cy="60" r="10" fill="#047857" stroke="#0F172A" stroke-width="2.5"/></symbol>
+</svg>
+
+<div class="pres-edge prev" id="presPrev" aria-label="הקודם"></div>
+<div class="pres-edge next" id="presNext" aria-label="הבא"></div>
+<div class="pres-hud" id="presHud">
+  <button id="hudPrev" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
+  <span class="pc" id="presCounter">01 / 08</span>
+  <button id="hudNext" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
+  <button id="hudExit" aria-label="יציאה" style="margin-inline-start:6px;"><i class="ti ti-x"></i></button>
+</div>
+
+<!-- Reusable image modal · A/B states · engine part (no triggers on this deck) -->
+<div class="crop-modal" id="cropModal" role="dialog" aria-modal="true" aria-label="תצוגת תמונה">
+  <div class="crop-modal__dialog">
+    <button class="crop-modal__close" id="cropModalClose" type="button" aria-label="סגור"><i class="ti ti-x"></i></button>
+    <div class="crop-modal__stage" id="cropModalStage" role="button" tabindex="0" aria-label="החליפו בין A ל-B">
+      <img class="crop-modal__img is-crop" id="cropModalCrop" src="" alt="מצב A — חיתוך">
+      <img class="crop-modal__img is-full" id="cropModalFull" src="" alt="מצב B — התמונה המלאה">
+      <span class="crop-modal__ab" id="cropModalAB" role="button" tabindex="0" aria-label="החליפו בין A ל-B"><span class="ab-a">A</span><span class="ab-b">B</span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const items = Array.from(document.querySelectorAll('.cat-item'));
+  const counter = document.getElementById('counter');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  let current = 0;
+
+  /* ===== scroll-view visibility (entrance animations) ===== */
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      en.target.classList.toggle('is-visible', en.isIntersecting && en.intersectionRatio > 0.28);
+    });
+  }, { threshold: [0, 0.28, 0.6] });
+  document.querySelectorAll('.slide').forEach(s => slideObserver.observe(s));
+
+  const trackObserver = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting && en.intersectionRatio > 0.5) {
+        current = items.indexOf(en.target);
+        counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + items.length;
+      }
+    });
+  }, { threshold: [0.5] });
+  items.forEach(it => trackObserver.observe(it));
+
+  function go(n) {
+    const i = Math.max(0, Math.min(items.length - 1, n));
+    items[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  prev.addEventListener('click', () => go(current - 1));
+  next.addEventListener('click', () => go(current + 1));
+
+  /* ============================================================
+     CLICK-TO-REVEAL step engine (forward consumes steps first).
+     ============================================================ */
+  function getSteps(item) {
+    const slide = item.querySelector('.slide');
+    if (!slide) return [];
+    const steps = [];
+    const generic = Array.from(slide.querySelectorAll('[data-step]'))
+      .sort((a, b) => (+a.dataset.step) - (+b.dataset.step));
+    generic.forEach(el => {
+      steps.push({
+        on: () => el.classList.add('step-on'),
+        off: () => el.classList.remove('step-on'),
+        isOn: () => el.classList.contains('step-on')
+      });
+    });
+    return steps;
+  }
+  function resetSteps(item) { getSteps(item).forEach(s => s.off()); }
+  function revealNext(item) {
+    const steps = getSteps(item);
+    for (const s of steps) { if (!s.isOn()) { s.on(); return true; } }
+    return false;
+  }
+  function hideLast(item) {
+    const steps = getSteps(item);
+    for (let i = steps.length - 1; i >= 0; i--) { if (steps[i].isOn()) { steps[i].off(); return true; } }
+    return false;
+  }
+
+  /* ===== IMAGE MODAL · A / B states (engine part; no triggers here) ===== */
+  const cropModal = document.getElementById('cropModal');
+  const cmCrop = document.getElementById('cropModalCrop');
+  const cmFull = document.getElementById('cropModalFull');
+  const cmAB = document.getElementById('cropModalAB');
+  const cmStage = document.getElementById('cropModalStage');
+  const cmClose = document.getElementById('cropModalClose');
+  const presPrevEl = document.getElementById('presPrev');
+  const presNextEl = document.getElementById('presNext');
+
+  function cropModalOpen() { return cropModal.classList.contains('open'); }
+  function setEdgesActive(active) {
+    const pe = active ? '' : 'none';
+    if (presPrevEl) presPrevEl.style.pointerEvents = pe;
+    if (presNextEl) presNextEl.style.pointerEvents = pe;
+  }
+  function openCropModal(cropSrc, fullSrc) {
+    cmCrop.src = cropSrc;
+    cmFull.src = fullSrc;
+    cropModal.classList.remove('show-full');
+    cropModal.classList.add('open');
+    setEdgesActive(false);
+  }
+  function toggleCropState() { cropModal.classList.toggle('show-full'); }
+  function closeCropModal() {
+    cropModal.classList.remove('open');
+    cropModal.classList.remove('show-full');
+    setEdgesActive(true);
+  }
+  document.querySelectorAll('.crop-trigger').forEach(t => {
+    const open = (e) => { e.preventDefault(); e.stopPropagation(); openCropModal(t.dataset.crop, t.dataset.full); };
+    t.addEventListener('click', open);
+    t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') open(e); });
+  });
+  cmStage.addEventListener('click', (e) => { e.stopPropagation(); toggleCropState(); });
+  cmAB.addEventListener('click', (e) => { e.stopPropagation(); toggleCropState(); });
+  cmAB.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); toggleCropState(); } });
+  cmClose.addEventListener('click', (e) => { e.stopPropagation(); closeCropModal(); });
+  cropModal.addEventListener('click', (e) => { if (e.target === cropModal) closeCropModal(); });
+
+  /* ===== PRESENT MODE ===== */
+  const body = document.body;
+  const presBtn = document.getElementById('presentBtn');
+  const presCounter = document.getElementById('presCounter');
+  const presHud = document.getElementById('presHud');
+  let pi = 0, hudTimer = null;
+
+  function showPresent(i, opts) {
+    opts = opts || {};
+    pi = Math.max(0, Math.min(items.length - 1, i));
+    items.forEach((it, idx) => it.classList.toggle('present-active', idx === pi));
+    const active = items[pi];
+    if (!opts.keepSteps) resetSteps(active);
+    if (opts.revealAll) getSteps(active).forEach(s => s.on());
+    const slide = active.querySelector('.slide');
+    if (slide) { slide.classList.remove('is-visible'); void slide.offsetWidth; slide.classList.add('is-visible'); }
+    presCounter.textContent = String(pi + 1).padStart(2, '0') + ' / ' + items.length;
+    current = pi;
+    flashHud();
+    broadcastState();
+  }
+  function presentForward() {
+    if (cropModalOpen()) return;
+    const active = items[pi];
+    if (revealNext(active)) { flashHud(); broadcastState(); return; }
+    if (pi < items.length - 1) showPresent(pi + 1);
+  }
+  function presentBackward() {
+    if (cropModalOpen()) return;
+    const active = items[pi];
+    if (hideLast(active)) { flashHud(); broadcastState(); return; }
+    if (pi > 0) showPresent(pi - 1, { revealAll: true });
+  }
+  function flashHud() {
+    presHud.classList.add('show');
+    clearTimeout(hudTimer);
+    hudTimer = setTimeout(() => presHud.classList.remove('show'), 1800);
+  }
+  function enterPresent(i) {
+    body.classList.add('presenting');
+    showPresent(i || 0);
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+  }
+  function exitPresent() {
+    body.classList.remove('presenting');
+    items.forEach(it => it.classList.remove('present-active'));
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    items[pi].scrollIntoView({ block: 'start' });
+  }
+
+  presBtn.addEventListener('click', () => {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    if (!body.classList.contains('presenting')) enterPresent(current);
+  });
+  document.getElementById('presNext').addEventListener('click', presentForward);
+  document.getElementById('presPrev').addEventListener('click', presentBackward);
+  document.getElementById('hudNext').addEventListener('click', (e) => { e.stopPropagation(); presentForward(); });
+  document.getElementById('hudPrev').addEventListener('click', (e) => { e.stopPropagation(); presentBackward(); });
+  document.getElementById('hudExit').addEventListener('click', (e) => { e.stopPropagation(); exitPresent(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (cropModalOpen()) {
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeCropModal(); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCropState(); }
+      else if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','PageUp','PageDown','Home','End'].includes(e.key)) { e.preventDefault(); }
+      return;
+    }
+    if (e.key === 'p' || e.key === 'P') {
+      const t = (e.target.tagName || '').toLowerCase();
+      if (t === 'input' || t === 'select' || t === 'textarea') return;
+      if (!IS_PRESENTER) { e.preventDefault(); openPresenter(); }
+      return;
+    }
+    if (!body.classList.contains('presenting')) {
+      const tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'select' || tag === 'input') return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+      else if (e.key === 'Home') go(0);
+      else if (e.key === 'End') go(items.length - 1);
+      return;
+    }
+    if (e.key === 'Escape') { exitPresent(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); presentForward(); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); presentBackward(); }
+    else if (e.key === 'Home') showPresent(0);
+    else if (e.key === 'End') showPresent(items.length - 1);
+  });
+  document.addEventListener('mousemove', () => { if (body.classList.contains('presenting')) flashHud(); });
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && body.classList.contains('presenting')) {
+      body.classList.remove('presenting');
+      items.forEach(it => it.classList.remove('present-active'));
+    }
+  });
+
+/* SP-JS-START */
+  /* ===== PRESENTER VIEW (speaker-notes second window) ===== */
+  const IS_PRESENTER = /[?&]presenter=1/.test(location.search);
+  let presenterWin = null, startedAt = null;
+
+  function broadcastState() {
+    if (!presenterWin || presenterWin.closed) return;
+    const steps = getSteps(items[pi]);
+    const totalSteps = steps.length;
+    const stepIndex = steps.filter(s => s.isOn()).length;
+    const pend = Array.from(items[pi].querySelectorAll('[data-step]:not(.step-on)'))
+      .sort((a, b) => (+a.dataset.step) - (+b.dataset.step));
+    const nextReveal = pend.length ? pend[0].textContent.replace(/\s+/g, ' ').trim().slice(0, 170) : '';
+    presenterWin.postMessage({ t: 'sp-sync', slideIndex: pi, stepIndex, totalSteps, totalSlides: items.length, startedAt, nextReveal }, '*');
+  }
+  function openPresenter() {
+    startedAt = startedAt || Date.now();
+    if (!presenterWin || presenterWin.closed) {
+      const url = location.href.split('#')[0].split('?')[0] + '?presenter=1';
+      presenterWin = window.open(url, 'sp_presenter', 'width=1040,height=740');
+    } else { presenterWin.focus(); }
+    setTimeout(broadcastState, 160);
+  }
+  function fmtClock(ms) { const s = Math.max(0, Math.floor(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+
+  function buildPresenterPanel() {
+    body.classList.add('sp-presenter-mode');
+    const root = document.createElement('div');
+    root.id = 'presenterRoot';
+    root.innerHTML =
+      '<section id="spNow"><div id="spNowLabel">עכשיו אומרים</div><div id="spNote"></div><div id="spRevealLine"></div></section>' +
+      '<section id="spNext"><div id="spNextLabel">השקף הבא</div><div id="spNextHead"></div><div id="spNextPrev"></div></section>' +
+      '<footer id="spBar"><span id="spTimer">00:00</span><span id="spPos">—</span><span id="spStep" class="is-hidden">—</span>' +
+      '<span class="sp-navbtn"><button id="spBack" type="button">‹ הקודם</button><button id="spFwd" type="button">הבא ›</button></span></footer>';
+    body.appendChild(root);
+
+    let st = { slideIndex: 0, stepIndex: 0, totalSteps: 0, totalSlides: items.length, startedAt: null, nextReveal: '' };
+
+    function renderNextPreview(idx) {
+      const box = document.getElementById('spNextPrev');
+      const head = document.getElementById('spNextHead');
+      box.innerHTML = '';
+      const nx = items[idx + 1];
+      if (!nx) { head.textContent = ''; box.innerHTML = '<div class="sp-end">— סוף המצגת —</div>'; return; }
+      const h = nx.querySelector('h1, h2, .statement, .def__term');
+      head.textContent = h ? h.textContent.replace(/\s+/g, ' ').trim() : '';
+      const REF = 1280;
+      const wrap = document.createElement('div'); wrap.className = 'sp-clonewrap'; wrap.style.width = REF + 'px';
+      const clone = nx.cloneNode(true);
+      clone.removeAttribute('id'); clone.style.margin = '0';
+      clone.querySelectorAll('.sp-notes').forEach(n => n.remove());
+      clone.querySelectorAll('.slide').forEach(s => s.classList.add('is-visible'));
+      clone.querySelectorAll('[data-step]').forEach(s => s.classList.add('step-on'));
+      wrap.appendChild(clone); box.appendChild(wrap);
+      const scale = box.clientWidth / REF;
+      wrap.style.transform = 'scale(' + scale + ')';
+      box.style.height = (REF * 9 / 16 * scale) + 'px';
+    }
+    function paint() {
+      const note = items[st.slideIndex] && items[st.slideIndex].querySelector('.sp-notes');
+      document.getElementById('spNote').innerHTML = note ? note.innerHTML : '';
+      document.getElementById('spPos').textContent = 'שקף ' + (st.slideIndex + 1) + ' / ' + st.totalSlides;
+      const stepEl = document.getElementById('spStep');
+      if (st.totalSteps > 0) { stepEl.classList.remove('is-hidden'); stepEl.textContent = 'צעד ' + st.stepIndex + ' / ' + st.totalSteps; }
+      else stepEl.classList.add('is-hidden');
+      document.getElementById('spRevealLine').textContent = st.nextReveal ? ('הבא לחשיפה: ' + st.nextReveal) : '';
+      renderNextPreview(st.slideIndex);
+    }
+    window.addEventListener('message', (ev) => { const d = ev.data || {}; if (d.t === 'sp-sync') { st = Object.assign(st, d); paint(); } });
+    document.getElementById('spBack').addEventListener('click', () => { if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'backward' }, '*'); });
+    document.getElementById('spFwd').addEventListener('click', () => { if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'forward' }, '*'); });
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowLeft', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'forward' }, '*'); }
+      else if (['ArrowRight', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); if (window.opener) window.opener.postMessage({ t: 'sp-cmd', cmd: 'backward' }, '*'); }
+    });
+    setInterval(() => { if (st.startedAt) document.getElementById('spTimer').textContent = fmtClock(Date.now() - st.startedAt); }, 500);
+    window.addEventListener('resize', () => renderNextPreview(st.slideIndex));
+    if (window.opener) window.opener.postMessage({ t: 'sp-ready' }, '*');
+    paint();
+  }
+
+  if (IS_PRESENTER) {
+    buildPresenterPanel();
+  } else {
+    window.addEventListener('message', (ev) => {
+      const d = ev.data || {};
+      if (d.t === 'sp-ready') broadcastState();
+      else if (d.t === 'sp-cmd') { if (d.cmd === 'forward') presentForward(); else if (d.cmd === 'backward') presentBackward(); else if (d.cmd === 'exit') exitPresent(); }
+    });
+    const _pv = new URLSearchParams(location.search).get('present');
+    const _start = _pv ? Math.max(0, (parseInt(_pv, 10) || 1) - 1) : 0;
+    const _rev = /[?&]reveal=1/.test(location.search);      /* screenshot helper */
+    const _cat = /[?&]catalog=1/.test(location.search);     /* catalog inspection helper */
+    if (!_cat) {
+      body.classList.add('presenting');
+      showPresent(_start, _rev ? { revealAll: true } : undefined);
+    }
+  }
+  /* SP-JS-END */
+</script>
+</body>
+</html>
