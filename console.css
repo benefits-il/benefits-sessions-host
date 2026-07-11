@@ -116,3 +116,37 @@
 /* פתיחה רכה של גוף-הרצועה */
 @keyframes lane-reveal{ from{ opacity:0; transform:translateY(-4px); } to{ opacity:1; transform:none; } }
 .lane:not(.is-collapsed) .lane-body{ animation:lane-reveal var(--m-quick) ease-out; }
+
+/* ---- ימי-לקוח: מקטע שקט בתחתית אינדקס-המפגשים ---- */
+.client-days{
+  margin-block-start:36px; padding-block-start:24px;
+  border-block-start:1.5px solid var(--border-soft);
+}
+.client-days .kicker{ display:block; color:var(--gray-600); margin-block-end:12px; }
+
+/* ---- קונסולת-יום (עמוד יום-לקוח, למשל yenon.html) ---- */
+.day-facts{ display:flex; flex-wrap:wrap; gap:8px; }
+
+.day-table{ width:100%; border-collapse:collapse; font-size:15px; }
+.day-table th,.day-table td{
+  padding:9px 12px; text-align:right; vertical-align:top;
+  border-block-end:1px solid var(--border-soft); line-height:1.55;
+}
+.day-table th{
+  font-family:var(--font-head); font-weight:700; font-size:12.5px;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--anchor);
+}
+.day-table td:first-child{
+  white-space:nowrap; font-family:var(--font-head); font-weight:700; color:var(--depth);
+}
+.day-table tbody tr:last-child td{ border-block-end:0; }
+
+.day-checklist{
+  margin:0; padding-inline-start:20px; display:grid; gap:8px;
+  font-size:15.5px; color:var(--gray-700); line-height:1.55;
+}
+.day-checklist b{ color:var(--depth); font-family:var(--font-head); font-weight:700; }
+
+.day-foot{
+  margin-block-start:18px; font-size:14.5px; color:var(--gray-600); text-align:center;
+}
