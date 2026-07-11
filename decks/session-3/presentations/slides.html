@@ -536,7 +536,7 @@
     <span class="brand__sub">· session 3</span>
   </div>
   <div class="topbar__spacer"></div>
-  <span class="counter" id="counter">01 / 09</span>
+  <span class="counter" id="counter">01 / 08</span>
   <button class="navbtn" id="prev" type="button" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
   <button class="navbtn" id="next" type="button" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
   <button class="present-btn" id="presentBtn" type="button"><i class="ti ti-presentation"></i> מסך מלא</button>
@@ -560,7 +560,7 @@
 
   <!-- 02 · CONCEPT WITH MOTIF · content is the win -->
   <section class="cat-item" id="s2" data-type="concept-with-motif">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>מצגת היא בעצם תוצר לוואי של עבודה טובה על התוכן.</li><li>אתם כבר יודעים איך לבנות מצגות — עשיתם את זה כל החיים שלכם.</li><li>מה שאנחנו מוסיפים זה תהליך עבודה שמביא אתכם לנקודה שבה אתם אומרים "זה מעולה", בלי להתפזר עם השאלה "מאיפה אני בכלל מתחיל".</li></ul><span class="sp-cue">▸ הבא: שקף שני הסוכנים והשרשרת.</span></aside>
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>מצגת היא בעצם תוצר לוואי של עבודה טובה על התוכן.</li><li>אתם כבר יודעים איך לבנות מצגות — עשיתם את זה כל החיים שלכם.</li><li>מה שאנחנו מוסיפים זה תהליך עבודה שמביא אתכם לנקודה שבה אתם אומרים "זה מעולה", בלי להתפזר עם השאלה "מאיפה אני בכלל מתחיל".</li></ul><span class="sp-cue">▸ הבא: שקף AI slop — ולמה עורכים בעצמנו.</span></aside>
     <div class="stage"><div class="slide">
       <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
       <div class="body-grid">
@@ -579,72 +579,68 @@
     </div></div>
   </section>
 
-  <!-- 03 · DIAGRAM · two agents, one chain (Point -> MD -> POWER) -->
-  <section class="cat-item" id="s3" data-type="diagram">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>PointToPower מורכב משני סוכנים שמכירים זה את זה.</li><li>Point מטפל בתוכן — וזה החלק הקשה באמת. POWER מטפל בבנייה — החלק הקל.</li><li>Point לעולם לא נוגע בעיצוב, ו-POWER לעולם לא עורך תוכן.</li><li>מה שעובר ביניהם זה קובץ MD אחד — וזאת מסירת המקל.</li></ul><span class="sp-cue">▸ הבא: שקף ההתקנה בשני נתיבים.</span></aside>
-    <div class="stage"><div class="slide slide--soft">
-      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
-      <span class="kicker anim drop" style="margin:0 auto 1.6cqw;"><i class="ti ti-link"></i> שני סוכנים, שרשרת אחת</span>
-      <h2 class="anim x" style="--i:1;text-align:center;margin:0 auto 2.4cqw;"><span class="ltr">Point</span> כותב את התוכן, ו-<span class="ltr">POWER</span> בונה את <span class="hi">המצגת</span>.</h2>
-      <div class="pp-chain anim up-big" style="--i:2">
-        <div class="pp-node"><div class="pp-node__ic" style="background:var(--lavender);"><i class="ti ti-pencil"></i></div><div class="pp-node__t"><span class="ltr">Point</span></div><div class="pp-node__s">תוכן · החלק הקשה</div></div>
-        <i class="ti ti-arrow-left pp-arrow" aria-hidden="true"></i>
-        <div class="pp-baton"><span class="pp-baton__chip"><i class="ti ti-file-text"></i> קובץ MD</span></div>
-        <i class="ti ti-arrow-left pp-arrow" aria-hidden="true"></i>
-        <div class="pp-node"><div class="pp-node__ic" style="background:var(--anchor);"><i class="ti ti-tools"></i></div><div class="pp-node__t"><span class="ltr">POWER</span></div><div class="pp-node__s">בנייה · החלק הקל</div></div>
-      </div>
-      <p class="footnote anim" style="--i:3;text-align:center;font-size:var(--t-small);margin-top:2cqw;"><span class="ltr">Point</span> לא נוגע בעיצוב, ו-<span class="ltr">POWER</span> לא עורך תוכן.</p>
-    </div></div>
-  </section>
-
-  <!-- 04 · TWO-PATH · install -->
-  <section class="cat-item" id="s4" data-type="two-path">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>כדי לעבוד עם שני הסוכנים, מתקינים אותם פעם אחת. יש שני נתיבים — בחרו אחד.</li><li>הנתיב הראשון הוא Cowork: מורידים את קובץ הפלאגין, גוררים אותו אל פלאגיני ה-Cowork, מרעננים, ומפעילים עם slash point.</li><li>הנתיב השני הוא Project ב-Claude.ai: מריצים את סקריפט הבנייה, יוצרים שני Projects — אחד ל-Point ואחד ל-POWER — ומעלים לכל אחד את ה-system prompt וקובצי הידע.</li><li>ההוראות המלאות נמצאות ב-README של הפלאגין.</li></ul><span class="sp-cue">▸ הבא: שקף Point — מתוכן למבנה.</span></aside>
+  <!-- 03 · STATEMENT · AI slop — why we edit ourselves -->
+  <section class="cat-item" id="s3" data-type="statement">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>יש מושג שכדאי להכיר — AI slop.</li><li>זו מצגת שנראית וואו, ובעצם כתוב בה כלום.</li><li>בדיוק בגלל זה אנחנו קוראים ועורכים את הדברים בעצמנו, ולא נותנים ל-AI לכתוב תוכן רנדומלי במקומנו.</li><li>ועוד הבחנה חשובה: איך בונים מצגת ואיך מעבירים מצגת הם שני דברים נפרדים. כל אחד בונה מצגות אחרת, ומתייחס אליהן אחרת.</li></ul><span class="sp-cue">▸ הבא: שקף שני הסוכנים והגבול ביניהם.</span></aside>
     <div class="stage"><div class="slide">
       <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
-      <span class="kicker anim drop"><i class="ti ti-download"></i> התקנה — בוחרים נתיב אחד</span>
-      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 2cqw;">מתקינים פעם אחת, בשני <span class="hi">נתיבים</span> אפשריים.</h2>
-      <div class="cols-2">
-        <div class="panel anim x" style="--i:2">
-          <h3><i class="ti ti-puzzle"></i> <span class="ltr">Cowork</span> — תוסף</h3>
-          <p>מורידים את קובץ הפלאגין, גוררים אותו אל פלאגיני ה-<span class="ltr">Cowork</span>, מרעננים, ומפעילים עם <span class="ltr">/point</span>.</p>
-        </div>
-        <div class="panel anim x" style="--i:3">
-          <h3><i class="ti ti-folders"></i> <span class="ltr">Claude.ai</span> — <span class="ltr">Project</span></h3>
-          <p>מריצים את סקריפט הבנייה, יוצרים שני <span class="ltr">Projects</span> — ל-<span class="ltr">Point</span> ול-<span class="ltr">POWER</span> — ומעלים לכל אחד את ה-<span class="ltr">system prompt</span> וקובצי הידע.</p>
-        </div>
-      </div>
+      <span class="kicker anim drop"><i class="ti ti-alert-triangle"></i> <span class="ltr">AI slop</span> — ולמה עורכים בעצמנו</span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 2cqw;">מצגת שנראית וואו וכתוב בה <span class="hi">כלום</span>.</h2>
+      <ul class="facts" style="max-width:none;gap:1.3cqw;">
+        <li class="anim x" style="--i:2"><i class="ti ti-sparkles"></i><div><span class="ltr">AI slop</span> הוא בדיוק זה: מראה מרשים, ותוכן ריק.</div></li>
+        <li class="alt anim x" style="--i:3"><i class="ti ti-edit"></i><div>לכן אנחנו קוראים ועורכים את הדברים בעצמנו, ולא נותנים ל-<span class="ltr">AI</span> לכתוב באוויר.</div></li>
+        <li class="sky anim x" style="--i:4"><i class="ti ti-arrows-split-2"></i><div>בניית מצגת והעברת מצגת הם שני דברים נפרדים: כל אחד בונה אחרת, ומתייחס למצגת אחרת.</div></li>
+      </ul>
     </div></div>
   </section>
 
-  <!-- 05 · FLOW · Point: content -> structure -->
+  <!-- 04 · DIAGRAM · two agents, one boundary (package hand-off) -->
+  <section class="cat-item" id="s4" data-type="diagram">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>PointToPower מורכב משני סוכנים עם גבול ברור ביניהם.</li><li>לפני שנכנסים אליהם — למצגת יש שלושה חלקים, וכל אחד עולם בפני עצמו: התוכן, המבנה (השלד), והעיצוב.</li><li>Point עוזר עם התוכן ומביא אותי לעריכה שלו. NotebookLM עוזר גם בכתיבת ועריכת התוכן וגם בתכנון המבנה. POWER מבצע ודואג לעיצוב.</li><li>הגבול חד: Point לא נוגע בעיצוב, ו-POWER לא עורך תוכן.</li><li>ומה שעובר ביניהם הוא לא קובץ אחד — זו חבילה שלמה: מבנה, חומרים, ומחברת-מנחה.</li></ul><span class="sp-cue">▸ הבא: שקף Point בפעולה.</span></aside>
+    <div class="stage"><div class="slide slide--soft">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop" style="margin:0 auto 1.6cqw;"><i class="ti ti-link"></i> שני סוכנים, גבול אחד</span>
+      <h2 class="anim x" style="--i:1;text-align:center;margin:0 auto 2.4cqw;"><span class="ltr">Point</span> עוזר עם התוכן, <span class="ltr">POWER</span> מבצע ודואג <span class="hi">לעיצוב</span>.</h2>
+      <div class="pp-chain anim up-big" style="--i:2">
+        <div class="pp-node"><div class="pp-node__ic" style="background:var(--lavender);"><i class="ti ti-pencil"></i></div><div class="pp-node__t"><span class="ltr">Point</span></div><div class="pp-node__s">תוכן · מביא לעריכה</div></div>
+        <i class="ti ti-arrow-left pp-arrow" aria-hidden="true"></i>
+        <div class="pp-baton"><span class="pp-baton__chip"><i class="ti ti-package"></i> חבילה שלמה</span></div>
+        <i class="ti ti-arrow-left pp-arrow" aria-hidden="true"></i>
+        <div class="pp-node"><div class="pp-node__ic" style="background:var(--anchor);"><i class="ti ti-tools"></i></div><div class="pp-node__t"><span class="ltr">POWER</span></div><div class="pp-node__s">ביצוע · עיצוב</div></div>
+      </div>
+      <p class="footnote anim" style="--i:3;text-align:center;font-size:var(--t-small);margin-top:2cqw;">המקל שעובר ביניהם הוא חבילה שלמה — מבנה, חומרים, ומחברת-מנחה — לא קובץ בודד.</p>
+    </div></div>
+  </section>
+
+  <!-- 05 · FLOW · Point in action -->
   <section class="cat-item" id="s5" data-type="flow">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>פותחים את Point עם slash point.</li><li>הוא ישאל אתכם כמה שאלות — מי קהל היעד, מה הז'אנר, מה האורך, מה אתם רוצים שייקחו, האם צריך הערות דובר, ובאיזו שפה.</li><li>אתם עונים על בסיס החומרים שכבר יש לכם.</li><li>אחר כך Point מציע מבנה: מסר אחד לכל שקף, מסודר לפי שיטות תוכן מוכחות.</li><li>בסוף הוא נותן לכם קובץ MD מוכן — וזאת מסירת המקל ל-POWER.</li></ul><span class="sp-cue">▸ זה הלב: מתמקדים בתוכן ובמבנה, לא בניסוח כל שורה. הבא: שקף NotebookLM סביב Point.</span></aside>
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>Point לא בולע הכול. הוא מסנן, ואומר לכם בדיוק מה הוא זרק ולמה.</li><li>אחר כך הוא מראיין — קהל, ז'אנר, אורך, מסר, שפה, והאם צריך הערות-דובר. אתם עונים על בסיס החומרים שכבר יש לכם.</li><li>הוא מפיק לכם ערכת-NotebookLM, ועוצר.</li><li>אחרי שאתם חוזרים עם התוצרים, עורכים יחד את מבנה המצגת, ואז הוא אורז חבילה שלמה עם מחברת-מנחה.</li><li>נקודה שקל ליפול בה: לא מוסרים ל-Point קובץ PowerPoint כדוגמה או כתוכן. ממירים אותו קודם ל-MD, כי התוכן הוא לא המבנה. אם נותנים לו PowerPoint — גמרנו עליו.</li></ul><span class="sp-cue">▸ הבא: שקף NotebookLM.</span></aside>
     <div class="stage"><div class="slide slide--greensoft">
       <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
-      <span class="kicker anim drop"><i class="ti ti-pencil"></i> <span class="ltr">Point</span> — מתוכן למבנה</span>
-      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 2cqw;"><span class="ltr">Point</span> הופך את החומרים שלכם ל<span class="hi">מבנה</span> מצגת.</h2>
+      <span class="kicker anim drop"><i class="ti ti-pencil"></i> <span class="ltr">Point</span> בפעולה</span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 2cqw;"><span class="ltr">Point</span> הופך את החומרים שלכם ל<span class="hi">חבילה</span> מוכנה.</h2>
       <div class="pp-flow anim up-big" style="--i:2">
-        <div class="pp-step"><span class="pp-step__n">1</span><div class="pp-step__t">שאלות אפיון</div><div class="pp-step__s">קהל, ז'אנר, אורך, מסר ושפה</div></div>
-        <div class="pp-step"><span class="pp-step__n">2</span><div class="pp-step__t">מבנה שקפים מוצע</div><div class="pp-step__s">מסר אחד לכל שקף</div></div>
-        <div class="pp-step"><span class="pp-step__n">3</span><div class="pp-step__t">קובץ <span class="ltr">MD</span> מוכן</div><div class="pp-step__s">מסירת המקל ל-<span class="ltr">POWER</span></div></div>
+        <div class="pp-step"><span class="pp-step__n">1</span><div class="pp-step__t">מסנן</div><div class="pp-step__s">אומר מה זרק ולמה</div></div>
+        <div class="pp-step"><span class="pp-step__n">2</span><div class="pp-step__t">מראיין</div><div class="pp-step__s">קהל, ז'אנר, אורך, מסר, שפה</div></div>
+        <div class="pp-step"><span class="pp-step__n">3</span><div class="pp-step__t">ערכת-<span class="ltr">NotebookLM</span></div><div class="pp-step__s">מפיק — ועוצר</div></div>
+        <div class="pp-step"><span class="pp-step__n">4</span><div class="pp-step__t">עורכים יחד</div><div class="pp-step__s">ואז אורז חבילה ומחברת-מנחה</div></div>
       </div>
     </div></div>
   </section>
 
   <!-- 06 · CONCEPT WITH MOTIF · NotebookLM around Point (callback) -->
   <section class="cat-item" id="s6" data-type="concept-with-motif">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>שלב אופציונלי אחד.</li><li>Point יכול להמליץ על פיצ'ר של NotebookLM עם פרומפט מוכן — זורקים את החומרים פנימה, ומקבלים בחזרה אינפוגרפיקה או כמה רעיונות.</li><li>כלל ברזל אחד: NotebookLM הוא צייר סקיצות, לא מדפסת.</li><li>לעולם אל תיקחו את התוצרים שלו כמצגת הסופית שלכם — רק כהשראה.</li></ul><span class="sp-cue">▸ הבא: שקף POWER — ממבנה לפרומפט.</span></aside>
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>NotebookLM הוא חלק סופר-חשוב ומהותי במסלול — לא שלב שאפשר לוותר עליו.</li><li>הוא עוזר גם בכתיבת ועריכת התוכן לקראת המצגת, וגם בתכנון המבנה.</li><li>יש לו מחקר מהיר ומחקר עמוק, ששולפים גם מקורות חיצוניים.</li><li>והוא כבר פולט decks אמיתיים — אבל זה שבעים אחוז, וכאן מתחילה העבודה הקשה.</li><li>כלל הברזל נשאר: NotebookLM הוא צייר סקיצות, לא מדפסת. לוקחים ממנו השראה, לא את המצגת הסופית.</li></ul><span class="sp-cue">▸ הבא: שקף POWER והיעדים.</span></aside>
     <div class="stage"><div class="slide">
       <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
       <div class="body-grid">
         <div>
-          <span class="kicker anim drop"><i class="ti ti-bulb"></i> <span class="ltr">NotebookLM</span> סביב <span class="ltr">Point</span></span>
+          <span class="kicker anim drop"><i class="ti ti-bulb"></i> <span class="ltr">NotebookLM</span></span>
           <h2 class="anim x" style="--i:1;margin:1.2cqw 0 1.4cqw;"><span class="ltr">NotebookLM</span> הוא <span class="hi">צייר סקיצות</span>, לא מדפסת.</h2>
           <ul class="facts" style="max-width:none;gap:1.0cqw;">
-            <li class="anim x" style="--i:2"><i class="ti ti-wand"></i><div><span class="ltr">Point</span> יכול להמליץ על פיצ'ר של <span class="ltr">NotebookLM</span> עם פרומפט מוכן.</div></li>
-            <li class="warn anim x" style="--i:3"><i class="ti ti-photo"></i><div>זורקים פנימה את החומרים ומקבלים אינפוגרפיקה או כמה רעיונות.</div></li>
-            <li class="alt anim x" style="--i:4"><i class="ti ti-alert-triangle"></i><div>כלל הברזל הוא לקחת מהתוצר השראה בלבד, אף פעם לא כמצגת הסופית.</div></li>
+            <li class="anim x" style="--i:2"><i class="ti ti-star"></i><div>חלק מהותי במסלול, לא שלב שאפשר לדלג עליו.</div></li>
+            <li class="sky anim x" style="--i:3"><i class="ti ti-search"></i><div>עוזר בכתיבת ועריכת התוכן ובתכנון המבנה — מחקר מהיר ומחקר עמוק.</div></li>
+            <li class="alt anim x" style="--i:4"><i class="ti ti-percentage"></i><div>כבר פולט <span class="ltr">decks</span> אמיתיים — אבל זה שבעים אחוז, ומשם העבודה הקשה.</div></li>
           </ul>
         </div>
         <div class="motif-wrap anim zoom" style="--i:2">
@@ -654,46 +650,35 @@
     </div></div>
   </section>
 
-  <!-- 07 · FLOW · POWER: structure -> prompt -->
+  <!-- 07 · FLOW · POWER executes, designs, tiers the target -->
   <section class="cat-item" id="s7" data-type="flow">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>עכשיו POWER. מעבירים לו את קובץ ה-MD מ-Point.</li><li>הוא ישאל: HTML או PowerPoint.</li><li>אחר כך הוא יציע סגנון — לא רשימה של שלושים וחמישה, אלא שלשה: סגנון ראשי, חלופי, ו-wildcard.</li><li>הוא נותן פירוט ברמת השקף — גריד, היררכיה, מיקום תמונות, תנועה — ומפיק פרומפט בנייה סופי.</li></ul><span class="sp-cue">▸ סגנון הוא תמיד שלשה, לא רשימה פתוחה; אם כלום לא מתאים, אומרים "wildcard". הבא: שקף המצגת החיה.</span></aside>
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>POWER מקבל את החבילה מ-Point, מאשר יעד, ומציע סגנון — לא רשימה של שלושים וחמישה, אלא שלשה: ראשי, חלופי, ו-wildcard.</li><li>הוא מבצע ודואג לעיצוב, כולל הלבשת המותג שלכם עם design-tokens, ומפיק פרומפט-בנייה ופרומפטי-ויזואלים.</li><li>היעדים מדורגים: PowerPoint הוא המסלול החזק. HTML הוא עמוד חי. Google Slides בסוגריים — Gemini לא יודע לייצר טוב ל-Slides, ואין קונקטור טוב.</li><li>העיקרון: פרומפט אחד כתוב היטב אפשר להריץ בהרבה בונים — Copilot בתוך PowerPoint, Gemini, ChatGPT, ותוסף-Claude.</li><li>טיפ שחוסך המון עבודה: את מצגת ה-HTML אפשר לתת לקלוד ולבקש "תהפוך את זה ל-PowerPoint". את עריכת ה-HTML עושים בצ'אט חדש. סייג: Gemini מהיר, אבל שבר לי את הצורה.</li></ul><span class="sp-cue">▸ סגנון הוא תמיד שלשה, לא רשימה פתוחה. הבא: שקף הסיום.</span></aside>
     <div class="stage"><div class="slide slide--soft">
       <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
-      <span class="kicker anim drop"><i class="ti ti-tools"></i> <span class="ltr">POWER</span> — ממבנה לפרומפט</span>
-      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 2cqw;"><span class="ltr">POWER</span> הופך את קובץ ה-<span class="ltr">MD</span> ל<span class="hi">פרומפט בנייה</span>.</h2>
+      <span class="kicker anim drop"><i class="ti ti-tools"></i> <span class="ltr">POWER</span> והיעדים</span>
+      <h2 class="anim x" style="--i:1;margin:1.2cqw 0 1.6cqw;"><span class="ltr">POWER</span> מבצע, דואג לעיצוב, ומדרג את <span class="hi">היעד</span>.</h2>
       <div class="pp-flow anim up-big" style="--i:2">
-        <div class="pp-step"><span class="pp-step__n">1</span><div class="pp-step__t">מקבל את קובץ ה-<span class="ltr">MD</span></div><div class="pp-step__s">התוכן מ-<span class="ltr">Point</span></div></div>
-        <div class="pp-step"><span class="pp-step__n">2</span><div class="pp-step__t">בוחרים יעד</div><div class="pp-step__s"><span class="ltr">HTML</span> או <span class="ltr">PowerPoint</span></div></div>
-        <div class="pp-step"><span class="pp-step__n">3</span><div class="pp-step__t">סגנון כשלשה</div><div class="pp-step__s">ראשי · חלופי · <span class="ltr">wildcard</span></div></div>
-        <div class="pp-step"><span class="pp-step__n">4</span><div class="pp-step__t">פרומפט בנייה סופי</div><div class="pp-step__s">פירוט פר-שקף</div></div>
+        <div class="pp-step"><span class="pp-step__n">1</span><div class="pp-step__t">מקבל חבילה ומאשר יעד</div><div class="pp-step__s">מ-<span class="ltr">Point</span></div></div>
+        <div class="pp-step"><span class="pp-step__n">2</span><div class="pp-step__t">שלישיית-סגנון</div><div class="pp-step__s">ראשי · חלופי · <span class="ltr">wildcard</span></div></div>
+        <div class="pp-step"><span class="pp-step__n">3</span><div class="pp-step__t">מלביש מותג</div><div class="pp-step__s">עם <span class="ltr">design-tokens</span></div></div>
+        <div class="pp-step"><span class="pp-step__n">4</span><div class="pp-step__t">פרומפט-בנייה + ויזואלים</div><div class="pp-step__s">פירוט פר-שקף</div></div>
       </div>
+      <div class="anim x" style="--i:3;display:flex;gap:1cqw;justify-content:center;flex-wrap:wrap;margin-top:1.8cqw;">
+        <span class="tag"><i class="ti ti-presentation"></i> <span class="ltr">PowerPoint</span> — המסלול החזק</span>
+        <span class="tag"><i class="ti ti-brand-html5"></i> <span class="ltr">HTML</span> — עמוד חי</span>
+        <span class="tag"><i class="ti ti-brand-google"></i> <span class="ltr">Google Slides</span> — בסוגריים</span>
+      </div>
+      <p class="footnote anim" style="--i:4;text-align:center;font-size:var(--t-small);margin-top:1.4cqw;">פרומפט אחד כתוב היטב — ומריצים אותו בהרבה בונים.</p>
     </div></div>
   </section>
 
-  <!-- 08 · CONCEPT · the live presentation, two equal paths -->
-  <section class="cat-item" id="s8" data-type="two-path">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>מדביקים את הפרומפט ב-Claude הרגיל — לא ב-Claude Code — וצופים במצגת מתרנדרת בשידור חי.</li><li>התוכן שעיצבתם לפני כמה דקות הוא עכשיו מצגת בידיים שלכם.</li><li>ואותו תוצר של Point יכול לשמש גם לבניית PowerPoint — אותו תוכן בדיוק, נתיב שני.</li></ul><span class="sp-cue">▸ HTML ו-PowerPoint הם שני נתיבים שווים על אותו תוכן. הבא: שקף הסיום.</span></aside>
-    <div class="stage"><div class="slide slide--dark">
-      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
-      <span class="kicker anim drop" style="margin:0 auto 1.4cqw;"><i class="ti ti-player-play"></i> המצגת החיה</span>
-      <h2 class="anim x" style="--i:1;text-align:center;margin:0 auto 1.2cqw;color:#fff;">מדביקים את הפרומפט — ומקבלים <span class="hi" style="color:var(--ink);">מצגת חיה</span>.</h2>
-      <p class="lead anim x" style="--i:2;text-align:center;max-width:80%;margin:0 auto 2cqw;color:var(--green-mint);">מדביקים ב-<span class="ltr">Claude</span> הרגיל, לא ב-<span class="ltr">Claude Code</span>, וצופים במצגת נבנית מול העיניים.</p>
-      <div class="pp-paths anim up-big" style="--i:3">
-        <div class="pp-path"><div class="pp-path__ic"><i class="ti ti-brand-html5"></i></div><div class="pp-path__t"><span class="ltr">HTML</span></div></div>
-        <div class="pp-path"><div class="pp-path__ic"><i class="ti ti-presentation"></i></div><div class="pp-path__t"><span class="ltr">PowerPoint</span></div></div>
-      </div>
-      <p class="footnote anim" style="--i:4;text-align:center;font-size:var(--t-small);margin-top:1.6cqw;color:var(--green-mint);">אותו תוכן בדיוק, שני נתיבים שווים.</p>
-    </div></div>
-  </section>
-
-  <!-- 09 · CLOSING SLIDE · verbatim closing line -->
-  <section class="cat-item" id="s9" data-type="closing">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>אז זה כל הרעיון: התוכן היה הניצחון, הבנייה הייתה רק הזנב.</li><li>יש לכם עוד תרחישים לתרגל עליהם, ונתיב שני — PowerPoint — שרץ בדיוק על אותו תוכן.</li></ul><span class="sp-cue">▸ סוף המצגת.</span></aside>
+  <!-- 08 · CLOSING SLIDE · verbatim closing line -->
+  <section class="cat-item" id="s8" data-type="closing">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>אז זה כל הרעיון: התוכן היה הניצחון, הבנייה הייתה רק הזנב.</li><li>בבית מריצים את המסלול המלא על מצגת אמיתית שאתם רוצים או צריכים להכין.</li></ul><span class="sp-cue">▸ סוף המצגת.</span></aside>
     <div class="stage"><div class="slide slide--closing">
       <svg class="deco" style="top:8%;left:7%;width:13cqw;height:13cqw;opacity:.5;"><use href="#dots-grid"/></svg>
       <svg class="deco ink-sun" style="bottom:10%;right:8%;width:18cqw;height:5cqw;opacity:.8;"><use href="#squiggle-gold"/></svg>
       <svg class="deco" style="top:12%;right:10%;width:9cqw;height:9cqw;"><use href="#star-burst"/></svg>
-      <p class="closing-quote anim drop">«התוכן היה הניצחון, הבנייה הייתה רק הזנב.»</p>
       <span class="closing-logo anim drop" style="--i:1"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
       <p class="closing-name anim pop" style="--i:2">Benefits</p>
       <p class="closing-line anim" style="--i:3"><span class="ltr">AI that finally fits</span> · בן עקיבא</p>
@@ -723,7 +708,7 @@
 <div class="pres-edge next" id="presNext" aria-label="הבא"></div>
 <div class="pres-hud" id="presHud">
   <button id="hudPrev" aria-label="הקודם"><i class="ti ti-chevron-right"></i></button>
-  <span class="pc" id="presCounter">01 / 09</span>
+  <span class="pc" id="presCounter">01 / 08</span>
   <button id="hudNext" aria-label="הבא"><i class="ti ti-chevron-left"></i></button>
   <button id="hudExit" aria-label="יציאה" style="margin-inline-start:6px;"><i class="ti ti-x"></i></button>
 </div>
