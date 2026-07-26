@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>רצף BMAD · שלושה שקפים · Benefits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Varela+Round&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Session 5 · class-bmad · BMAD flow diagram, redrawn in Marko.
+     Source of truth for the sequence: docs.bmad-method.org/reference/workflow-map
+     Ben 2026-07-26: everything written, NO small text, may be SPREAD
+     across several slides rather than compressed into one.
+     Tokens + atoms duplicated byte-for-byte from class-bmad/slides.html.
+     This file is the ASSET. The deck agent lifts .flow-* markup into slides.
+     ============================================================ */
+  :root {
+    --anchor:#047857; --ui-green:#10B981; --depth:#064E3B; --green-soft:#D1FAE5; --green-mint:#6EE7B7;
+    --canvas:#FFFBEB; --paper:#FFFFFF; --soft:#FEF3C7;
+    --ink:#0F172A; --border-soft:#FDE68A;
+    --sunshine:#FCD34D; --coral:#FB7185; --lavender:#A78BFA; --leaf:#84CC16;
+    --sky:#38BDF8; --pink:#EC4899; --teal:#2DD4BF;
+    --gray-900:#1E293B; --gray-600:#475569; --gray-500:#64748B;
+    --font-display:'Rubik', system-ui, sans-serif;
+    --font-body:'Varela Round', system-ui, sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, monospace;
+    --radius-lg:20px; --radius-xl:28px; --radius-pill:999px;
+    --shadow-lg:8px 8px 0 0 var(--ink);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body), system-ui, sans-serif;
+    color: var(--gray-900); background: var(--canvas);
+    padding: 32px clamp(16px, 4vw, 40px) 96px;
+  }
+  .catalog { max-width: 1340px; margin: 0 auto; }
+  .cat-item { margin-bottom: 60px; }
+  .cat-label { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--gray-600); margin-bottom: 10px; direction: ltr; }
+  .stage { container-type: inline-size; width: 100%; }
+
+  .slide {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+    border: 3px solid var(--ink); border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg); background: var(--canvas);
+    padding: 3.6cqw 4.6cqw;
+    display: flex; flex-direction: column; justify-content: center;
+    --t-body:   clamp(26px, 2.25cqw, 36px);
+    --t-small:  clamp(25px, 2cqw, 31px);
+    --t-micro:  clamp(20px, 1.7cqw, 26px);
+    --t-h3:     clamp(28px, 2.5cqw, 42px);
+    --t-h2:     clamp(40px, 5cqw, 80px);
+    font-size: var(--t-body); line-height: 1.5; color: var(--gray-900);
+  }
+  .kicker { display: inline-flex; align-items: center; gap: 0.5em; background: var(--sunshine); color: var(--ink); border: 2.5px solid var(--ink); border-radius: var(--radius-pill); padding: 0.4em 1em; font-family: var(--font-display); font-size: clamp(20px, 1.7cqw, 26px); font-weight: 700; box-shadow: 4px 4px 0 0 var(--ink); width: max-content; }
+  h2 { font-family: var(--font-display); color: var(--ink); margin: 0; }
+  .slide h2 { font-size: var(--t-h2); font-weight: 800; line-height: 1.04; letter-spacing: -0.04em; }
+  .slide h2 .hi { background: var(--sunshine); padding: 0 0.16em; border-radius: 8px; }
+  .slide-head { display: flex; align-items: baseline; gap: 1.6cqw; margin-bottom: 1.8cqw; flex-wrap: wrap; }
+
+  /* ---------- flow: vertical stack, full-width cards ----------
+     Vertical was chosen deliberately: it gives every node the FULL slide
+     width, which is what keeps the type large. It also sidesteps the RTL
+     arrow question entirely — the flow reads top-to-bottom in both
+     languages, so no arrow ever points the wrong way. */
+  .flow { display: grid; gap: 0.7cqw; }
+  .flow-step {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.8cqw;
+    background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg);
+    padding: 1.5cqw 2.2cqw; box-shadow: 7px 7px 0 0 var(--ink);
+  }
+  .flow-step.is-gate { background: var(--green-soft); }
+  .flow-step.is-loop { background: var(--soft); }
+  .flow-step.is-next { background: var(--anchor); color: #fff; }
+  .flow-step.is-next .flow-title { color: #fff; }
+  .flow-step.is-next .flow-note { color: rgba(255,255,255,0.92); }
+  .flow-step.is-next .flow-cmd { background: var(--paper); color: var(--ink); }
+
+  .flow-agent {
+    display: grid; place-items: center; width: 5.4cqw; height: 5.4cqw; min-width: 54px; min-height: 54px;
+    background: var(--sunshine); color: var(--ink); border: 3px solid var(--ink); border-radius: 50%;
+    font-family: var(--font-display); font-weight: 900; font-size: var(--t-h3); box-shadow: 4px 4px 0 0 var(--ink);
+  }
+  .flow-step.is-gate .flow-agent { background: var(--green-mint); }
+  .flow-step.is-loop .flow-agent { background: var(--coral); color: #fff; }
+  .flow-step.is-next .flow-agent { background: var(--sunshine); color: var(--ink); }
+
+  .flow-title { font-family: var(--font-display); font-weight: 800; font-size: var(--t-h3); color: var(--ink); line-height: 1.15; }
+  .flow-note { font-size: var(--t-small); color: var(--gray-600); line-height: 1.35; margin-top: 0.35cqw; }
+  .flow-cmd {
+    font-family: var(--font-mono); font-weight: 600; font-size: var(--t-small);
+    direction: ltr; unicode-bidi: isolate; white-space: nowrap;
+    background: var(--ink); color: #fff; border-radius: 12px; padding: 0.42em 0.85em;
+  }
+  .flow-arrow { justify-self: center; font-size: var(--t-h3); color: var(--anchor); line-height: 1; font-weight: 900; }
+
+  /* the story loop bracket */
+  .flow-loop {
+    border: 3px dashed var(--ink); border-radius: var(--radius-lg);
+    padding: 1.2cqw 1.4cqw; display: grid; gap: 0.6cqw; background: rgba(255,255,255,0.55);
+  }
+  .flow-loop .flow-step { box-shadow: 5px 5px 0 0 var(--ink); padding: 1.1cqw 1.8cqw; }
+  .flow-loop-tag {
+    font-family: var(--font-display); font-weight: 800; font-size: var(--t-micro); color: var(--ink);
+    background: var(--coral); border: 2.5px solid var(--ink); border-radius: var(--radius-pill);
+    padding: 0.3em 0.9em; width: max-content; box-shadow: 3px 3px 0 0 var(--ink); color: #fff;
+  }
+</style>
+</head>
+<body>
+<div class="catalog">
+
+  <!-- ============ שקף א · תכנון ============ -->
+  <div class="cat-item">
+    <div class="cat-label">slide A — planning</div>
+    <div class="stage">
+      <section class="slide">
+        <div class="slide-head">
+          <span class="kicker">שלב 1 מתוך 3</span>
+          <h2>קודם <span class="hi">מתכננים</span></h2>
+        </div>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-agent">מ</div>
+            <div>
+              <div class="flow-title">מרי שואלת אתכם על המוצר</div>
+              <div class="flow-note">אותן שאלות מהתנור: מה בונים, למי, ומה התוצר. התשובות כבר אצלכם בתיקייה.</div>
+            </div>
+            <span class="flow-cmd">bmad-product-brief</span>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">
+            <div class="flow-agent">ג</div>
+            <div>
+              <div class="flow-title">ג'ון הופך את זה למסמך דרישות</div>
+              <div class="flow-note">החזון נכתב כמסמך מסודר שאפשר לבנות לפיו.</div>
+            </div>
+            <span class="flow-cmd">bmad-prd</span>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step is-gate">
+            <div class="flow-agent">✓</div>
+            <div>
+              <div class="flow-title">אתם קוראים ומאשרים</div>
+              <div class="flow-note">אם המסמך לא מדויק — הקוד לא יהיה מדויק. זה התפקיד שלכם לאורך כל הדרך.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ שקף ב · ארכיטקטורה ============ -->
+  <div class="cat-item">
+    <div class="cat-label">slide B — solutioning</div>
+    <div class="stage">
+      <section class="slide">
+        <div class="slide-head">
+          <span class="kicker">שלב 2 מתוך 3</span>
+          <h2>אחר כך <span class="hi">מפרקים לחלקים</span></h2>
+        </div>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-agent">א</div>
+            <div>
+              <div class="flow-title">הארכיטקט בוחר איך זה ייבנה</div>
+              <div class="flow-note">באילו טכנולוגיות, איך הרכיבים מדברים ביניהם.</div>
+            </div>
+            <span class="flow-cmd">bmad-architecture</span>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">
+            <div class="flow-agent">ס</div>
+            <div>
+              <div class="flow-title">הפרויקט נחתך למשימות עבודה</div>
+              <div class="flow-note">אפוסים גדולים, ובתוכם סיפורים קטנים שאפשר לבנות אחד-אחד.</div>
+            </div>
+            <span class="flow-cmd">bmad-epics</span>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step is-gate">
+            <div class="flow-agent">✓</div>
+            <div>
+              <div class="flow-title">בדיקה שהכול מוכן לבנייה</div>
+              <div class="flow-note">שער אחרון לפני שמתחילים לכתוב קוד.</div>
+            </div>
+            <span class="flow-cmd">bmad-readiness</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ שקף ג · הבנייה ============ -->
+  <div class="cat-item">
+    <div class="cat-label">slide C — implementation loop</div>
+    <div class="stage">
+      <section class="slide">
+        <div class="slide-head">
+          <span class="kicker">שלב 3 מתוך 3</span>
+          <h2>ואז <span class="hi">בונים, סיפור אחרי סיפור</span></h2>
+        </div>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-agent">ת</div>
+            <div>
+              <div class="flow-title">בונים תוכנית עבודה</div>
+              <div class="flow-note">מה נבנה עכשיו, ובאיזה סדר.</div>
+            </div>
+            <span class="flow-cmd">bmad-sprint-plan</span>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-loop">
+            <span class="flow-loop-tag">חוזר על עצמו לכל סיפור, עד שנגמרים הסיפורים</span>
+            <div class="flow-step is-loop">
+              <div class="flow-agent">1</div>
+              <div><div class="flow-title">כותבים את הסיפור הבא</div></div>
+              <span class="flow-cmd">create-story</span>
+            </div>
+            <div class="flow-step is-loop">
+              <div class="flow-agent">2</div>
+              <div><div class="flow-title">המפתח בונה אותו</div></div>
+              <span class="flow-cmd">develop-story</span>
+            </div>
+            <div class="flow-step is-loop">
+              <div class="flow-agent">3</div>
+              <div><div class="flow-title">מודל אחר עובר על הקוד ובודק</div></div>
+              <span class="flow-cmd">code-review</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ שקף ד · מה ממשיך אחרי ============ -->
+  <div class="cat-item">
+    <div class="cat-label">slide D — what continues after</div>
+    <div class="stage">
+      <section class="slide">
+        <div class="slide-head">
+          <span class="kicker">ומה שממשיך אחרי</span>
+          <h2>כרמן — <span class="hi">מכאן זה רץ לבד</span></h2>
+        </div>
+        <div class="flow">
+          <div class="flow-step is-gate">
+            <div class="flow-agent">✓</div>
+            <div>
+              <div class="flow-title">עמוד המעקב שלכם יגיד לכם מתי</div>
+              <div class="flow-note">לא צריך לזכור. כשמגיע הרגע — זה כתוב שם, עם הפרומפט המוכן.</div>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">
+            <div class="flow-agent">ג</div>
+            <div>
+              <div class="flow-title">לפני הקריאה — הפרויקט צריך להיות מאגר git</div>
+              <div class="flow-note">מהמפגש הקודם: אתחול וקומיט ראשון. בלי זה כרמן לא יתחיל.</div>
+            </div>
+            <span class="flow-cmd">git init</span>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step is-next">
+            <div class="flow-agent">⌖</div>
+            <div>
+              <div class="flow-title">הרגע שהבנייה עוברת להרצה עצמאית</div>
+              <div class="flow-note">אתם מפסיקים להריץ פקודה-פקודה. כרמן מוודא שיש לו כל מה שהוא צריך מכם, ואז ממשיך לבד.</div>
+            </div>
+            <span class="flow-cmd">/orbit-autopilot:karman</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
