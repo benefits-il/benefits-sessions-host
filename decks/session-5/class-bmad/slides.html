@@ -378,6 +378,39 @@
   #spNote ul.sp-points { margin:0 0 .2em; padding-inline-start:1.15em; display:flex; flex-direction:column; gap:.6em; }
   #spNote ul.sp-points li { line-height:1.5; }
   /* SP-CSS-END */
+
+  /* ---------- BMAD flow diagram (slides 2-5) ----------
+     Redrawn from docs.bmad-method.org/reference/workflow-map.
+     Vertical stack so every node gets the full slide width — that is what
+     keeps the type large (Ben 2026-07-26: everything written, no small text). */
+  .flow { display: grid; gap: 0.7cqw; }
+  .flow-step { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.8cqw;
+    background: var(--paper); border: 3px solid var(--ink); border-radius: var(--radius-lg);
+    padding: 1.5cqw 2.2cqw; box-shadow: 7px 7px 0 0 var(--ink); }
+  .flow-step.is-gate { background: var(--green-soft); }
+  .flow-step.is-loop { background: var(--soft); }
+  .flow-step.is-next { background: var(--anchor); }
+  .flow-step.is-next .flow-title { color: #fff; }
+  .flow-step.is-next .flow-note { color: rgba(255,255,255,0.92); }
+  .flow-step.is-next .flow-cmd { background: var(--paper); color: var(--ink); }
+  .flow-agent { display: grid; place-items: center; width: 5.4cqw; height: 5.4cqw; min-width: 54px; min-height: 54px;
+    background: var(--sunshine); color: var(--ink); border: 3px solid var(--ink); border-radius: 50%;
+    font-family: var(--font-display); font-weight: 900; font-size: var(--t-h3); box-shadow: 4px 4px 0 0 var(--ink); }
+  .flow-step.is-gate .flow-agent { background: var(--green-mint); }
+  .flow-step.is-loop .flow-agent { background: var(--coral); color: #fff; }
+  .flow-title { font-family: var(--font-display); font-weight: 800; font-size: var(--t-h3); color: var(--ink); line-height: 1.15; }
+  .flow-note { font-size: var(--t-small); color: var(--gray-600); line-height: 1.35; margin-top: 0.35cqw; }
+  .flow-cmd { font-family: var(--font-mono); font-weight: 600; font-size: var(--t-small);
+    direction: ltr; unicode-bidi: isolate; white-space: nowrap;
+    background: var(--ink); color: #fff; border-radius: 12px; padding: 0.42em 0.85em; }
+  .flow-arrow { justify-self: center; font-size: var(--t-h3); color: var(--anchor); line-height: 1; font-weight: 900; }
+  .flow-loop { border: 3px dashed var(--ink); border-radius: var(--radius-lg);
+    padding: 1.2cqw 1.4cqw; display: grid; gap: 0.6cqw; background: rgba(255,255,255,0.55); }
+  .flow-loop .flow-step { box-shadow: 5px 5px 0 0 var(--ink); padding: 1.1cqw 1.8cqw; }
+  .flow-loop-tag { font-family: var(--font-display); font-weight: 800; font-size: var(--t-micro); color: #fff;
+    background: var(--coral); border: 2.5px solid var(--ink); border-radius: var(--radius-pill);
+    padding: 0.3em 0.9em; width: max-content; box-shadow: 3px 3px 0 0 var(--ink); }
+
 </style>
 </head>
 <body>
@@ -399,7 +432,7 @@
 
   <!-- 01 · TITLE — הסיפור -->
   <section class="cat-item" id="s1" data-type="title">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>הגענו ליחידה האחרונה של הקורס — ולפני שנוגעים במקלדת, אני חייב לספר לכם איך זה התחיל אצלי.</li><li>במשך שנתיים המילה הכי מעצבנת בשבילי הייתה "סוכנים": <strong>«עוד מעט יהיה סוכנים, עוד מעט יהיה סוכנים»</strong>.</li><li>ואני יושב, מחפש, חוקר, קורא — ולא מצליח להבין <strong>«מה אתם רוצים ממני עם הדבר הזה»</strong>.</li><li>ואז יום אחד קפץ אליי חבר. סתם בא לבקר.</li><li>הוא רואה אותי עם המחשב פתוח, ואומר לי: <strong>«שומע, יש לי משהו מגניב להראות לך, יש פה כלי מטורף»</strong>.</li><li>אמרתי לו: <strong>«מה, <span class="ltr">ChatGPT</span>?»</strong>. והוא: <strong>«זוז, זוז, תן לי»</strong>.</li><li><strong>«מתחיל להסביר לי על <span class="ltr">BMAD</span> — ובאותו רגע נפל לי האסימון.»</strong></li><li><strong>«מאותו רגע הכל התהפך בעבודה שלי עם <span class="ltr">AI</span>.»</strong></li><li>פתאום הבנתי שיש דרך מובנית לעבוד — <strong>«לא רק לקוות שזה יעבוד»</strong>.</li><li>לא אני מול צ'אט — אני מול צוות: אנליסטית ששואלת, מנהל-מוצר שמגדיר, ארכיטקט שמתכנן, וכולם עוצרים ומחכים לאישור שלי.</li><li>ואני אגיד לכם משהו: <strong>«אני עדיין מתלהב מבימאד. אני עדיין עובד עם זה.»</strong></li><li>ולמה אני כל-כך מתחבר לזה? כי אתם כבר מכירים את זה.</li><li>התנור. <span class="ltr">STUDIO</span>. השאלות שישאלו אתכם עוד מעט — הן השאלות מהתנור.</li><li><strong>«זה מה שמכווין אותי בכל צורת העבודה, ובגלל זה אני מאוד מתחבר לבימאד — זה ממש סטודיו.»</strong></li><li><strong>«בימאד זה רק עוד דרך להראות שהשיטה שלנו עובדת.»</strong></li><li>זה היה ה-<span class="ltr">KICKER</span> — הדבר שסידר לי בראש את צורת החשיבה עד הסוף.</li><li>ותיזכרו במשפט מהיחידה הקודמת: מה שבניתם רץ אצלכם ואתם מפעילים; שלי רץ לבד בענן.</li><li><strong>«ההבדל הוא לא קסם — הוא שיטת עבודה. וזו השיטה.»</strong></li><li>את הסרטון ראיתם בבית, ההתקנה כבר אצלכם — היום לא לומדים על <span class="ltr">BMAD</span>. היום עובדים איתו.</li></ul><span class="sp-cue">▸הסיפור בעל-פה, בקצב חופשי — השקף נשאר ברקע. בלי לפתוח כלים עדיין◂ הבא: שקף <span class="ltr">2</span> — ההדגמה.</span></aside>
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>הגענו ליחידה האחרונה של הקורס — ולפני שנוגעים במקלדת, אני חייב לספר לכם איך זה התחיל אצלי.</li><li>במשך שנתיים המילה הכי מעצבנת בשבילי הייתה "סוכנים": <strong>«עוד מעט יהיה סוכנים, עוד מעט יהיה סוכנים»</strong>.</li><li>ואני יושב, מחפש, חוקר, קורא — ולא מצליח להבין <strong>«מה אתם רוצים ממני עם הדבר הזה»</strong>.</li><li>ואז יום אחד קפץ אליי חבר. סתם בא לבקר.</li><li>הוא רואה אותי עם המחשב פתוח, ואומר לי: <strong>«שומע, יש לי משהו מגניב להראות לך, יש פה כלי מטורף»</strong>.</li><li>אמרתי לו: <strong>«מה, <span class="ltr">ChatGPT</span>?»</strong>. והוא: <strong>«זוז, זוז, תן לי»</strong>.</li><li><strong>«מתחיל להסביר לי על <span class="ltr">BMAD</span> — ובאותו רגע נפל לי האסימון.»</strong></li><li><strong>«מאותו רגע הכל התהפך בעבודה שלי עם <span class="ltr">AI</span>.»</strong></li><li>פתאום הבנתי שיש דרך מובנית לעבוד — <strong>«לא רק לקוות שזה יעבוד»</strong>.</li><li>לא אני מול צ'אט — אני מול צוות: אנליסטית ששואלת, מנהל-מוצר שמגדיר, ארכיטקט שמתכנן, וכולם עוצרים ומחכים לאישור שלי.</li><li>ואני אגיד לכם משהו: <strong>«אני עדיין מתלהב מבימאד. אני עדיין עובד עם זה.»</strong></li><li>ולמה אני כל-כך מתחבר לזה? כי אתם כבר מכירים את זה.</li><li>התנור. <span class="ltr">STUDIO</span>. השאלות שישאלו אתכם עוד מעט — הן השאלות מהתנור.</li><li><strong>«זה מה שמכווין אותי בכל צורת העבודה, ובגלל זה אני מאוד מתחבר לבימאד — זה ממש סטודיו.»</strong></li><li><strong>«בימאד זה רק עוד דרך להראות שהשיטה שלנו עובדת.»</strong></li><li>זה היה ה-<span class="ltr">KICKER</span> — הדבר שסידר לי בראש את צורת החשיבה עד הסוף.</li><li>ותיזכרו במשפט מהיחידה הקודמת: מה שבניתם רץ אצלכם ואתם מפעילים; שלי רץ לבד בענן.</li><li><strong>«ההבדל הוא לא קסם — הוא שיטת עבודה. וזו השיטה.»</strong></li><li>את הסרטון ראיתם בבית, ההתקנה כבר אצלכם — היום לא לומדים על <span class="ltr">BMAD</span>. היום עובדים איתו.</li></ul><span class="sp-cue">▸הסיפור בעל-פה, בקצב חופשי — השקף נשאר ברקע. בלי לפתוח כלים עדיין◂ הבא: שקף <span class="ltr">2</span> — המבנה מתחיל.</span></aside>
     <div class="stage"><div class="slide slide--title">
       <span class="title-glow" aria-hidden="true"></span>
       <svg class="deco" style="top:8%;right:7%;width:6cqw;height:6cqw;" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="var(--sunshine)" stroke="var(--ink)" stroke-width="6"/></svg>
@@ -411,54 +444,70 @@
     </div></div>
   </section>
 
-  <!-- 02 · LIVE-DEMO — הדגמת TUESDAY -->
-  <section class="cat-item" id="s2" data-type="live-demo">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>אני אראה לכם את זה על <span class="ltr">TUESDAY</span> — ואז אתם עושים בדיוק את זה על הפרויקט שלכם.</li><li><strong>▸עובר ל-<span class="ltr">Claude Code</span> בתיקיית-<span class="ltr">TUESDAY</span>. מריץ <span class="ltr">bmad-help</span>◂</strong></li><li>זה ה-<span class="ltr">Master</span>: הוא סורק את הפרויקט ואומר לכם בדיוק מה הצעד הבא.</li><li>נתקעתם אי-פעם — חוזרים אליו.</li><li><strong>▸צ'אט נקי. מריץ <span class="ltr">bmad-product-brief</span>. עונה לשאלות של מרי בקול, מקריא אותן לכיתה תוך-כדי◂</strong></li><li>שימו לב לשאלות של מרי — הן מוכרות לכם.</li><li>זה התנור: מה בונים, למי, מה התוצר — רק שהפעם מישהי אחרת שואלת.</li><li><strong>▸צ'אט נקי. מריץ <span class="ltr">bmad-prd</span>, בוחר <span class="ltr">Create</span>. כשהמסמך מוכן — פותח אותו◂</strong></li><li>וכאן ג'ון הופך את החזון למסמך-דרישות.</li><li><strong>▸פותח את ה-<span class="ltr">PRD</span>, מקריא בלוק אחד בקול◂</strong></li><li><strong>«מאשרים את זה? זה רגע ה-<span class="ltr">Go/No-Go</span>. אם המסמך לא מדויק — הקוד לא יהיה מדויק.»</strong></li><li><strong>⏸ ▸מחכה לתגובת הכיתה על הבלוק שהוקרא◂</strong></li><li><strong>«ושימו לב מה קרה פה — לא כתבתי קוד. עניתי על שאלות ואישרתי מסמך. אני הבמאי.»</strong></li></ul><span class="sp-cue">▸אם הריצה החיה מתעכבת: עוברים לתיקיית <span class="ltr">_bmad-output</span> האפויה של <span class="ltr">TUESDAY</span> ומראים את התוצרים המוכנים◂ הבא: שקף <span class="ltr">3</span> — ההקמה.</span></aside>
+  <!-- 02 · DIAGRAM — תכנון -->
+  <section class="cat-item" id="s2" data-type="diagram">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>לפני שנוגעים בכלום — זה כל המסלול, בארבעה שקפים. אחר כך תעבדו לפיו.</li><li>מתחילים בתכנון, ובתכנון יש בדיוק שני צעדים.</li><li>הצעד הראשון: מרי. היא האנליסטית, והיא שואלת אתכם על המוצר.</li><li>ואתם תזהו את השאלות — מה בונים, למי זה מיועד, מה התוצר בסוף. אלה השאלות מהתנור.</li><li>ההבדל היחיד הוא שהפעם מישהי אחרת שואלת אותן, ואתם עונים.</li><li>ויש לכם יתרון אמיתי: רוב התשובות כבר כתובות אצלכם בתיקייה, מהעבודה של המפגשים הקודמים.</li><li>הצעד השני: ג׳ון. הוא לוקח את מה שעניתם ומייצר מסמך דרישות מסודר.</li><li>לא רעיון בראש — מסמך שאפשר לבנות לפיו.</li><li>ואז מגיע הצעד שהוא שלכם, והוא חוזר בכל שלב במסלול: <strong>אתם קוראים ומאשרים.</strong></li><li><strong>«אם המסמך לא מדויק — הקוד לא יהיה מדויק.»</strong> זה התפקיד שלכם לאורך כל הדרך, וזה כל התפקיד.</li></ul><span class="sp-cue">▸השקף נשאר על המסך. מצביע על התיבות תוך-כדי, בלי לפתוח כלים◂ הבא: שקף <span class="ltr">3</span> — מפרקים לחלקים.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-map-pin"></i> שלב <span class="ltr">1</span> מתוך <span class="ltr">3</span></span>
+      <h2 class="anim x" style="--i:1;margin:1.1cqw 0 1.6cqw;">קודם <span class="hi">מתכננים</span></h2>
+      <div class="flow anim up-big" style="--i:2"><div class="flow-step"><div class="flow-agent">מ</div><div><div class="flow-title">מרי שואלת אתכם על המוצר</div><div class="flow-note">אותן שאלות מהתנור: מה בונים, למי, ומה התוצר. התשובות כבר אצלכם בתיקייה.</div></div><span class="flow-cmd">bmad-product-brief</span></div><div class="flow-arrow">↓</div><div class="flow-step"><div class="flow-agent">ג</div><div><div class="flow-title">ג׳ון הופך את זה למסמך דרישות</div><div class="flow-note">החזון נכתב כמסמך מסודר שאפשר לבנות לפיו.</div></div><span class="flow-cmd">bmad-prd</span></div><div class="flow-arrow">↓</div><div class="flow-step is-gate"><div class="flow-agent">✓</div><div><div class="flow-title">אתם קוראים ומאשרים</div><div class="flow-note">אם המסמך לא מדויק — הקוד לא יהיה מדויק. זה התפקיד שלכם לאורך כל הדרך.</div></div><span></span></div></div>
+    </div></div>
+  </section>
+  <!-- 03 · DIAGRAM — ארכיטקטורה -->
+  <section class="cat-item" id="s3" data-type="diagram">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>יש מסמך דרישות מאושר. עכשיו מחליטים איך בונים אותו.</li><li>הארכיטקט בוחר את הטכנולוגיות ואת האופן שבו הרכיבים מדברים ביניהם.</li><li>אתם לא צריכים להבין כל שורה שם. אתם צריכים להבין מה הוא החליט ולמה.</li><li>אחר כך הפרויקט נחתך למשימות עבודה: אפוסים גדולים, ובתוך כל אחד סיפורים קטנים.</li><li>וזה הרעיון המרכזי — לא בונים "אפליקציה". בונים סיפור אחד, ואז עוד אחד.</li><li>כל סיפור הוא משהו שאפשר לסיים, לבדוק, ולסמן שנגמר.</li><li>ובסוף השלב הזה יש עוד שער: בדיקה שהכול מוכן לבנייה.</li><li>זה השער האחרון לפני שנכתבת שורת קוד ראשונה.</li></ul><span class="sp-cue">▸מצביע על שלוש התיבות בסדר. לא נכנס לפרטי הארכיטקטורה — זה לא הזמן◂ הבא: שקף <span class="ltr">4</span> — הלולאה.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-sitemap"></i> שלב <span class="ltr">2</span> מתוך <span class="ltr">3</span></span>
+      <h2 class="anim x" style="--i:1;margin:1.1cqw 0 1.6cqw;">אחר כך <span class="hi">מפרקים לחלקים</span></h2>
+      <div class="flow anim up-big" style="--i:2"><div class="flow-step"><div class="flow-agent">א</div><div><div class="flow-title">הארכיטקט בוחר איך זה ייבנה</div><div class="flow-note">באילו טכנולוגיות, איך הרכיבים מדברים ביניהם.</div></div><span class="flow-cmd">bmad-architecture</span></div><div class="flow-arrow">↓</div><div class="flow-step"><div class="flow-agent">ס</div><div><div class="flow-title">הפרויקט נחתך למשימות עבודה</div><div class="flow-note">אפוסים גדולים, ובתוכם סיפורים קטנים שאפשר לבנות אחד-אחד.</div></div><span class="flow-cmd">bmad-epics</span></div><div class="flow-arrow">↓</div><div class="flow-step is-gate"><div class="flow-agent">✓</div><div><div class="flow-title">בדיקה שהכול מוכן לבנייה</div><div class="flow-note">שער אחרון לפני שמתחילים לכתוב קוד.</div></div><span class="flow-cmd">bmad-readiness</span></div></div>
+    </div></div>
+  </section>
+  <!-- 04 · DIAGRAM — לולאת הבנייה -->
+  <section class="cat-item" id="s4" data-type="diagram">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>קודם תוכנית עבודה: מה נבנה עכשיו ובאיזה סדר.</li><li>ומכאן זו לולאה, והיא חוזרת על עצמה עד שנגמרים הסיפורים.</li><li>כותבים את הסיפור הבא. המפתח בונה אותו. ואז — וזה החלק שאני הכי אוהב — <strong>מודל אחר עובר על הקוד ובודק אותו.</strong></li><li>לא אותו מודל שכתב. מודל אחר, כי מי שכתב משהו הוא הכי גרוע בלמצוא בו טעויות.</li><li>עבר? ממשיכים לסיפור הבא. נפל? חוזרים ומתקנים, ורק אז ממשיכים.</li><li><strong>«אני לא מוכר לכם שדברים לוקחים שתי דקות ותראו איזה מהר עשיתי.»</strong> זה לוקח זמן. אבל זה מתקדם בקו ישר.</li><li>וכל אחד מכם יגיע היום למקום אחר בלולאה הזאת, וזה בסדר גמור.</li></ul><span class="sp-cue">▸מצביע על המסגרת המקווקות — שזה יישאר בעין כלולאה, לא כרשימה◂ הבא: שקף <span class="ltr">5</span> — ומה ממשיך אחרי.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-refresh"></i> שלב <span class="ltr">3</span> מתוך <span class="ltr">3</span></span>
+      <h2 class="anim x" style="--i:1;margin:1.1cqw 0 1.6cqw;">ואז <span class="hi">בונים, סיפור אחרי סיפור</span></h2>
+      <div class="flow anim up-big" style="--i:2"><div class="flow-step"><div class="flow-agent">ת</div><div><div class="flow-title">בונים תוכנית עבודה</div><div class="flow-note">מה נבנה עכשיו, ובאיזה סדר.</div></div><span class="flow-cmd">bmad-sprint-plan</span></div><div class="flow-arrow">↓</div><div class="flow-loop"><span class="flow-loop-tag">חוזר על עצמו לכל סיפור, עד שנגמרים הסיפורים</span><div class="flow-step is-loop"><div class="flow-agent">1</div><div><div class="flow-title">כותבים את הסיפור הבא</div></div><span class="flow-cmd">create-story</span></div><div class="flow-step is-loop"><div class="flow-agent">2</div><div><div class="flow-title">המפתח בונה אותו</div></div><span class="flow-cmd">develop-story</span></div><div class="flow-step is-loop"><div class="flow-agent">3</div><div><div class="flow-title">מודל אחר עובר על הקוד ובודק</div></div><span class="flow-cmd">code-review</span></div></div></div>
+    </div></div>
+  </section>
+  <!-- 05 · DIAGRAM — כרמן -->
+  <section class="cat-item" id="s5" data-type="diagram">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>ויש עוד שלב אחד, והוא כבר לא של היום — הוא של אחרי.</li><li>ברגע מסוים בבנייה אתם מפסיקים להריץ פקודה-פקודה, והמכונה ממשיכה לבד. השלב הזה נקרא כרמן.</li><li>ואל תדאגו לזכור מתי — <strong>עמוד המעקב שתקבלו עוד מעט יגיד לכם בדיוק מתי</strong>, עם הפרומפט המוכן.</li><li>דבר אחד שכן חשוב: לפני שקוראים לכרמן, הפרויקט צריך להיות מאגר <span class="ltr">git</span> עם קומיט אחד לפחות.</li><li>זה מהמפגש הקודם, ואתם כבר יודעים לעשות את זה. בלי זה כרמן פשוט לא מתחיל.</li><li>אני מראה לכם את זה עכשיו כדי שתדעו שיש לאן להמשיך. לא כדי שתעשו את זה היום.</li></ul><span class="sp-cue">▸בלי הדגמה של כרמן. רק מסמנים שהוא קיים ושהעמוד יוביל אליו◂ הבא: שקף <span class="ltr">6</span> — ההדגמה.</span></aside>
+    <div class="stage"><div class="slide">
+      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
+      <span class="kicker anim drop"><i class="ti ti-rocket"></i> ומה שממשיך אחרי</span>
+      <h2 class="anim x" style="--i:1;margin:1.1cqw 0 1.6cqw;">כרמן — <span class="hi">מכאן זה רץ לבד</span></h2>
+      <div class="flow anim up-big" style="--i:2"><div class="flow-step is-gate"><div class="flow-agent">✓</div><div><div class="flow-title">עמוד המעקב שלכם יגיד לכם מתי</div><div class="flow-note">לא צריך לזכור. כשמגיע הרגע — זה כתוב שם, עם הפרומפט המוכן.</div></div><span></span></div><div class="flow-arrow">↓</div><div class="flow-step"><div class="flow-agent">ג</div><div><div class="flow-title">לפני הקריאה — הפרויקט צריך להיות מאגר git</div><div class="flow-note">מהמפגש הקודם: אתחול וקומיט ראשון. בלי זה כרמן לא יתחיל.</div></div><span class="flow-cmd">git init</span></div><div class="flow-arrow">↓</div><div class="flow-step is-next"><div class="flow-agent">⌖</div><div><div class="flow-title">הרגע שהבנייה עוברת להרצה עצמאית</div><div class="flow-note">אתם מפסיקים להריץ פקודה-פקודה. כרמן מוודא שיש לו כל מה שהוא צריך מכם, ואז ממשיך לבד.</div></div><span class="flow-cmd">/orbit-autopilot:karman</span></div></div>
+    </div></div>
+  </section>
+  <!-- 06 · LIVE-DEMO — פרומפט-האב -->
+  <section class="cat-item" id="s6" data-type="live-demo">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>עכשיו אני מראה לכם מה אתם עומדים לעשות, ואני עושה את זה על פרויקט אמיתי שלי.</li><li>יש לי פרומפט אחד. אני מדביק אותו בקלוד קוד, בתוך תיקיית-הפרויקט. זהו.</li><li>והוא עושה שני דברים בזה אחר זה.</li><li><strong>▸מדביק את פרומפט-האב. שלב א מתחיל◂</strong></li><li>הדבר הראשון: כל הידע שלי על הפרויקט מפוזר בכמה מקומות. אף פעם הוא לא במקום אחד.</li><li>אז הוא שולח סוכנים שעוברים על הכול, <strong>בלי לדלג</strong>, ומחזירים לי רשימה של איפה כל דבר יושב.</li><li><strong>▸האינדקס חוזר. מקריא שתי-שלוש שורות ממנו◂</strong></li><li>שימו לב שהוא לא הדפיס לי את התוכן. הוא הדפיס לי איפה זה נמצא, ומה זה.</li><li>ואז הוא בוחר מה רלוונטי, מכניס הכול לתיקיית ידע אחת בתוך הפרויקט — <strong>ועוצר ומחכה שאני אאשר.</strong></li><li><strong>▸מאשר. שלב ב מתחיל — <span class="ltr">bmad-help</span> פותח שיחה◂</strong></li><li>עכשיו נכנס <span class="ltr">bmad-help</span> ומדבר איתי על הפרויקט.</li><li><strong>▸השיחה מסתיימת, העמוד נבנה. פותח אותו בדפדפן◂</strong></li><li>וזה מה שיוצא: עמוד משלי, בעיצוב של הקורס, שיושב אצלי בפרויקט.</li><li>כל השלבים שראינו בשקפים, ולכל שלב <strong>פרומפט מוכן להעתקה</strong> ומה לבדוק לפני שמאשרים.</li><li><strong>«ומה שקרה פה — לא כתבתי קוד. הדבקתי פרומפט אחד.»</strong></li><li>וזה העמוד שילווה אתכם גם אחרי שהשיעור נגמר.</li><li><strong>⏸ ▸שאלה אחת לכיתה לפני שמשחררים◂</strong></li></ul><span class="sp-cue">▸<strong><span class="ltr">fallback</span> אם ההרצה החיה נתקעת:</strong> פותחים עמוד-מעקב שנבנה מראש ומראים אותו כמו שהוא. לא מדבגים חי◂ הבא: שקף <span class="ltr">7</span> — עכשיו אתם.</span></aside>
     <div class="stage"><div class="slide">
       <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
       <span class="kicker anim drop"><i class="ti ti-player-play"></i> הדגמה</span>
-      <h2 class="anim x" style="--i:1;margin:1.4cqw 0 2.2cqw;"><span class="ltr">TUESDAY</span> פוגשת <span class="hi">את הצוות</span></h2>
-      <p class="lead anim" style="--i:2;margin:0 0 1.8cqw;">שלוש תיבות-<span class="ltr">demo</span>:</p>
-      <div class="ltr anim" style="--i:3;display:flex;gap:1.4cqw;flex-wrap:wrap;justify-content:flex-start;direction:ltr;">
-        <span class="tag" style="font-family:var(--font-mono);direction:ltr;font-size:clamp(20px,1.9cqw,30px);">bmad-help</span>
-        <span class="tag" style="font-family:var(--font-mono);direction:ltr;font-size:clamp(20px,1.9cqw,30px);">bmad-product-brief</span>
-        <span class="tag" style="font-family:var(--font-mono);direction:ltr;font-size:clamp(20px,1.9cqw,30px);">bmad-prd</span>
-      </div>
+      <h2 class="anim x" style="--i:1;margin:1.1cqw 0 1.6cqw;">פרומפט אחד — <span class="hi">ומקבלים עמוד</span></h2>
+      <div class="flow anim up-big" style="--i:2"><div class="flow-step"><div class="flow-agent">א</div><div><div class="flow-title">אוספים את הידע</div><div class="flow-note">סוכנים עוברים על כל התיקיות, בלי לדלג, ומחזירים אינדקס. אישור שלכם — ואז ממשיכים.</div></div><span class="flow-cmd">stage 1</span></div><div class="flow-arrow">↓</div><div class="flow-step is-next"><div class="flow-agent">ב</div><div><div class="flow-title">בונים את עמוד-המעקב</div><div class="flow-note"><span class="ltr">bmad-help</span> מדבר איתכם, ואז בונה עמוד עם פרומפט להעתקה לכל שלב.</div></div><span class="flow-cmd">stage 2</span></div></div>
     </div></div>
   </section>
-
-  <!-- 03 · ACTIVITY — הקמה -->
-  <section class="cat-item" id="s3" data-type="activity">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>עכשיו אתם.</li><li>פותחים בקלוד קוד את תיקיית-הפרויקט שלכם — זו עם החבילה: קול-המותג, האיפיון, ה-<span class="ltr">KB</span>, מערכת-העיצוב והסקיצות.</li><li>מריצים <span class="ltr">bmad-help</span> — אם ה-<span class="ltr">Master</span> עונה, ההתקנה מהבית עובדת.</li><li>ומי שזה לא עובד אצלו — טבלת-התקלות בעמוד-הכיתה; אני אגיע אליכם, לא עוצרים את כולם.</li><li>ואז צ'אט נקי, <span class="ltr">bmad-product-brief</span> — ומתחילים לענות למרי.</li><li>כשמרי שואלת — יש לכם יתרון: רוב התשובות כבר כתובות בתיקייה שלכם.</li></ul><span class="sp-cue">▸זמן-הקמה: מסתובב בין המסכים עד שכולם רואים את מרי שואלת. מי שנתקע — שיתוף-מסך◂ הבא: שקף <span class="ltr">4</span> — עובדים.</span></aside>
-    <div class="stage"><div class="slide slide--greensoft">
+  <!-- 07 · ACTIVITY — עבודה (cue slide, stays on screen) -->
+  <section class="cat-item" id="s7" data-type="activity">
+    <aside class="sp-notes" hidden><ul class="sp-points"><li>עכשיו אתם. פותחים את תיקיית-הפרויקט שלכם בקלוד קוד — זו עם החבילה מהמפגשים הקודמים.</li><li>מורידים את הפרומפט מעמוד הכיתה, מדביקים, והוא ישאל אתכם איפה החומרים יושבים.</li><li>כשהוא עוצר ומראה לכם מה הוא הבין — <strong>תקראו את זה באמת</strong> לפני שאתם מאשרים. זה הרגע לתפוס אם הוא פיספס משהו.</li><li>ואז תקבלו את העמוד שלכם, ומשם אתם עובדים לפיו, בקצב שלכם.</li><li>כל אחד יגיע למקום אחר היום. זה בסדר, וזה בכוונה — העמוד ממשיך איתכם הביתה.</li><li>ומי שנתקע — קודם <span class="ltr">bmad-help</span>, ואז יד ושיתוף-מסך. אני מגיע לכולם, לא עוצרים את הכיתה.</li></ul><span class="sp-cue">▸ליווי: מסתובב בין המסכים. <span class="ltr">watch-for</span>: מי שמדביק בלי לפתוח קודם את תיקיית-הפרויקט · מי שמאשר את שלב א בלי לקרוא · מי שכותב <span class="ltr">slash</span> לפני שם-הפקודה בגלל ה-<span class="ltr">RTL</span> — כותבים את שם-הפקודה ישירות · מי שמצא מדריך ישן עם <span class="ltr">/pm</span> — זה <span class="ltr">V4/V5</span>, אצלנו <span class="ltr">bmad-*</span> ישיר◂ ▸תזכורת-זמן קצרה בקול לקראת סוף הבלוק◂ הבא: שקף <span class="ltr">8</span> — הבדיקה.</span></aside>
+    <div class="stage"><div class="slide">
       <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
-      <span class="kicker anim drop"><i class="ti ti-rocket"></i> מקימים</span>
-      <h2 class="anim x" style="--i:1;margin:1.4cqw 0 2.4cqw;">שלושה צעדים — <span class="hi">והצוות שלכם נכנס</span></h2>
-      <div class="pp-flow">
-        <div class="pp-step anim up-big" style="--i:2"><span class="pp-step__n">1</span><div class="pp-step__t">פותחים בקלוד קוד את תיקיית-הפרויקט — עם החבילה בפנים</div></div>
-        <div class="pp-step anim up-big" style="--i:3"><span class="pp-step__n">2</span><div class="pp-step__t">מריצים <span class="ltr">bmad-help</span> — בדיקת-חיים להתקנה מהבית</div></div>
-        <div class="pp-step anim up-big" style="--i:4"><span class="pp-step__n">3</span><div class="pp-step__t">מריצים <span class="ltr">bmad-product-brief</span> — ומתחילים לענות</div></div>
-      </div>
-      <p class="footnote anim" style="--i:5">התקנה לא עונה? טבלת-התקלות בעמוד-הכיתה.</p>
+      <span class="kicker anim drop"><i class="ti ti-users"></i> עכשיו אתם</span>
+      <h2 class="anim x" style="--i:1;margin:1.1cqw 0 1.6cqw;">מדביקים, מאשרים — <span class="hi">ומתחילים לנהל</span></h2>
+      <div class="flow anim up-big" style="--i:2"><div class="flow-step"><div class="flow-agent">1</div><div><div class="flow-title">פותחים בקלוד קוד את תיקיית-הפרויקט שלכם</div></div><span></span></div><div class="flow-step"><div class="flow-agent">2</div><div><div class="flow-title">מדביקים את פרומפט-האב מעמוד הכיתה</div></div><span></span></div><div class="flow-step"><div class="flow-agent">3</div><div><div class="flow-title">עונים לו איפה החומרים — ומאשרים כשהוא עוצר</div></div><span></span></div></div>
+      <p class="footnote anim" style="--i:5">נתקעתם? <span class="ltr">bmad-help</span> · יד ושיתוף-מסך.</p>
     </div></div>
   </section>
 
-  <!-- 04 · LIVE-DEMO — עבודה (cue slide, stays on screen) -->
-  <section class="cat-item" id="s4" data-type="live-demo">
-    <aside class="sp-notes" hidden><ul class="sp-points"><li>מכאן — אתם מנהלים.</li><li>כל פקודה בצ'אט נקי; בין פקודות — קוראים את המסמך שנוצר ומאשרים, כמו שראיתם אצלי.</li><li>המפה שעל המסך היא כל הדרך — כל אחד מתקדם עד איפה שהוא מגיע, בקצב שלו.</li><li>ומי שנתקע — קודם <span class="ltr">bmad-help</span>, ואז יד ושיתוף-מסך.</li></ul><span class="sp-cue">▸ליווי: מסתובב בין המסכים. <span class="ltr">watch-for</span>: מי שכותב <span class="ltr">slash</span> לפני הפקודה בגלל ה-<span class="ltr">RTL</span> — מראים שכותבים את שם-הפקודה ישירות · מי ש"סתם מדבר" עם הסוכן — מזכירים: צ'אט נקי + שם-הפקודה · מי שמצא מדריך ישן עם <span class="ltr">/pm</span> — זה <span class="ltr">V4/V5</span>, אצלנו <span class="ltr">bmad-*</span> ישיר◂ ▸תזכורת-זמן קצרה בקול לקראת סוף הבלוק◂ הבא: שקף <span class="ltr">5</span> — הבדיקה.</span></aside>
-    <div class="stage"><div class="slide slide--dark">
-      <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
-      <span class="kicker anim drop"><i class="ti ti-settings"></i> עכשיו מנהלים</span>
-      <h2 class="anim x" style="--i:1;margin:1.4cqw 0 2.6cqw;">צ'אט נקי לכל פקודה — <span class="hi">אתם מאשרים</span></h2>
-      <div class="card anim" style="--i:2;padding:2cqw 2.4cqw;text-align:center;">
-        <div class="ltr" style="font-family:var(--font-mono);direction:ltr;font-size:clamp(22px,2.15cqw,34px);font-weight:600;color:var(--ink);line-height:1.7;">brief → prd → architecture → epics → readiness → sprint → stories</div>
-      </div>
-      <p class="footnote anim" style="--i:3;color:var(--green-mint);">נתקעתם? <span class="ltr">bmad-help</span> · יד + שיתוף-מסך</p>
-    </div></div>
-  </section>
-
-  <!-- 05 · ACTIVITY — בדיקת-סיום -->
-  <section class="cat-item" id="s5" data-type="activity">
+  <!-- 08 · ACTIVITY — בדיקת-סיום -->
+  <section class="cat-item" id="s8" data-type="activity">
     <aside class="sp-notes" hidden><ul class="sp-points"><li>עוצרים רגע — לא בשביל סיכום, בשביל בדיקה אחת.</li><li>כל אחד כותב בצ'אט משפט אחד: מה הצעד הבא שלו בפרויקט.</li><li>לא "אמשיך לעבוד" — משפט מדויק: איזו פקודה, על מה.</li><li><strong>⏸ ▸קורא את התשובות תוך-כדי; מי שכתב משהו מעורפל — שאלה אחת מדייקת: "איזו פקודה זה אצלך?"◂</strong></li><li>אם אתם יודעים מה הפקודה הבאה שלכם — אתם יודעים לנהל את הצוות הזה. זה כל הסיפור.</li><li>ומה שלא ברור — הצ'אט שלנו פתוח, ואני שם.</li></ul><span class="sp-cue">▸סוף היחידה וסוף השיעור — בלי סגירה דרמטית. יציאה על העבודה שלהם◂ הבא: סוף — אין שקף נוסף.</span></aside>
     <div class="stage"><div class="slide">
       <span class="corner-mark"><svg viewBox="824 453 2250 2991" preserveAspectRatio="xMidYMid meet"><use href="#benefits-logo"/></svg></span>
